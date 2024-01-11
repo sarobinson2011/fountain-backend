@@ -8,8 +8,11 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 */
 
 contract SimpleToken is ERC20 {
+    address public owner;
     
-    constructor() ERC20("MyToken", "MTK") {}
+    constructor() ERC20("MyToken", "MTK") {
+        owner = msg.sender;
+    }
     
 }
 

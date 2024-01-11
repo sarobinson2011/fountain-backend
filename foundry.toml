@@ -2,8 +2,21 @@
 src = "src"
 out = "out"
 libs = ["lib"]
-remappings = ["@openzeppelin/=lib/openzeppelin-contracts/"]
 
+auto_detect_remappings = true
+
+# remappings = ["ds-test/=lib/solmate/lib/ds-test/src/", "forge-std/=lib/forge-std/src/", "@openzeppelin/=lib/openzeppelin-contracts/"]
+remappings = [
+    "@openzeppelin/=lib/openzeppelin-contracts/",
+    "forge-std/=lib/forge-std/src/",
+]
+
+[rpc_endpoints]
+sepolia = "${SEPOLIA_RPC_URL}"
+aurora-test = "${AURORA_TEST_RPC_URL}"
+
+[etherscan]
+sepolia = { key = "${ETHERSCAN_API_KEY}" }
 
 
 # See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options
