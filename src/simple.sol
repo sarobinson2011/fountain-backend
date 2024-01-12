@@ -16,3 +16,16 @@ contract SimpleToken is ERC20 {
     
 }
 
+// forge flatten --output src/simple.flattened.sol src/simple.sol
+
+// forge verify-contract --chain-id 1313161555 --num-of-optimizations 1000000 --watch \
+//     --compiler-version v0.8.22+commit.4fc1097e \
+//     <the_contract_address> \
+//     src/simple.sol:SimpleToken 
+
+// forge verify-contract --chain-id 1313161555 --num-of-optimizations 1000000 --watch --compiler-version v0.8.22+commit.4fc1097e 0xB864c40A6F9d20B9500f14f239862899ea8aC772 src/simple.sol:SimpleToken
+
+
+
+
+

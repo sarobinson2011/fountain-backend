@@ -15,8 +15,8 @@ contract DeploySimple is Script {
     }
 }
 
-// forge create src/simple.sol:SimpleToken --private-key $PRIVATE_KEY --rpc-url $SEPOLIA_RPC_URL
-// forge create src/simple.sol:SimpleToken --private-key $PRIVATE_KEY --rpc-url $AURORA_TEST_RPC_URL
+// source .env
+
 
 // forge create --rpc-url INSERT_RPC_API_ENDPOINT \
 // --constructor-args 100 \
@@ -24,15 +24,20 @@ contract DeploySimple is Script {
 // src/MyToken.sol:MyToken
 
 
-// forge create --rpc-url https://rpc2.sepolia.org \
-// --private-key b4a2e3f0d67722c2ef7e95e688e360708fb74e65c5932828e6e499b4adcfc525 \
-// --etherscan-api-key K47TR45ZRI8MM5ZTDJAXQVXN9IRTEVHFMB \
+// forge create src/simple.sol:SimpleToken --private-key $PRIVATE_KEY --rpc-url $SEPOLIA_RPC_URL --verify      <-- success
+
+// forge create src/simple.sol:SimpleToken --private-key $PRIVATE_KEY --rpc-url $AURORA_TEST_RPC_URL           <-- fail
+// forge create src/simple.sol:SimpleToken --private-key $PRIVATE_KEY --rpc-url $AURORA_TEST_RPC_URL --legacy  <-- success
+//      --legacy --verify       <-- fail
+
+// forge create --rpc-url $SEPOLIA_RPC_URL \
+// --private-key $PRIVATE_KEY \
+// --etherscan-api-key $ETHERSCAN_API_KEY \
 // --verify \
 // src/simple.sol:SimpleToken
 
-
-// forge create --rpc-url https://testnet.aurora.dev \
-// --private-key b4a2e3f0d67722c2ef7e95e688e360708fb74e65c5932828e6e499b4adcfc525 \
+// forge create --rpc-url $AURORA_TEST_RPC_URL \
+// --private-key $PRIVATE_KEY \
 // --verify \
 // src/simple.sol:SimpleToken
 
