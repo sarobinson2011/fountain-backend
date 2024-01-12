@@ -14,8 +14,9 @@ remappings = [
 ]
 
 [rpc_endpoints]
-sepolia = "${SEPOLIA_RPC_URL}"
-aurora-test = "${AURORA_TEST_RPC_URL}"
+sepolia = "https://rpc2.sepolia.org"
+# sepolia = "${SEPOLIA_RPC_URL}"
+# aurora-test = "${AURORA_TEST_RPC_URL}"
 
 [etherscan]
 sepolia = { key = "${ETHERSCAN_API_KEY}" }
