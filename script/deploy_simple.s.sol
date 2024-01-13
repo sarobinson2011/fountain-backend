@@ -19,8 +19,9 @@ contract DeploySimple is Script {
 
         vm.startBroadcast(privateKey);
         // deploy token
-        new SimpleToken("STOKEN", "STK");
+        SimpleToken simpletoken = new SimpleToken("STOKEN", "STK");
         // mint ?
+        
         vm.stopBroadcast();
     }
 }
@@ -28,6 +29,7 @@ contract DeploySimple is Script {
 // source .env
 
 // forge script script/deploy_simple.s.sol:DeploySimple
+// forge script script/deploy_simple.s.sol:DeploySimple --rpc-url $SEPOLIA_RPC_URL --broadcast --verify -vvvv
 
     // forge create --rpc-url INSERT_RPC_API_ENDPOINT \
     // --constructor-args 100 \
