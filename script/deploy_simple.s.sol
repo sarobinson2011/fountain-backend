@@ -7,21 +7,29 @@ pragma solidity 0.8.22;
 
 import "forge-std/console.sol";
 import {Script, console2} from "forge-std/Script.sol";
-import {SimpleToken} from "../src/simple.sol";
+import {Reward} from "../src/tokencontract.sol";
+import {LockDrop} from "../src/lockdrop.sol";
 
 contract DeploySimple is Script {
     
     function run() public {
         uint256 privateKey = vm.envUint("PRIVATE_KEY_0x");
         address account = vm.addr(privateKey);
+        uint256 supply = 1_000_000 * (10**18);
 
         console.log("Account:", account);
 
+        // start broadcast
         vm.startBroadcast(privateKey);
-        // deploy token
-        SimpleToken simpletoken = new SimpleToken("STOKEN", "STK");
-        // mint ?
         
+        // deploy lockdrop
+        LockDrop lockdrop = new LockDrop();
+        // deploy the token contract
+        new Reward("Rewardz", "RWDZ", address(lockdrop), supply);
+        // deposit - pass in 0.1 eth as the value
+        lockdrop.deposit{value:0.1 ether}();
+        
+        // stop broadcast
         vm.stopBroadcast();
     }
 }

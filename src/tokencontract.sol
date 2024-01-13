@@ -3,10 +3,6 @@ pragma solidity 0.8.22;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
-/* 
-    Simple contract to test contract verification
-*/
-
 contract Reward is ERC20 {
     address public owner;
     
@@ -16,6 +12,8 @@ contract Reward is ERC20 {
     }
     
 }
+
+
 
 
 
