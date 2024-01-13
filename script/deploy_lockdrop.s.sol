@@ -1,10 +1,6 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity 0.8.22;
 
-//
-// Learn to deploy via this script (on top of 'forge create')
-//
-
 import "forge-std/console.sol";
 import {Script, console2} from "forge-std/Script.sol";
 import {Reward} from "../src/tokencontract.sol";
@@ -27,12 +23,13 @@ contract DeploySimple is Script {
         // deploy the token contract
         new Reward("Rewardz", "RWDZ", address(lockdrop), supply);
         // deposit - pass in 0.1 eth as the value
-        lockdrop.deposit{value:0.1 ether}();
+        // lockdrop.deposit{value: 0.1 ether}();
         
         // stop broadcast
         vm.stopBroadcast();
     }
 }
+
 
 // source .env
 
