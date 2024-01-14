@@ -5,6 +5,7 @@ import "forge-std/console.sol";
 import {Script, console2} from "forge-std/Script.sol";
 import {Reward} from "../src/tokencontract.sol";
 import {LockDrop} from "../src/lockdrop.sol";
+import {ILockDrop} from "../src/Ilockdrop.sol";
 
 contract DeploySimple is Script {
     
@@ -19,8 +20,7 @@ contract DeploySimple is Script {
         vm.startBroadcast(privateKey);
         
         // call withdraw on the lockdrop contract (already deployed)
-        // need an interface to use the command below:
-        // lockdrop.withdraw();
+        ILockDrop(lockdrop).withdraw();
         
         // stop broadcast
         vm.stopBroadcast();
