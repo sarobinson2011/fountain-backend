@@ -20,9 +20,11 @@ contract DeploySimple is Script {
         
         // deploy lockdrop
         LockDrop lockdrop = new LockDrop();
+
         // deploy the token contract
         new Reward("Rewardz", "RWDZ", address(lockdrop), supply);
-        // deposit - pass in 0.1 eth as the value
+
+        // deposit 0.1 ether
         // lockdrop.deposit{value: 0.1 ether}();
         
         // stop broadcast
@@ -68,4 +70,7 @@ contract DeploySimple is Script {
 //     <the_contract_address> \
 //     src/simple.sol:SimpleToken 
 
-// forge verify-contract --chain-id 1313161555 --num-of-optimizations 1000000 --watch --compiler-version v0.8.22+commit.4fc1097e 0xB864c40A6F9d20B9500f14f239862899ea8aC772 src/simple.sol:SimpleToken
+// forge verify-contract --chain-id 11155111 --num-of-optimizations 1000000 --watch --compiler-version v0.8.22+commit.4fc1097e 0x5912a392035116C62A40a400e3F54E4523227420 src/lockdrop.sol:LockDrop
+// forge verify-contract --chain-id 1313161555 --num-of-optimizations 1000000 --watch --compiler-version v0.8.22+commit.4fc1097e 0x5912a392035116C62A40a400e3F54E4523227420 src/lockdrop.sol:LockDrop
+
+
