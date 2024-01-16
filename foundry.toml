@@ -13,10 +13,11 @@ remappings = [
 ]
 
 [rpc_endpoints]
-# aurora-test = "${AURORA_TEST_RPC_URL}"
 sepolia = "${SEPOLIA_RPC_URL}"
 arbitrum-sepolia = "${ARBITRUM_SEPOLIA_RPC_URL}"
+aurora-test = "${AURORA_TEST_RPC_URL}"
 
 [etherscan]
 sepolia = { key = "${ETHERSCAN_API_KEY}" }
-arbitrum-sepolia = { key = "${ABRISCAN_API_KEY}" }
+arbitrum-sepolia = { key = "${ARBISCAN_API_KEY}", url = "${ARBITRUM_SEPOLIA_API}" }
+aurora-test = { key = "QWERTY", url = "${AURORA_TEST_RPC_URL}" }
