@@ -6,7 +6,7 @@ libs = ["lib"]
 
 auto_detect_remappings = true
 
-# remappings = ["ds-test/=lib/solmate/lib/ds-test/src/", "forge-std/=lib/forge-std/src/", "@openzeppelin/=lib/openzeppelin-contracts/"]
+# remappings = ["ds-test/=lib/solmate/lib/ds-test/src/", "forge-std/=lib/forge-std/src/"]
 remappings = [
     "@openzeppelin/=lib/openzeppelin-contracts/",
     "forge-std/=lib/forge-std/src/",
@@ -18,6 +18,6 @@ arbitrum-sepolia = "${ARBITRUM_SEPOLIA_RPC_URL}"
 aurora-test = "${AURORA_TEST_RPC_URL}"
 
 [etherscan]
-sepolia = { key = "${ETHERSCAN_API_KEY}" }
+sepolia = { key = "${ETHERSCAN_API_KEY}", url = "${SEPOLIA_API}" }
 arbitrum-sepolia = { key = "${ARBISCAN_API_KEY}", url = "${ARBITRUM_SEPOLIA_API}" }
 aurora-test = { key = "QWERTY", url = "${AURORA_TEST_RPC_URL}" }

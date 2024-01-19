@@ -1,8 +1,9 @@
-// SPDX-License-Identifier: UNLICENSED
-pragma solidity 0.8.22;
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
 
 contract LockDrop {
     address public owner;
+    address public newt;
 
     struct TimedDeposit {
         uint256 amount;
@@ -16,6 +17,7 @@ contract LockDrop {
 
     constructor() {
         owner = msg.sender;
+        newt = msg.sender;
     }
 
     function deposit() external payable {
