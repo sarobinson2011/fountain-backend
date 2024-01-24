@@ -21,3 +21,6 @@ aurora-test = "${AURORA_TEST_RPC_URL}"
 sepolia = { key = "${ETHERSCAN_API_KEY}", url = "${SEPOLIA_API}" }
 arbitrum-sepolia = { key = "${ARBISCAN_API_KEY}", url = "${ARBITRUM_SEPOLIA_API}" }
 aurora-test = { key = "QWERTY", url = "${AURORA_TEST_RPC_URL}" }
+
+
+# forge script script/deploy_lockdrop.s.sol:Deploy --rpc-url ${ARBITRUM_SEPOLIA_RPC_URL} --private-key ${PRIVATE_KEY} --broadcast --verify --etherscan-api-key ${ARBITRUM_SEPOLIA_API} -vvvv
