@@ -3,7 +3,7 @@ pragma solidity ^0.8.0;
 
 contract LockDrop {
     address public owner;
-    address public newt;
+    address public nnewt;
 
     struct TimedDeposit {
         uint256 amount;
@@ -17,7 +17,7 @@ contract LockDrop {
 
     constructor() {
         owner = msg.sender;
-        newt = msg.sender;
+        nnewt = msg.sender;
     }
 
     function deposit() external payable {
