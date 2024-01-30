@@ -3,9 +3,7 @@
 src = "src"
 out = "out"
 libs = ["lib"]
-
 auto_detect_remappings = true
-
 # remappings = ["ds-test/=lib/solmate/lib/ds-test/src/", "forge-std/=lib/forge-std/src/"]
 remappings = [
     "@openzeppelin/=lib/openzeppelin-contracts/",
