@@ -16,7 +16,7 @@ contract LockDrop {
     mapping (address => TimedDeposit) public balances;   
     event NewDeposit(address indexed _user, uint256 _amount);
     event NewWithdraw(address indexed _user, uint256 _amount);
-    event RewardsTransferred(address indexed _user, uint256 _amount);
+    event RwdzTransferred(address indexed _user, uint256 _amount);
 
     constructor() {
         owner = msg.sender;
@@ -45,7 +45,7 @@ contract LockDrop {
 
         // Transfer RWDZ tokens to the withdrawer
         require(tokenReward.transfer(msg.sender, reward), "RWDZ token transfer failed");
-        emit RewardsTransferred(msg.sender, reward);
+        emit RwdzTransferred(msg.sender, reward);
         reward = 0;
                 
         // Transfer deposited Ether to the withdrawer
@@ -55,13 +55,10 @@ contract LockDrop {
 
     }
 
-    function calculateReward() internal returns (uint256) {
-
-        // need to calculate reward for balances[msg.sender]
-
-        // uint256 reward = balances[msg.sender].amount / 10;
-        
-        // return reward;       <-- return value to withdraw()
+    function calculateReward() internal view returns (uint256) {
+        // reward == 10% of deposit
+        uint256 reward = balances[msg.sender].amount * 10;
+        return reward;    
     }
 } 
 
