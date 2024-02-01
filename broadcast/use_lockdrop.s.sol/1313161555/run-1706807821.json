@@ -1,0 +1,33 @@
+{
+  "transactions": [
+    {
+      "hash": "0x7068c440f447a8ed182bcfde60c874b5fe423f5ba81b0721b5ad34e471b1771d",
+      "transactionType": "CALL",
+      "contractName": "LockDrop",
+      "contractAddress": "0xe57b6A8199E052F67169e3eC3aF73b74f200C46D",
+      "function": "deposit()",
+      "arguments": [],
+      "transaction": {
+        "type": "0x00",
+        "from": "0xf8f8269488f73fab3935555fcddd6035699dee25",
+        "to": "0xe57b6a8199e052f67169e3ec3af73b74f200c46d",
+        "gas": "0x17f0c",
+        "value": "0x16345785d8a0000",
+        "data": "0xd0e30db0",
+        "nonce": "0x6a"
+      },
+      "additionalContracts": [],
+      "isFixedGasLimit": false
+    }
+  ],
+  "receipts": [],
+  "libraries": [],
+  "pending": [
+    "0x7068c440f447a8ed182bcfde60c874b5fe423f5ba81b0721b5ad34e471b1771d"
+  ],
+  "returns": {},
+  "timestamp": 1706807821,
+  "chain": 1313161555,
+  "multi": false,
+  "commit": "1e23279"
+}

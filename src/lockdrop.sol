@@ -5,7 +5,7 @@ import "./I.tokencontract.sol";
 
 contract LockDrop {
     address public owner;
-    IReward public tokenReward; // IReward == IERC20
+    IReward public rewardTokens; // IReward == IERC20
 
     struct TimedDeposit {
         uint256 amount;
@@ -20,7 +20,7 @@ contract LockDrop {
 
     constructor() {
         owner = msg.sender;
-        tokenReward = IReward(address(this));   // RWDZ tokens are held in THIS contract
+        rewardTokens = IReward(address(this));   // RWDZ tokens are held in THIS contract
     }
 
     function deposit() external payable {
@@ -35,29 +35,29 @@ contract LockDrop {
     } 
     
     function withdraw() external {
-        uint256 reward = calculateReward(); //    <-- returns the reward value to transfer
         require(balances[msg.sender].amount > 0, "You have no balance to withdraw...");
-        require(block.timestamp >= balances[msg.sender].timestamp + 5 minutes, "Time lock not expired...");
-              
+        require(block.timestamp >= balances[msg.sender].timestamp + 2 minutes, "Time lock not expired...");
+ 
+        uint256 reward = calculateReward(); //    <-- returns the reward value to transfer
+ 
         uint256 tempAmount = balances[msg.sender].amount;
         balances[msg.sender].amount = 0;
         balances[msg.sender].timestamp = 0;
-
-        // Transfer RWDZ tokens to the withdrawer
-        require(tokenReward.transfer(msg.sender, reward), "RWDZ token transfer failed");
-        emit RwdzTransferred(msg.sender, reward);
-        reward = 0;
-                
+               
         // Transfer deposited Ether to the withdrawer
-        payable(msg.sender).transfer(tempAmount);
+        (bool success, ) = payable(msg.sender).call{value: tempAmount}("");
+        require(success, "Ether transfer failed");
         emit NewWithdraw(msg.sender, tempAmount);
         tempAmount = 0;
 
+         // Transfer RWDZ tokens to the withdrawer
+        require(rewardTokens.transfer(msg.sender, reward), "RWDZ token transfer failed");
+        emit RwdzTransferred(msg.sender, reward);
+        reward = 0;
     }
 
     function calculateReward() internal view returns (uint256) {
-        // reward == 10% of deposit
-        uint256 reward = balances[msg.sender].amount * 10;
+        uint256 reward = balances[msg.sender].amount / 10;
         return reward;    
     }
 } 

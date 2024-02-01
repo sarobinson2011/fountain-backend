@@ -7,11 +7,12 @@ import {Reward} from "../src/tokencontract.sol";
 import {LockDrop} from "../src/lockdrop.sol";
 import {ILockDrop} from "../src/I.lockdrop.sol";
 
-contract DeploySimple is Script {
+contract Deploy is Script {
     function run() public {
         uint256 privateKey = vm.envUint("PRIVATE_KEY_0x");
         address account = vm.addr(privateKey);
-        address lockdrop = 0xA7E92dA4062f857f3983C4A46eF5B76BBC487419; // deployed lockdrop address
+        // address reward = ;
+        address lockdrop = 0xE0aA665B625622b7df698B2B1410879A342569F2; // deployed lockdrop address
 
         console.log("Account:", account);
 
@@ -19,8 +20,8 @@ contract DeploySimple is Script {
         vm.startBroadcast(privateKey);
 
         // call withdraw on the lockdrop contract (already deployed)
+        // ILockDrop(lockdrop).deposit{value: 0.1 ether}();
         ILockDrop(lockdrop).withdraw();
-        // ILockDrop(lockdrop).deposit{value: 0.01 ether}();
 
         // stop broadcast
         vm.stopBroadcast();
