@@ -1,5 +1,11 @@
-# 1.
-    - Deploy Reward and LockDrop contracts 
+# 1. TokenManager implementation    <-- in progress
+    - Deploy TokenManager                                   ✓
+    - Deploy Reward                                         ✓
+    - call TokenManager:transferReward(msg.sender, 100)     ×
+
+
+
+# 2. LockDrop implementation        <--   
     - call deposit{value: 1 ether}()
     - add Reward token contract address to MetaMask, so the RWDZ tokens are recognised
     - wait 5 mins

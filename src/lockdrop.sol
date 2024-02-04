@@ -1,16 +1,16 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "./I.tokencontract.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+
 
 contract LockDrop {
     address public owner;
-    IReward public rewardTokens; // IReward == IERC20
+    IERC20 public rewardTokens; // IReward == IERC20
 
     struct TimedDeposit {
         uint256 amount;
         uint256 timestamp;
-        // uint256 reward;         // need logic to calculate the reward distribution
     }
 
     mapping (address => TimedDeposit) public balances;   
@@ -20,7 +20,7 @@ contract LockDrop {
 
     constructor() {
         owner = msg.sender;
-        rewardTokens = IReward(address(this));   // RWDZ tokens are held in THIS contract
+        rewardTokens = IERC20(address(this));   // RWDZ tokens are held in THIS contract
     }
 
     function deposit() external payable {
@@ -36,7 +36,7 @@ contract LockDrop {
     
     function withdraw() external {
         require(balances[msg.sender].amount > 0, "You have no balance to withdraw...");
-        require(block.timestamp >= balances[msg.sender].timestamp + 2 minutes, "Time lock not expired...");
+        require(block.timestamp >= balances[msg.sender].timestamp + 1 minutes, "Time lock not expired...");
  
         uint256 reward = calculateReward(); //    <-- returns the reward value to transfer
  
@@ -44,20 +44,22 @@ contract LockDrop {
         balances[msg.sender].amount = 0;
         balances[msg.sender].timestamp = 0;
                
-        // Transfer deposited Ether to the withdrawer
+        // Transfer deposited Ether to the withdrawer                       <-- this WORKS !
         (bool success, ) = payable(msg.sender).call{value: tempAmount}("");
         require(success, "Ether transfer failed");
         emit NewWithdraw(msg.sender, tempAmount);
         tempAmount = 0;
 
-         // Transfer RWDZ tokens to the withdrawer
-        require(rewardTokens.transfer(msg.sender, reward), "RWDZ token transfer failed");
+         // Transfer RWDZ tokens to the withdrawer                          <-- test this bit
+        bool successRwdz = rewardTokens.transfer(msg.sender, reward);
+        require(successRwdz, "RWDZ token transfer failed");
         emit RwdzTransferred(msg.sender, reward);
         reward = 0;
     }
 
-    function calculateReward() internal view returns (uint256) {
-        uint256 reward = balances[msg.sender].amount / 10;
+    function calculateReward() internal pure returns (uint256) {
+        // uint256 reward = balances[msg.sender].amount / 10;
+        uint256 reward = 100;
         return reward;    
     }
 } 
