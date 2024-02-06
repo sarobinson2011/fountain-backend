@@ -28,7 +28,6 @@ contract LockDrop {
             {
                 amount: msg.value, 
                 timestamp: block.timestamp
-                // reward: 0                       // zero upon deposit
             }
         );
         emit NewDeposit(msg.sender, msg.value);
