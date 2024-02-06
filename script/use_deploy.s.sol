@@ -20,7 +20,6 @@ contract Use is Script {
         // start broadcast
         vm.startBroadcast(privateKey);
         
-        // call withdraw on the lockdrop contract (already deployed)
         // ILockDrop(lockdrop).deposit{value: 0.1 ether}(); 
         // ITokenManager(tokenmanager).setRewardTokenAddress(reward);
         ITokenManager(tokenmanager).transferReward(me, amount);

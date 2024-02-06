@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beast Finance - portal</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            /* background-image: url('blue-beast.jpeg'); */
+            background-image: url('https://img.freepik.com/free-vector/cute-monster-kid-cartoon-vector-icon-illustration-monster-holiday-icon-concept-isolated-premium-vector-flat-cartoon-style_138676-3995.jpg?w=826&t=st=1707230554~exp=1707231154~hmac=6b8ec85c7fdba69cfeb25d2ba28609ed06e6a3618e83fc0a5ec618a997b9314e');
+            background-size: 80% 400%;
+            background-position: 50% 5%;
+            font-family: Arial, sans-serif;
+            color: #fff;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 50px;
+            color: hsl(259, 100%, 50%);
+        }
+
+        button {
+            margin: 10px;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: hsl(225, 70%, 53%);
+            /* Set button color */
+            color: #fff;
+            /* Set button text color */
+            border: none;
+            border-radius: 10px;
+        }
+
+        button:hover {
+            background-color: hsl(102, 64%, 44%);
+            /* Set button color on hover */
+        }
+
+        div {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Beast.finance</h1>
+
+    <button onclick="connectWallet()">Connect Your Wallet</button>
+
+    <div>
+        <button onclick="deposit()">Deposit</button>
+        <button onclick="withdraw()">Withdraw</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.6.0/dist/web3.min.js"></script>
+
+    <script>
+        let web3;
+
+        async function connectWallet() {
+            if (window.ethereum) {
+                try {
+                    await window.ethereum.enable();
+                    web3 = new Web3(window.ethereum);
+                    console.log("Connected to wallet:", web3.currentProvider.selectedAddress);
+                } catch (error) {
+                    console.error("Error connecting to wallet:", error);
+                }
+            } else {
+                console.error("No wallet detected");
+            }
+        }
+
+        async function deposit() {
+            const contractAddress = 'YOUR_CONTRACT_ADDRESS'; // Replace with your actual contract address
+            const contractABI = YOUR_CONTRACT_ABI; // Replace with your actual contract ABI
+
+            const contract = new web3.eth.Contract(contractABI, contractAddress);
+
+            const amount = prompt("Enter the deposit amount:");
+            if (amount) {
+                try {
+                    const accounts = await web3.eth.getAccounts();
+                    const result = await contract.methods.deposit().send({
+                        from: accounts[0],
+                        value: web3.utils.toWei(amount, 'ether')
+                    });
+                    console.log("Deposit transaction successful:", result);
+                } catch (error) {
+                    console.error("Error depositing:", error);
+                }
+            }
+        }
+
+        async function withdraw() {
+            const contractAddress = 'YOUR_CONTRACT_ADDRESS'; // Replace with your actual contract address
+            const contractABI = YOUR_CONTRACT_ABI; // Replace with your actual contract ABI
+
+            const contract = new web3.eth.Contract(contractABI, contractAddress);
+
+            try {
+                const accounts = await web3.eth.getAccounts();
+                const result = await contract.methods.withdraw().send({
+                    from: accounts[0]
+                });
+                console.log("Withdrawal transaction successful:", result);
+            } catch (error) {
+                console.error("Error withdrawing:", error);
+            }
+        }
+
+    </script>
+
+</body>
+
+</html>

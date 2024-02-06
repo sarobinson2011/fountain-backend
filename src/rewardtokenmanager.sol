@@ -9,7 +9,7 @@ contract TokenManager {
     address public rewardTokenAddress;
     address public owner;
 
-    constructor(){
+    constructor() {
         owner = msg.sender;
     }
 
@@ -32,3 +32,4 @@ contract TokenManager {
         require(success, "RWDZ token transfer failed...");
     }
 }
+
