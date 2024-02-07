@@ -53,10 +53,12 @@
 
     <h1>Beast.finance</h1>
 
-    <button onclick="connectWallet()">Connect Your Wallet</button>
+    <div>
+        <button onclick="connectWallet()">Connect Your Wallet</button>
+    </div>
 
     <div>
-        <button onclick="deposit()">Deposit</button>
+        <button onclick="deposit()">Get RWDZ</button>
         <button onclick="withdraw()">Withdraw</button>
     </div>
 
@@ -80,8 +82,71 @@
         }
 
         async function deposit() {
-            const contractAddress = 'YOUR_CONTRACT_ADDRESS'; // Replace with your actual contract address
-            const contractABI = YOUR_CONTRACT_ABI; // Replace with your actual contract ABI
+            const contractAddress = '0xb136843F392dd2f174063ee469a875F642444146'; // Replace with your actual contract address
+            const contractABI = [
+                {
+                    "inputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "constructor"
+                },
+                {
+                    "inputs": [],
+                    "name": "owner",
+                    "outputs": [
+                        {
+                            "internalType": "address",
+                            "name": "",
+                            "type": "address"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [],
+                    "name": "rewardTokenAddress",
+                    "outputs": [
+                        {
+                            "internalType": "address",
+                            "name": "",
+                            "type": "address"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "address",
+                            "name": "_rewardTokenAddress",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "setRewardTokenAddress",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "address",
+                            "name": "_to",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "_amount",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "transferReward",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                }
+            ]; // Replace with your actual contract ABI
 
             const contract = new web3.eth.Contract(contractABI, contractAddress);
 
@@ -89,7 +154,7 @@
             if (amount) {
                 try {
                     const accounts = await web3.eth.getAccounts();
-                    const result = await contract.methods.deposit().send({
+                    const result = await contract.methods.transferReward().send({
                         from: accounts[0],
                         value: web3.utils.toWei(amount, 'ether')
                     });

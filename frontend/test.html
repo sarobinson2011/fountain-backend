@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        button {
+            margin: 10px;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: hsl(225, 70%, 53%);
+            /* Set button color */
+            color: hwb(78 0% 93%);
+            /* Set button text color */
+            border: none;
+            border-radius: 10px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+    </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.6.0/dist/web3.min.js"></script>
+
+    <script>
+        import Web3 from 'web3';
+
+        const web3 = new Web3("https://testnet.aurora.dev");
+        const contractAddress = "0xb136843F392dd2f174063ee469a875F642444146";
+        const contractABI = [
+            {
+                "inputs": [],
+                "stateMutability": "nonpayable",
+                "type": "constructor"
+            },
+            {
+                "inputs": [],
+                "name": "owner",
+                "outputs": [
+                    {
+                        "internalType": "address",
+                        "name": "",
+                        "type": "address"
+                    }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "inputs": [],
+                "name": "rewardTokenAddress",
+                "outputs": [
+                    {
+                        "internalType": "address",
+                        "name": "",
+                        "type": "address"
+                    }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "inputs": [
+                    {
+                        "internalType": "address",
+                        "name": "_rewardTokenAddress",
+                        "type": "address"
+                    }
+                ],
+                "name": "setRewardTokenAddress",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "inputs": [
+                    {
+                        "internalType": "address",
+                        "name": "_to",
+                        "type": "address"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "_amount",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "transferReward",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            }
+        ];
+        const contract = new web3.eth.Contract(contractABI, contractAddress);
+
+        // Function 1 - connectWallet()
+        async function connectWallet() {
+            if (window.ethereum) {
+                try {
+                    await window.ethereum.enable();
+                    web3 = new Web3(window.ethereum);
+                    console.log("Connected to wallet:", web3.currentProvider.selectedAddress);
+                } catch (error) {
+                    console.error("Error connecting to wallet:", error);
+                }
+            } else {
+                console.error("No wallet detected");
+            }
+        }
+
+        // Function 2 - transferReward()
+        async function transferReward() {
+            const amount = 10 * 10 ** 18; // 10 tokens
+
+            // Get the current user's Ethereum address
+            const accounts = await web3.eth.requestAccounts();
+            const userAddress = "0xF8f8269488f73fab3935555FCDdD6035699deE25";
+
+            try {
+                // Call the transferReward function
+                const result = await contract.methods.transferReward(userAddress, amount).send({ from: userAddress });
+                console.log("Transaction successful:", result);
+            } catch (error) {
+                console.error("Transaction failed:", error);
+            }
+        }
+    </script>
+</head>
+
+<body>
+
+    <h1>Token Manager Interaction</h1>
+    <button onclick="connectWallet()">Connect Your Wallet</button>
+    <button onclick="transferReward()">Transfer Reward</button>
+
+</body>
+
+</html>
