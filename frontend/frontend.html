@@ -49,6 +49,8 @@
     </style>
 </head>
 
+
+
 <body>
 
     <h1>Beast.finance</h1>
@@ -56,21 +58,24 @@
     <div>
         <button onclick="connectWallet()">Connect Your Wallet</button>
     </div>
-
     <div>
-        <button onclick="deposit()">Get RWDZ</button>
-        <button onclick="withdraw()">Withdraw</button>
+        <button onclick="transferReward()">Get RWDZ</button>
+        <!-- <button onclick="withdraw()">Withdraw</button> -->
     </div>
 
+
+
+    <!-- import Web3.js -->
     <script src="https://cdn.jsdelivr.net/npm/web3@1.6.0/dist/web3.min.js"></script>
 
     <script>
-        let web3;
+        // let web3;
 
         async function connectWallet() {
             if (window.ethereum) {
                 try {
-                    await window.ethereum.enable();
+                    // await window.ethereum.enable();
+                    await window.ethereum.request({ method: 'eth_requestAccounts' });
                     web3 = new Web3(window.ethereum);
                     console.log("Connected to wallet:", web3.currentProvider.selectedAddress);
                 } catch (error) {
@@ -81,7 +86,8 @@
             }
         }
 
-        async function deposit() {
+        async function transferReward() {
+            const auroraRpcEndpoint = 'https://testnet.aurora.dev';
             const contractAddress = '0xb136843F392dd2f174063ee469a875F642444146'; // Replace with your actual contract address
             const contractABI = [
                 {
@@ -148,42 +154,44 @@
                 }
             ]; // Replace with your actual contract ABI
 
-            const contract = new web3.eth.Contract(contractABI, contractAddress);
-
-            const amount = prompt("Enter the deposit amount:");
-            if (amount) {
-                try {
-                    const accounts = await web3.eth.getAccounts();
-                    const result = await contract.methods.transferReward().send({
-                        from: accounts[0],
-                        value: web3.utils.toWei(amount, 'ether')
-                    });
-                    console.log("Deposit transaction successful:", result);
-                } catch (error) {
-                    console.error("Error depositing:", error);
-                }
-            }
-        }
-
-        async function withdraw() {
-            const contractAddress = 'YOUR_CONTRACT_ADDRESS'; // Replace with your actual contract address
-            const contractABI = YOUR_CONTRACT_ABI; // Replace with your actual contract ABI
+            web3 = new Web3(new Web3.providers.HttpProvider(auroraRpcEndpoint));
 
             const contract = new web3.eth.Contract(contractABI, contractAddress);
 
-            try {
-                const accounts = await web3.eth.getAccounts();
-                const result = await contract.methods.withdraw().send({
-                    from: accounts[0]
-                });
-                console.log("Withdrawal transaction successful:", result);
-            } catch (error) {
-                console.error("Error withdrawing:", error);
-            }
+            // const amount = prompt("Enter the amount of RWDZ to transfer:");
+            // if (amount) {
+            //     try {
+            //         const accounts = await web3.eth.getAccounts();
+            //         const result = await contract.methods.transferReward().send({
+            //             from: accounts[0],
+            //             value: web3.utils.toWei(amount, 'RWDZ')
+            //         });
+            //         console.log("RWDZ token transfer successful:", result);
+            //     } catch (error) {
+            //         console.error("Error transferring RWDZ:", error);
+            //     }
+            // }
+
         }
+
+        // async function withdraw() {
+        //     const contractAddress = 'YOUR_CONTRACT_ADDRESS'; // Replace with your actual contract address
+        //     const contractABI = YOUR_CONTRACT_ABI; // Replace with your actual contract ABI
+
+        //     const contract = new web3.eth.Contract(contractABI, contractAddress);
+
+        //     try {
+        //         const accounts = await web3.eth.getAccounts();
+        //         const result = await contract.methods.withdraw().send({
+        //             from: accounts[0]
+        //         });
+        //         console.log("Withdrawal transaction successful:", result);
+        //     } catch (error) {
+        //         console.error("Error withdrawing:", error);
+        //     }
+        // }
 
     </script>
-
 </body>
 
 </html>

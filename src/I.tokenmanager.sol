@@ -6,3 +6,4 @@ interface ITokenManager {
     function transferReward(address _to, uint _amount) external;
 }
 
+
