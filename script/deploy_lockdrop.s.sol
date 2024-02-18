@@ -23,18 +23,10 @@ contract Deploy is Script {
         // deploy the token contract
         new Reward("Rewardz", "RWDZ", address(lockdrop), supply);
 
-        // deposit ether
-        // lockdrop.deposit{value: 0.01 ether}();
-
         // stop broadcast
         vm.stopBroadcast();
     }
 }
-
-
-
-
-
 
 
 // source .env

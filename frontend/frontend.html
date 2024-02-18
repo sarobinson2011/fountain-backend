@@ -76,7 +76,11 @@
                 try {
                     // await window.ethereum.enable();
                     await window.ethereum.request({ method: 'eth_requestAccounts' });
-                    web3 = new Web3(window.ethereum);
+
+                    const auroraRpcEndpoint = 'https://testnet.aurora.dev';
+                    web3 = new Web3(new Web3.providers.HttpProvider(auroraRpcEndpoint));
+                    // web3 = new Web3(window.ethereum);
+
                     console.log("Connected to wallet:", web3.currentProvider.selectedAddress);
                 } catch (error) {
                     console.error("Error connecting to wallet:", error);
@@ -88,7 +92,7 @@
 
         async function transferReward() {
             const auroraRpcEndpoint = 'https://testnet.aurora.dev';
-            const contractAddress = '0xb136843F392dd2f174063ee469a875F642444146'; // Replace with your actual contract address
+            const contractAddress = '0xb136843F392dd2f174063ee469a875F642444146';
             const contractABI = [
                 {
                     "inputs": [],
@@ -158,19 +162,19 @@
 
             const contract = new web3.eth.Contract(contractABI, contractAddress);
 
-            // const amount = prompt("Enter the amount of RWDZ to transfer:");
-            // if (amount) {
-            //     try {
-            //         const accounts = await web3.eth.getAccounts();
-            //         const result = await contract.methods.transferReward().send({
-            //             from: accounts[0],
-            //             value: web3.utils.toWei(amount, 'RWDZ')
-            //         });
-            //         console.log("RWDZ token transfer successful:", result);
-            //     } catch (error) {
-            //         console.error("Error transferring RWDZ:", error);
-            //     }
-            // }
+            const amount = prompt("Enter the amount of RWDZ to transfer:");
+            if (amount) {
+                try {
+                    const accounts = await web3.eth.getAccounts();
+                    const result = await contract.methods.transferReward(web3.currentProvider.selectedAddress, amount).send({
+                        from: accounts[0],
+                        value: web3.utils.toWei(amount, 'RWDZ')
+                    });
+                    console.log("RWDZ token transfer successful:", result);
+                } catch (error) {
+                    console.error("Error transferring RWDZ:", error);
+                }
+            }
 
         }
 
