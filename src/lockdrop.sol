@@ -24,19 +24,17 @@ contract LockDrop {
         rewardTokens = IERC20(address(this));  // RWDZ tokens held in THIS contract
     }
 
-    function deposit(uint256 _amount) external payable {
+    function deposit() external payable {
 
         require(msg.value > 0, "deposit amount must be greater than zero"); 
-        // Check if enough Ether was sent to cover the deposit and gas fees
-        require(msg.value >= _amount, "Insufficient funds sent for deposit");
 
         balances[msg.sender] = TimedDeposit(
             {
-                amount: _amount, 
+                amount: msg.value, 
                 timestamp: block.timestamp
             }
         );
-        emit NewDeposit(msg.sender, _amount);
+        emit NewDeposit(msg.sender, msg.value);
     } 
     
     function withdraw() external {
@@ -68,6 +66,4 @@ contract LockDrop {
         return reward;    
     }
 } 
-
-
 
