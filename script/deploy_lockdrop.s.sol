@@ -5,31 +5,51 @@ import "forge-std/console.sol";
 import {Script, console2} from "forge-std/Script.sol";
 import {Reward} from "../src/tokencontract.sol";
 import {LockDrop} from "../src/lockdrop.sol";
+import {ILockDrop} from "../src/I.lockdrop.sol";
+import {TokenManager} from "../src/rewardtokenmanager.sol";
+import {ITokenManager} from "../src/I.tokenmanager.sol";
+
 
 contract Deploy is Script {
     function run() public {
         uint256 privateKey = vm.envUint("PRIVATE_KEY_0x");
         address account = vm.addr(privateKey);
-        uint256 supply = 1_000_000 * (10 ** 18);
+        uint256 supply = 1_000 * (10 ** 18);
 
         console.log("Account:", account);
 
         // start broadcast
         vm.startBroadcast(privateKey);
 
+        // deploy reward token manager
+        TokenManager tokenmanager = new TokenManager();
+        // deploy the RWDZ token contract
+        Reward reward = new Reward("Rewardz", "RWDZ", address(tokenmanager), supply);
+        // set the Reward token address in TokenManager
+        ITokenManager(address(tokenmanager)).setRewardTokenAddress(address(reward));
         // deploy lockdrop
-        LockDrop lockdrop = new LockDrop();
-
-        // deploy the token contract
-        new Reward("Rewardz", "RWDZ", address(lockdrop), supply);
+        new LockDrop(address(tokenmanager));
 
         // stop broadcast
         vm.stopBroadcast();
     }
 }
 
+// address tokenmanager 0x4c523EA66f07a6d67E9F313df51B7D4C2E8d451a
+// address reward 0x1d037b6b3F58652d83D10a21E8e06CA262F442c1
+// address lockdrop 0x4289aCdD394446D96c2F6E27E530C3f497c68577
 
-// source .env
+
+
+
+
+
+
+
+
+
+
+
 
 // forge script script/deploy_simple.s.sol:DeploySimple
 // forge script script/deploy_simple.s.sol:DeploySimple --rpc-url $SEPOLIA_RPC_URL --broadcast --verify -vvvv

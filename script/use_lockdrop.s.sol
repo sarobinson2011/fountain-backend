@@ -6,21 +6,27 @@ import {Script, console2} from "forge-std/Script.sol";
 import {Reward} from "../src/tokencontract.sol";
 import {LockDrop} from "../src/lockdrop.sol";
 import {ILockDrop} from "../src/I.lockdrop.sol";
+import {ITokenManager} from "../src/I.tokenmanager.sol";
+
 
 contract Deploy is Script {
     function run() public {
         uint256 privateKey = vm.envUint("PRIVATE_KEY_0x");
         address account = vm.addr(privateKey);
-        address lockdrop = 0x84dE68c836D9f401b9580dfD178779781248D59B; // deployed lockdrop address
+        uint256 amount = 10 * (10**18);
+        address me = 0xF8f8269488f73fab3935555FCDdD6035699deE25;
+        address tokenmanager =  0xE0aA665B625622b7df698B2B1410879A342569F2;
+        address reward =  0x7F58730990073Ca415EF52f845823810B4EF8d47;
+        address lockdrop =  0x7ffC9a29890E4B86B24560e112dC2Abd749E931f;
 
         console.log("Account:", account);
         
         // start broadcast
         vm.startBroadcast(privateKey);
 
-        // ILockDrop(lockdrop).deposit{value: 0.01 ether}();
-        
-        ILockDrop(lockdrop).withdraw(); 
+        // ITokenManager(tokenmanager).transferReward(me, amount);
+        // ILockDrop(lockdrop).deposit{value: 0.0001 ether}();
+        ILockDrop(lockdrop).withdraw();
         
         // stop broadcast
         vm.stopBroadcast();

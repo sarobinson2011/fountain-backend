@@ -2,11 +2,18 @@
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import {TokenManager} from "../src/rewardtokenmanager.sol";
+
+
+interface TokenManagerInterface {
+    function transferReward(address _to, uint256 _amount) external;
+    function setRewardTokenAddress(address _rewardTokenAddress) external;
+}
 
 
 contract LockDrop {
     address public owner;
-    IERC20 public rewardTokens; // IReward == IERC20
+    address public tokenManagerAddress;
 
     struct TimedDeposit {
         uint256 amount;
@@ -15,13 +22,13 @@ contract LockDrop {
 
     mapping (address => TimedDeposit) public balances;   
 
-    event NewDeposit(address indexed _user, uint256 _amount);
-    event NewWithdraw(address indexed _user, uint256 _amount);
+    event NewDeposit(address indexed _user, uint256 _amount, uint256 _timestamp);
+    event NewWithdraw(address indexed _user, uint256 _amount, uint256 _timestamp);
     event RwdzTransferred(address indexed _user, uint256 _amount);
 
-    constructor() {
+    constructor(address _tokenmanager) {
         owner = msg.sender;
-        rewardTokens = IERC20(address(this));  // RWDZ tokens held in THIS contract
+        tokenManagerAddress = _tokenmanager;  // addres of the TokenManager contract
     }
 
     function deposit() external payable {
@@ -34,36 +41,37 @@ contract LockDrop {
                 timestamp: block.timestamp
             }
         );
-        emit NewDeposit(msg.sender, msg.value);
+        emit NewDeposit(msg.sender, msg.value, block.timestamp);
     } 
     
     function withdraw() external {
         require(balances[msg.sender].amount > 0, "You have no balance to withdraw...");
         require(block.timestamp >= balances[msg.sender].timestamp + 1 minutes, "Time lock not expired...");
  
-        uint256 reward = calculateReward(); //    <-- returns the reward value to transfer
+        uint256 reward = calculateReward();
  
         uint256 tempAmount = balances[msg.sender].amount;
         balances[msg.sender].amount = 0;
         balances[msg.sender].timestamp = 0;
                
-        // Transfer deposited Ether to the withdrawer                       <-- this WORKS !
+        // Transfer deposited Ether to the withdrawer                     
         (bool success, ) = payable(msg.sender).call{value: tempAmount}("");
         require(success, "Ether transfer failed");
-        emit NewWithdraw(msg.sender, tempAmount);
+        emit NewWithdraw(msg.sender, tempAmount, block.timestamp);
         tempAmount = 0;
 
-         // Transfer RWDZ tokens to the withdrawer                          <-- test this bit
-        // bool successRwdz = rewardTokens.transfer(msg.sender, reward);
-        // require(successRwdz, "RWDZ token transfer failed");
-        // emit RwdzTransferred(msg.sender, reward);
+        // Transfer the RWDZ tokens 
+        TokenManagerInterface tokenManager = TokenManagerInterface(tokenManagerAddress);
+        tokenManager.transferReward(msg.sender, reward); 
+    
         reward = 0;
+    
     }
 
     function calculateReward() internal pure returns (uint256) {
         // uint256 reward = balances[msg.sender].amount / 10;
-        uint256 reward = 100;
+        uint256 reward = 10 * (10**18);
         return reward;    
     }
-} 
+}
 

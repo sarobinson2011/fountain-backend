@@ -1,6 +1,6 @@
 # 1. TokenManager implementation        <-- done (✓, ×)
-    - Deploy TokenManager                                       ✓
-    - Deploy Reward                                             ✓
+    - deploy TokenManager                                       ✓
+    - deploy Reward                                             ✓
     - call TokenManager:transferReward(msg.sender, 100)         ✓ 
 
 # 2. LockDrop implementation            <-- done 
@@ -20,10 +20,14 @@
     - check it all works on Aurora Testnet                      ✓
 
 # 4. FrontEnd interface #2              <-- in progress...
-    - Learn how to display emitted events (in the browser)      ×       <-- HERE !!
-    - Display the address of the connected wallet               ×
-    - Learn how to control element(s) location on page          ×
-    - Use the emit event --> display event on the page          ×
+    - learn how to display emitted events (in the console)      ✓       
+    - display emitted events (on the page)                      ✓      
+    - display the address of the connected wallet               ✓
+    - learn how to control element(s) location on page          ✓
   
 # 5. Backend functionality              <-- ToDo
-    - Rewardz token calculation for the drop + implement        ×
+    - rewardz token calculation for the drop + implement        ×       <-- HERE !
+    - bug in the deposit/withdraw logic:                        ×
+        - funds left stuck if multiple deposits occur
+        - without a withdraw afterwards
+    
