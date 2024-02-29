@@ -13,11 +13,12 @@ contract Deploy is Script {
     function run() public {
         uint256 privateKey = vm.envUint("PRIVATE_KEY_0x");
         address account = vm.addr(privateKey);
-        uint256 amount = 10 * (10**18);
+        uint256 amount = 15 * (10**18);
         address me = 0xF8f8269488f73fab3935555FCDdD6035699deE25;
-        address tokenmanager =  0xE0aA665B625622b7df698B2B1410879A342569F2;
-        address reward =  0x7F58730990073Ca415EF52f845823810B4EF8d47;
-        address lockdrop =  0x7ffC9a29890E4B86B24560e112dC2Abd749E931f;
+        
+        address tokenmanager =   0x57187B0Ec2a688D86D713e567D36F2c40fe6537D;
+        address reward =         0xC1e775775f5489cFaa8Aad4D226E348b17A06403;
+        address lockdrop =       0x43B2cA0BCe07F68E77236cd2d9793f6769c0cd10;
 
         console.log("Account:", account);
         
@@ -33,8 +34,5 @@ contract Deploy is Script {
     }
 }
 
-// Arbitrum Sepolia
-// forge verify-contract --chain-id 421614 --num-of-optimizations 1000000 --watch --compiler-version v0.8.19+commit.4fc1097e 0x5912a392035116C62A40a400e3F54E4523227420 src/lockdrop.sol:LockDrop
 
-// forge verify-contract --chain-id 421614 --num-of-optimizations 1000000 --watch --compiler-version v0.8.22+commit.4fc1097e 0xD860631A3957656cE86E9227Ae1E6C54763EB757 src/simple.sol:SimpleToken --etherscan-api-key ${ARBISCAN_API_KEY} --verifier-url ${ARBITRUM_SEPOLIA_API}
 

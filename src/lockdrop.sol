@@ -10,7 +10,6 @@ interface TokenManagerInterface {
     function setRewardTokenAddress(address _rewardTokenAddress) external;
 }
 
-
 contract LockDrop {
     address public owner;
     address public tokenManagerAddress;
@@ -24,25 +23,31 @@ contract LockDrop {
 
     event NewDeposit(address indexed _user, uint256 _amount, uint256 _timestamp);
     event NewWithdraw(address indexed _user, uint256 _amount, uint256 _timestamp);
-    event RwdzTransferred(address indexed _user, uint256 _amount);
 
     constructor(address _tokenmanager) {
         owner = msg.sender;
-        tokenManagerAddress = _tokenmanager;  // addres of the TokenManager contract
+        tokenManagerAddress = _tokenmanager;
     }
 
     function deposit() external payable {
-
-        require(msg.value > 0, "deposit amount must be greater than zero"); 
-
+    require(msg.value > 0, "deposit amount must be greater than zero"); 
+    
+    if (balances[msg.sender].amount > 0) {
+        balances[msg.sender].amount += msg.value;
+    } else {
         balances[msg.sender] = TimedDeposit(
-            {
-                amount: msg.value, 
-                timestamp: block.timestamp
-            }
-        );
-        emit NewDeposit(msg.sender, msg.value, block.timestamp);
-    } 
+        {
+            amount: msg.value, 
+            timestamp: block.timestamp
+        });
+    }
+
+    // Reset timestamp upon every deposit to enforce full time lock
+    balances[msg.sender].timestamp = block.timestamp;                       // HERE <---
+
+    emit NewDeposit(msg.sender, msg.value, block.timestamp);
+    }    
+
     
     function withdraw() external {
         require(balances[msg.sender].amount > 0, "You have no balance to withdraw...");
@@ -63,9 +68,7 @@ contract LockDrop {
         // Transfer the RWDZ tokens 
         TokenManagerInterface tokenManager = TokenManagerInterface(tokenManagerAddress);
         tokenManager.transferReward(msg.sender, reward); 
-    
         reward = 0;
-    
     }
 
     function calculateReward() internal pure returns (uint256) {
@@ -74,4 +77,5 @@ contract LockDrop {
         return reward;    
     }
 }
+
 

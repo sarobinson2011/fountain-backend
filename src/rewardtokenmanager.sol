@@ -8,6 +8,7 @@ contract TokenManager {
 
     address public rewardTokenAddress;
     address public owner;
+    event RewardTransferred(address indexed _user, uint256 _amount);
 
     constructor() {
         owner = msg.sender;
@@ -30,6 +31,8 @@ contract TokenManager {
     function transferReward(address _to, uint _amount) public addressIsNotZero {
         (bool success, ) = rewardTokenAddress.call(abi.encodeWithSignature("transferReward(address,uint256)",_to,_amount));
         require(success, "RWDZ token transfer failed...");
+        emit RewardTransferred(msg.sender, _amount);              
+
     }
 }
 

@@ -21,13 +21,12 @@
 
 # 4. FrontEnd interface #2              <-- in progress...
     - learn how to display emitted events (in the console)      ✓       
-    - display emitted events (on the page)                      ✓      
+    - display emitted events (on the page)                      ?      <-- HERE !      
     - display the address of the connected wallet               ✓
     - learn how to control element(s) location on page          ✓
   
-# 5. Backend functionality              <-- ToDo
-    - rewardz token calculation for the drop + implement        ×       <-- HERE !
-    - bug in the deposit/withdraw logic:                        ×
-        - funds left stuck if multiple deposits occur
-        - without a withdraw afterwards
-    
+# 5. Backend functionality              <-- in progress...
+    - emit and detect RewardTransferred event                   ?      <-- HERE !
+    - rewardz token calculation for the drop + implement        ×       
+    - bug in the deposit/withdraw logic                         ✓
+
