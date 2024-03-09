@@ -16,8 +16,8 @@ contract Deploy is Script {
         address account = vm.addr(privateKey);
         uint256 supply = 1_000 * (10 ** 18);
 
-        address tokenmanagerAddress =   0x17Cc05C02b35CF3d79d2fCedf1Ad15d391442570;
-        address rewardAddress =   0x52bbcDBEC990b39d2fb5B7d75B956c439e0fDe4F;
+        address tokenmanagerAddress =   0xdD559d1615BBb1b53cecf2026f0c355c6D760Dbb;
+        address rewardAddress =   0x27346f96D479C15889eCB07CeCbFeaD536E9AF52;
 
         console.log("Account:", account);
 

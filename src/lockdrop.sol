@@ -30,22 +30,21 @@ contract LockDrop {
     }
 
     function deposit() external payable {
-    require(msg.value > 0, "deposit amount must be greater than zero"); 
-    
-    if (balances[msg.sender].amount > 0) {
-        balances[msg.sender].amount += msg.value;
-    } else {
-        balances[msg.sender] = TimedDeposit(
-        {
-            amount: msg.value, 
-            timestamp: block.timestamp
-        });
-    }
+        require(msg.value > 0, "deposit amount must be greater than zero"); 
+        
+        if (balances[msg.sender].amount > 0) {
+            balances[msg.sender].amount += msg.value;
+        } else {
+            balances[msg.sender] = TimedDeposit(
+            {
+                amount: msg.value, 
+                timestamp: block.timestamp
+            });
+        }
 
-    // Reset timestamp upon every deposit to enforce full time lock
-    balances[msg.sender].timestamp = block.timestamp;                       // HERE <---
-
-    emit NewDeposit(msg.sender, msg.value, block.timestamp);
+        // Reset timestamp upon every deposit to enforce full time lock
+        balances[msg.sender].timestamp = block.timestamp;                   
+        emit NewDeposit(msg.sender, msg.value, block.timestamp);
     }    
 
     

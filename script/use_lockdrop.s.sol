@@ -16,9 +16,9 @@ contract Deploy is Script {
         uint256 amount = 15 * (10**18);
         address me = 0xF8f8269488f73fab3935555FCDdD6035699deE25;
         
-        address tokenmanager =   0x57187B0Ec2a688D86D713e567D36F2c40fe6537D;
-        address reward =         0xC1e775775f5489cFaa8Aad4D226E348b17A06403;
-        address lockdrop =       0x43B2cA0BCe07F68E77236cd2d9793f6769c0cd10;
+        address tokenmanager =   0xdD559d1615BBb1b53cecf2026f0c355c6D760Dbb;
+        address reward =         0x27346f96D479C15889eCB07CeCbFeaD536E9AF52;
+        address lockdrop =       0xAa01BfbB39aFC88F35D18B8ACBa6c09971646923;
 
         console.log("Account:", account);
         
