@@ -17,7 +17,7 @@ contract Deploy is Script {
         address me = 0xF8f8269488f73fab3935555FCDdD6035699deE25;
         
         address tokenmanager =   0xdD559d1615BBb1b53cecf2026f0c355c6D760Dbb;
-        address reward =         0x27346f96D479C15889eCB07CeCbFeaD536E9AF52;
+        // address reward =         0x27346f96D479C15889eCB07CeCbFeaD536E9AF52;
         address lockdrop =       0xAa01BfbB39aFC88F35D18B8ACBa6c09971646923;
 
         console.log("Account:", account);
@@ -25,8 +25,8 @@ contract Deploy is Script {
         // start broadcast
         vm.startBroadcast(privateKey);
 
-        // ITokenManager(tokenmanager).transferReward(me, amount);
-        // ILockDrop(lockdrop).deposit{value: 0.0001 ether}();
+        ITokenManager(tokenmanager).transferReward(me, amount);
+        ILockDrop(lockdrop).deposit{value: 0.0001 ether}();
         ILockDrop(lockdrop).withdraw();
         
         // stop broadcast

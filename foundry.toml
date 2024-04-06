@@ -23,3 +23,11 @@ aurora-test = { key = "QWERTY", url = "${AURORA_TEST_RPC_URL}" }
 
 
 # forge script script/deploy_lockdrop.s.sol:Deploy --rpc-url ${ARBITRUM_SEPOLIA_RPC_URL} --private-key ${PRIVATE_KEY} --broadcast --verify --etherscan-api-key ${ARBITRUM_SEPOLIA_API} -vvvv
+
+
+# Consuming Contract (consumer) == VRFv2Consumer
+
+#   1. Deploy consumer (pass the Chainlink 'subscriptionId' as a constructor argument)  
+#   2. Fund the consumer contract with LINK
+#   2. Call fulfillRandomWords()
+#   3. Confirm the event is emitted on etherscan

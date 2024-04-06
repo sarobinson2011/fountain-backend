@@ -12,7 +12,6 @@
   
 # 3. FrontEnd interface #1              <-- done
     - connect wallet button                                     ✓
-    - deposit button (with hard-coded 0.01 ether)               ✓
     - withdraw button                                           ✓
     - deposit button (with user input amount)                   ✓   
     - deposit button (with amount as an argument + check)       ✓
@@ -30,4 +29,5 @@
     - bug in the deposit/withdraw logic                         ✓
     - rewardz token calculation for the drop + implement        ×       
       - use Chainlink to inject randomness to the drop          ×
+    - logic to check for no RWDZ left to transfer               ×
 

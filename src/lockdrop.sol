@@ -3,6 +3,7 @@ pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {TokenManager} from "../src/rewardtokenmanager.sol";
+import "../src/randomNumberGenerator.sol";
 
 
 interface TokenManagerInterface {
@@ -13,6 +14,7 @@ interface TokenManagerInterface {
 contract LockDrop {
     address public owner;
     address public tokenManagerAddress;
+    VRFv2Consumer public randomNumberGenerator; // instance of VRFv2Consumer contract
 
     struct TimedDeposit {
         uint256 amount;
@@ -24,9 +26,10 @@ contract LockDrop {
     event NewDeposit(address indexed _user, uint256 _amount, uint256 _timestamp);
     event NewWithdraw(address indexed _user, uint256 _amount, uint256 _timestamp);
 
-    constructor(address _tokenmanager) {
+    constructor(address _tokenmanager, address _randomNumberGenerator) {
         owner = msg.sender;
         tokenManagerAddress = _tokenmanager;
+        randomNumberGenerator = VRFv2Consumer(_randomNumberGenerator);
     }
 
     function deposit() external payable {
@@ -46,13 +49,12 @@ contract LockDrop {
         balances[msg.sender].timestamp = block.timestamp;                   
         emit NewDeposit(msg.sender, msg.value, block.timestamp);
     }    
-
     
     function withdraw() external {
         require(balances[msg.sender].amount > 0, "You have no balance to withdraw...");
         require(block.timestamp >= balances[msg.sender].timestamp + 1 minutes, "Time lock not expired...");
  
-        uint256 reward = calculateReward();
+        uint256 reward = calculateReward(0);               // REMOVE the '0'  <--  LOOK !!
  
         uint256 tempAmount = balances[msg.sender].amount;
         balances[msg.sender].amount = 0;
@@ -70,11 +72,12 @@ contract LockDrop {
         reward = 0;
     }
 
-    function calculateReward() internal pure returns (uint256) {
-        // uint256 reward = balances[msg.sender].amount / 10;
-        uint256 reward = 10 * (10**18);
-        return reward;    
+    function calculateReward(uint256 randomness) internal pure returns(uint256) {
+        uint256 reward = randomness;                       // placeholder for assigning the randomness
+        return reward;
     }
 }
+
+// event RequestFulfilled(uint256 requestId, uint256[] randomWords);    //  len(randomWords) = 2
 
 
