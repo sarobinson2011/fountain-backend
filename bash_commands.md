@@ -12,6 +12,13 @@
 
 
 
+
+// << THAT >> command =  source.env
+
+
+
+
+
 // 1:  Arbitrum Sepolia
 // forge verify-contract --chain-id 421614 --num-of-optimizations 1000000 --watch --compiler-version v0.8.19+commit.4fc1097e 0x5912a392035116C62A40a400e3F54E4523227420 src/lockdrop.sol:LockDrop
 
@@ -24,7 +31,7 @@
 
 
 // WORKS - Aurora 
-
+forge script script/deploy_vrfconsumer.s.sol:Deploy --rpc-url ${SEPOLIA_RPC_URL} --private-key ${PRIVATE_KEY}--broadcast --verify -vv --etherscan-api-key ${ETHERSCAN_API_KEY}
 
 // forge script script/deploy_lockdrop.s.sol:Deploy --rpc-url ${AURORA_TEST_RPC_URL} --broadcast --legacy --private-key ${PRIVATE_KEY}
 

@@ -27,7 +27,7 @@ aurora-test = { key = "QWERTY", url = "${AURORA_TEST_RPC_URL}" }
 
 # Consuming Contract (consumer) == VRFv2Consumer
 
-#   1. Deploy consumer (pass the Chainlink 'subscriptionId' as a constructor argument)  
-#   2. Fund the consumer contract with LINK
-#   2. Call fulfillRandomWords()
-#   3. Confirm the event is emitted on etherscan
+#   1. Deploy consumer (pass the Chainlink 'subscriptionId' as a constructor argument)  - tick
+#   2. Fund the consumer contract with LINK                                             - tick
+#   2. Call fulfillRandomWords()                                                        - cross
+#   3. Confirm the event is emitted on etherscan                                        - cross
