@@ -21,7 +21,7 @@ contract EventListener {
 
 
     // Verify whether chainlink has returned random words
-    function RandomValues()
+    function GetRequestStatus()
         public
         view
         returns (bool fulfilled, uint256[] memory randomWords)
@@ -38,15 +38,9 @@ contract EventListener {
         //    uint256 requestID = getRequestId();
         uint256 requestID = vrfv2consumer.lastRequestId();
         // Get random words array
-        (, uint256[] memory randomWords) = vrfv2consumer.getRequestStatus(
-            requestID
-        );
+        (, uint256[] memory randomWords) = vrfv2consumer.getRequestStatus(requestID);
 
         // return first random word
         return randomWords[0];
     }
-
-
-
 }
-
