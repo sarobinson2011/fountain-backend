@@ -17,13 +17,12 @@ contract VRFv2Consumer is VRFConsumerBaseV2, ConfirmedOwner {
     event RequestFulfilled(uint256 requestId, uint256[] randomWords);
 
     struct RequestStatus {
-        bool fulfilled;         // whether the request has been successfully fulfilled
-        bool exists;            // whether a requestId exists
+        bool fulfilled; // whether the request has been successfully fulfilled
+        bool exists; // whether a requestId exists
         uint256[] randomWords;
     }
-
     mapping(uint256 => RequestStatus)
-        public s_requests;      /* requestId --> requestStatus */
+        public s_requests; /* requestId --> requestStatus */
     VRFCoordinatorV2Interface COORDINATOR;
 
     // Your subscription ID.
@@ -52,7 +51,7 @@ contract VRFv2Consumer is VRFConsumerBaseV2, ConfirmedOwner {
 
     // For this example, retrieve 2 random values in one request.
     // Cannot exceed VRFCoordinatorV2.MAX_NUM_WORDS.
-    uint32 numWords = 2;
+    uint32 numWords = 1;
 
     /**
      * HARDCODED FOR SEPOLIA
@@ -94,7 +93,7 @@ contract VRFv2Consumer is VRFConsumerBaseV2, ConfirmedOwner {
         emit RequestSent(requestId, numWords);
         return requestId;
     }
- 
+
     function fulfillRandomWords(
         uint256 _requestId,
         uint256[] memory _randomWords
@@ -113,6 +112,3 @@ contract VRFv2Consumer is VRFConsumerBaseV2, ConfirmedOwner {
         return (request.fulfilled, request.randomWords);
     }
 }
-
-
-

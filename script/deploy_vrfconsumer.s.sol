@@ -11,9 +11,9 @@ contract Deploy is Script {
     function run() public {
         uint256 privateKey = vm.envUint("PRIVATE_KEY_0x");
         address account = vm.addr(privateKey);
-        uint256 supply = 1_000 * (10 ** 18);
-        uint64 subscriptionId = 10258;              // Chainlink Subscription ID
-        address vrfConsumer = 0x90D01FB7F39535aBf700f106a772e012D9CCF2F6;
+        // uint256 supply = 1_000 * (10 ** 18);
+        uint64 subscriptionId = 10258;                                      // Chainlink Subscription ID
+        address vrfConsumer = 0xFcb58c9B25B53eDD3f7c230C98C062Eb8a89fd63;
 
         console.log("Account:", account);
 
@@ -21,15 +21,17 @@ contract Deploy is Script {
         vm.startBroadcast(privateKey);
 
         // deploy VRFv2Consumer contract
-        // VRFv2Consumer vrfv2consumer = new VRFv2Consumer(subscriptionId);
+        // new VRFv2Consumer(subscriptionId);
 
         // call requestRandomWords()
-        IVRFv2Consumer(vrfConsumer).requestRandomWords();
+        IVRFv2Consumer(vrfConsumer).requestRandomWords();      // <-- this doesn't work yet!!  
 
         vm.stopBroadcast();
     }
 }
 
-
+// deploy
 // forge script script/deploy_vrfconsumer.s.sol:Deploy --rpc-url ${SEPOLIA_RPC_URL} --private-key ${PRIVATE_KEY} --broadcast --verify -vv --etherscan-api-key ${ETHERSCAN_API_KEY}
 
+// use
+// forge script script/deploy_vrfconsumer.s.sol:Deploy --rpc-url ${SEPOLIA_RPC_URL} --private-key ${PRIVATE_KEY} --broadcast
