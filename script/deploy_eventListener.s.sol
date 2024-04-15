@@ -3,8 +3,8 @@ pragma solidity ^0.8.0;
 
 import "forge-std/console.sol";
 import {Script, console2} from "forge-std/Script.sol";
-import {VRFv2Consumer} from "../src/randomNumberGenerator.sol";  
-import {IVRFv2Consumer} from "../src/I.vrfv2consumer.sol";
+import {EventListener} from "../src/eventInterface.sol";
+import {IEventListener} from "../src/I.eventInterface.sol";
 
 
 contract Deploy is Script {
@@ -20,11 +20,11 @@ contract Deploy is Script {
         // start broadcast
         vm.startBroadcast(privateKey);
 
-        // deploy VRFv2Consumer contract
-        // new VRFv2Consumer(subscriptionId);
+        // deploy EventListener contract - passing the vrfconsumer to the constructor
+        // new EventListener(vrfConsumer);
 
         // call requestRandomWords()
-        IVRFv2Consumer(vrfConsumer).requestRandomWords();   
+        IEventListener(vrfConsumer).requestRandomWords();   
 
         vm.stopBroadcast();
     }
@@ -35,4 +35,6 @@ contract Deploy is Script {
 
 // use
 // forge script script/deploy_vrfconsumer.s.sol:Deploy --rpc-url ${SEPOLIA_RPC_URL} --private-key ${PRIVATE_KEY} --broadcast
+
+// forge script script/deploy_eventListener.s.sol:Deploy --rpc-url ${SEPOLIA_RPC_URL} --private-key ${PRIVATE_KEY} --broadcast --verify -vv --etherscan-api-key ${ETHERSCAN_API_KEY}
 
