@@ -21,7 +21,7 @@ contract Deploy is Script {
         vm.startBroadcast(privateKey);
 
         // deploy VRFv2Consumer contract
-        // new VRFv2Consumer(subscriptionId);
+        new VRFv2Consumer(subscriptionId);
 
         // call requestRandomWords()
         IVRFv2Consumer(vrfConsumer).requestRandomWords();   
