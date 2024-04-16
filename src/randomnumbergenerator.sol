@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import {VRFv2Consumer} from "../src/randomNumberGenerator.sol";
+import {VRFv2Consumer} from "../src/vrfv2consumer.sol";
 
 
-contract EventListener {
+contract RandomNumberGenerator {
     VRFv2Consumer public vrfv2consumer;
 
     constructor(address _vrfConsumerAddress) {
@@ -39,10 +39,6 @@ contract EventListener {
 }
 
 
-// 1. deploy EventListener(VRFCONSUMER_ADDRESS)                                     - DONE
-// 2. call requestRandomWords()                                                     - not
-// 3. call getRequestStatus() --> require(fulfilled, "waiting for chainlink") ?     - not
-// 4. call randonNumberGenerator()                                                  - not
-// 5. xyz
+
 
 

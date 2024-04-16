@@ -3,7 +3,7 @@ pragma solidity ^0.8.0;
 
 import "forge-std/console.sol";
 import {Script, console2} from "forge-std/Script.sol";
-import {VRFv2Consumer} from "../src/randomNumberGenerator.sol";  
+import {VRFv2Consumer} from "../src/vrfv2consumer.sol";  
 import {IVRFv2Consumer} from "../src/I.vrfv2consumer.sol";
 
 
