@@ -11,8 +11,8 @@ contract Deploy is Script {
     function run() public {
         uint256 privateKey = vm.envUint("PRIVATE_KEY_0x");
         address account = vm.addr(privateKey);
-        address vrfConsumer = 0xFcb58c9B25B53eDD3f7c230C98C062Eb8a89fd63;
-        address randomnumbergenerator = 0x99e7233Bb11224e18D17bD7595Ad9B45862490FC;   
+        address vrfConsumer = 0x6B96bD3b4E1700FCFa3A6b3ce8cd6312933b7068;
+        // address randomnumbergenerator = 0x99e7233Bb11224e18D17bD7595Ad9B45862490FC;   
 
         console.log("Account:", account);
 
@@ -20,7 +20,7 @@ contract Deploy is Script {
         vm.startBroadcast(privateKey);
 
         // 0b.  deploy RandomNumberGenerator contract 
-        // new RandomNumberGenerator(vrfConsumer);
+        new RandomNumberGenerator(vrfConsumer);
 
         // 1.   call requestRandomWords()
         // IRandomNumberGenerator(vrfConsumer).requestRandomWords();   
@@ -30,9 +30,9 @@ contract Deploy is Script {
         // console.log("Request fulfilled: ", fulfilled);
         // console.log("Random word: ", randomWords[0]);
 
-        // 3.   call randonNumberGenerator()
-        uint256 randomWord = IRandomNumberGenerator(randomnumbergenerator).randomNumGenerator();
-        console.log("Random number (VRF): ", randomWord);
+        // // 3.   call randonNumberGenerator()
+        // uint256 randomWord = IRandomNumberGenerator(randomnumbergenerator).randomNumGenerator();
+        // console.log("Random number (VRF): ", randomWord);
 
         vm.stopBroadcast();
     }

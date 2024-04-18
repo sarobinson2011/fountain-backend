@@ -56,7 +56,7 @@ contract VRFv2Consumer is VRFConsumerBaseV2, ConfirmedOwner {
 
     // For this example, retrieve 2 random values in one request.
     // Cannot exceed VRFCoordinatorV2.MAX_NUM_WORDS.
-    uint32 numWords = 1;
+    uint32 numWords = 2;
 
     /**
      * HARDCODED FOR SEPOLIA
@@ -75,13 +75,13 @@ contract VRFv2Consumer is VRFConsumerBaseV2, ConfirmedOwner {
     }
 
     
-    modifier onlyAuthorized() {
-        require(
-            msg.sender == owner() || msg.sender == address(randomnumbergenerator),
-            "Not authorized"
-        );
-        _;
-    }
+    // modifier onlyAuthorized() {
+    //     require(
+    //         msg.sender == owner() || msg.sender == address(randomnumbergenerator),
+    //         "Not authorized"
+    //     );
+    //     _;
+    // }
 
 
     // Assumes the subscription is funded sufficiently.

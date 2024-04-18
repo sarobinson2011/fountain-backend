@@ -75,7 +75,7 @@ contract LockDrop {
         reward = 0;
     }
 
-    function calculateReward() internal  returns(uint256) {
+    function calculateReward() internal returns(uint256) {
         // reward can hold values 0-255
         uint8 reward = 0;
 
@@ -87,7 +87,6 @@ contract LockDrop {
         
         // use the return value to generate a number 1-20
         reward = uint8(randomWord % 20) + 1;
-        
         return reward;
     }
 }

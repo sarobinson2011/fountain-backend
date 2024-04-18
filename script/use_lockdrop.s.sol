@@ -14,11 +14,7 @@ contract Deploy is Script {
         uint256 privateKey = vm.envUint("PRIVATE_KEY_0x");
         address account = vm.addr(privateKey);
         // uint256 amount = 15 * (10**18);
-        
-        // address tokenmanager = 0xdD559d1615BBb1b53cecf2026f0c355c6D760Dbb;
-        // address reward = 0x27346f96D479C15889eCB07CeCbFeaD536E9AF52;
-        // address lockdrop = 0xAa01BfbB39aFC88F35D18B8ACBa6c09971646923;     <-- OLD
-        address lockdrop =  0xB94cef0886aB7F99cF3ccb08c78a66BB71932297 ;
+        address lockdrop =  address(0); //0xB94cef0886aB7F99cF3ccb08c78a66BB71932297 ;
 
         console.log("Account:", account);
         
@@ -37,10 +33,12 @@ contract Deploy is Script {
 }   
 
 
-// 0a. deploy VRFv2Consumer contract
-// 0b. deploy RandomNumberGenerator(VRFv2Consumer)
-// 1. IRandomNumberGenerator.requestRandomWords()                                                    
-// 2. (bool fulfilled, uint256[] memory randomWords) = IRandomNumberGenerator.getRequestStatus()     
-// 3. uint256 randomWord = RandomNumberGenerator.randonNumberGenerator()                             
-// 4. console.log("Random number (VRF): ", randomWord); 
+// call LockDrop.withdraw()
+
+    // withdraw() steps
+    // 5. IRandomNumberGenerator.requestRandomWords()                                                    
+    // 6. (bool fulfilled, uint256[] memory randomWords) = IRandomNumberGenerator.getRequestStatus()     
+    // 7. uint256 randomWord = RandomNumberGenerator.randonNumberGenerator()                            
+// 8. console.log("Random number (VRF): ", randomWords[0]); 
+
 

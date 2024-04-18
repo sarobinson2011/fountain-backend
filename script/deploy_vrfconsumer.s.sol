@@ -13,7 +13,7 @@ contract Deploy is Script {
         address account = vm.addr(privateKey);
         // uint256 supply = 1_000 * (10 ** 18);
         uint64 subscriptionId = 10258;                                      // Chainlink Subscription ID
-        address vrfConsumer = 0xFcb58c9B25B53eDD3f7c230C98C062Eb8a89fd63;
+        // address vrfConsumer = 0xFcb58c9B25B53eDD3f7c230C98C062Eb8a89fd63;
 
         console.log("Account:", account);
 
@@ -24,7 +24,7 @@ contract Deploy is Script {
         new VRFv2Consumer(subscriptionId);
 
         // call requestRandomWords()
-        IVRFv2Consumer(vrfConsumer).requestRandomWords();   
+        // IVRFv2Consumer(vrfConsumer).requestRandomWords();   
 
         vm.stopBroadcast();
     }
