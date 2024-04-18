@@ -12,7 +12,7 @@ contract Deploy is Script {
         uint256 privateKey = vm.envUint("PRIVATE_KEY_0x");
         address account = vm.addr(privateKey);
         address vrfConsumer = 0xFcb58c9B25B53eDD3f7c230C98C062Eb8a89fd63;
-        address randomnumbergenerator = 0x99e7233Bb11224e18D17bD7595Ad9B45862490FC;      // is this needed?                  
+        address randomnumbergenerator = 0x99e7233Bb11224e18D17bD7595Ad9B45862490FC;   
 
         console.log("Account:", account);
 
@@ -36,22 +36,11 @@ contract Deploy is Script {
 
         vm.stopBroadcast();
     }
-}
+} 
 
-// 0a. deploy VRFv2Consumer contract                                                                    - Pre-DONE
-// 0b. deploy RandomNumberGenerator(VRFv2Consumer)                                                      - DONE
+// 53536293154676140569958563196662922688202871610704771088399798310698045435977     //  <-- the random number output
 
-// 1. IRandomNumberGenerator.requestRandomWords()                                                       - X
-
-// 2. (bool fulfilled, uint256[] memory randomWords) = IRandomNumberGenerator.getRequestStatus()        - X
-
-// 3. uint256 randomWord = RandomNumberGenerator.randonNumberGenerator()                                - X
-
-// 4. console.log("Random number (VRF): ", randomWord);                                                 - X
-
-
-
-
+                                    
 
 // deploy
 // forge script script/deploy_vrfconsumer.s.sol:Deploy --rpc-url ${SEPOLIA_RPC_URL} --private-key ${PRIVATE_KEY} --broadcast --verify -vv --etherscan-api-key ${ETHERSCAN_API_KEY}

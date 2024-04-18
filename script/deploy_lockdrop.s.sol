@@ -18,6 +18,8 @@ contract Deploy is Script {
 
         address tokenmanagerAddress =   0xdD559d1615BBb1b53cecf2026f0c355c6D760Dbb;
         address rewardAddress =   0x27346f96D479C15889eCB07CeCbFeaD536E9AF52;
+        address vrfConsumer = 0xFcb58c9B25B53eDD3f7c230C98C062Eb8a89fd63;
+        address randomnumbergenerator = 0x99e7233Bb11224e18D17bD7595Ad9B45862490FC; 
 
         console.log("Account:", account);
 
@@ -32,10 +34,10 @@ contract Deploy is Script {
         
         // set the Reward token address in TokenManager
         // ITokenManager(address(tokenmanager)).setRewardTokenAddress(address(reward));
-        ITokenManager(tokenmanagerAddress).setRewardTokenAddress(rewardAddress);
+        // ITokenManager(tokenmanagerAddress).setRewardTokenAddress(rewardAddress);
         
         // deploy lockdrop
-        // new LockDrop(address(tokenmanager));
+        new LockDrop(tokenmanagerAddress, vrfConsumer, randomnumbergenerator);
 
         // stop broadcast
         vm.stopBroadcast();

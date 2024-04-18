@@ -5,6 +5,8 @@ pragma solidity ^0.8.7;
 import {VRFCoordinatorV2Interface} from "@chainlink/interfaces/VRFCoordinatorV2Interface.sol";
 import {VRFConsumerBaseV2} from "@chainlink/vrf/VRFConsumerBaseV2.sol";
 import {ConfirmedOwner} from "@chainlink/shared/access/ConfirmedOwner.sol";
+import {RandomNumberGenerator} from "../src/randomnumbergenerator.sol";
+
 
 /*
     Chainlink VRF:
@@ -24,6 +26,9 @@ contract VRFv2Consumer is VRFConsumerBaseV2, ConfirmedOwner {
     mapping(uint256 => RequestStatus)
         public s_requests; /* requestId --> requestStatus */
     VRFCoordinatorV2Interface COORDINATOR;
+
+    // used in the 'onlyAuthorized' modifier
+    RandomNumberGenerator public randomnumbergenerator;
 
     // Your subscription ID.
     uint64 s_subscriptionId;
@@ -69,10 +74,20 @@ contract VRFv2Consumer is VRFConsumerBaseV2, ConfirmedOwner {
         s_subscriptionId = subscriptionId;
     }
 
+    
+    modifier onlyAuthorized() {
+        require(
+            msg.sender == owner() || msg.sender == address(randomnumbergenerator),
+            "Not authorized"
+        );
+        _;
+    }
+
+
     // Assumes the subscription is funded sufficiently.
     function requestRandomWords()
         external
-        onlyOwner
+        onlyOwner   
         returns (uint256 requestId)
     {
         // Will revert if subscription is not set and funded.
@@ -111,4 +126,5 @@ contract VRFv2Consumer is VRFConsumerBaseV2, ConfirmedOwner {
         RequestStatus memory request = s_requests[_requestId];
         return (request.fulfilled, request.randomWords);
     }
+
 }
