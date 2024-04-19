@@ -12,8 +12,8 @@ contract Deploy is Script {
         uint256 privateKey = vm.envUint("PRIVATE_KEY_0x");
         address account = vm.addr(privateKey);
         // uint256 supply = 1_000 * (10 ** 18);
-        uint64 subscriptionId = 10258;                                      // Chainlink Subscription ID
-        // address vrfConsumer = 0xFcb58c9B25B53eDD3f7c230C98C062Eb8a89fd63;
+        uint64 subscriptionId = 10258;                                              // Chainlink Subscription ID
+        address randomnumbergenerator = 0x7f7729Bfd9EdBff801640E8047edfF8E3D328eBA;
 
         console.log("Account:", account);
 
@@ -21,7 +21,7 @@ contract Deploy is Script {
         vm.startBroadcast(privateKey);
 
         // deploy VRFv2Consumer contract
-        new VRFv2Consumer(subscriptionId);
+        new VRFv2Consumer(subscriptionId, randomnumbergenerator);
 
         // call requestRandomWords()
         // IVRFv2Consumer(vrfConsumer).requestRandomWords();   

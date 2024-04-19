@@ -11,8 +11,8 @@ contract Deploy is Script {
     function run() public {
         uint256 privateKey = vm.envUint("PRIVATE_KEY_0x");
         address account = vm.addr(privateKey);
-        address vrfConsumer = 0x6B96bD3b4E1700FCFa3A6b3ce8cd6312933b7068;
-        // address randomnumbergenerator = 0x99e7233Bb11224e18D17bD7595Ad9B45862490FC;   
+        // address vrfConsumer = ;
+        // address randomnumbergenerator = ;   
 
         console.log("Account:", account);
 
@@ -20,7 +20,7 @@ contract Deploy is Script {
         vm.startBroadcast(privateKey);
 
         // 0b.  deploy RandomNumberGenerator contract 
-        new RandomNumberGenerator(vrfConsumer);
+        new RandomNumberGenerator();
 
         // 1.   call requestRandomWords()
         // IRandomNumberGenerator(vrfConsumer).requestRandomWords();   
@@ -37,8 +37,6 @@ contract Deploy is Script {
         vm.stopBroadcast();
     }
 } 
-
-// 53536293154676140569958563196662922688202871610704771088399798310698045435977     //  <-- the random number output
 
                                     
 

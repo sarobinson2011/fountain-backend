@@ -14,13 +14,12 @@ contract Deploy is Script {
     function run() public {
         uint256 privateKey = vm.envUint("PRIVATE_KEY_0x");
         address account = vm.addr(privateKey);
-        uint256 supply = 1_000 * (10 ** 18);
+        // uint256 supply = 1_000 * (10 ** 18);
 
-        address vrfConsumer = 0x6B96bD3b4E1700FCFa3A6b3ce8cd6312933b7068;
-        address randomnumbergenerator = 0xA78807ff0471Df36663f1E34c3Ce4f61b2928445; 
-        // address tokenmanagerAddress =   0xdD559d1615BBb1b53cecf2026f0c355c6D760Dbb;
-
-        address rewardAddress =   0x27346f96D479C15889eCB07CeCbFeaD536E9AF52;
+        address vrfConsumer = 0xB53da4a1c4f1722ab896e9df2b8613eF6d850e24;
+        address randomnumbergenerator = 0x7f7729Bfd9EdBff801640E8047edfF8E3D328eBA; 
+        address tokenmanagerAddress =   0xcBC9DFEC7A3E052a9D15DaA19e266416f09976E2;
+        // address rewardAddress =   0x27346f96D479C15889eCB07CeCbFeaD536E9AF52;
 
         console.log("Account:", account);
 
@@ -28,7 +27,7 @@ contract Deploy is Script {
         vm.startBroadcast(privateKey);
 
         // deploy reward token manager
-        TokenManager tokenmanager = new TokenManager();
+        // TokenManager tokenmanager = new TokenManager();
 
         // deploy the RWDZ token contract
         // Reward reward = new Reward("Rewardz", "RWDZ", address(tokenmanager), supply);
@@ -38,7 +37,7 @@ contract Deploy is Script {
         // ITokenManager(tokenmanagerAddress).setRewardTokenAddress(rewardAddress);
         
         // deploy lockdrop
-        // new LockDrop(tokenmanagerAddress, vrfConsumer, randomnumbergenerator);
+        new LockDrop(tokenmanagerAddress, vrfConsumer, randomnumbergenerator);
 
         // stop broadcast
         vm.stopBroadcast();
@@ -46,11 +45,3 @@ contract Deploy is Script {
 }
 
 
-
-
-
-// 1. deploy VRFv2Consumer contract (uint subscriptionId)                                  - yes
-// 2. deploy RandomNumberGenerator (address VRFv2Consumer)                                 - yes
-// 3. deploy TokenManager contract                                                         - no
-// 4. deploy LockDrop (address tokenmanager, address vrfconsumer, randomnumbergenerator)   - no
-// 5. Reward = reward;                                                                     - ?

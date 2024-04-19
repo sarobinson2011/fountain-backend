@@ -23,10 +23,3 @@ aurora-test = { key = "QWERTY", url = "${AURORA_TEST_RPC_URL}" }
 
 
 # forge script script/deploy_lockdrop.s.sol:Deploy --rpc-url ${ARBITRUM_SEPOLIA_RPC_URL} --private-key ${PRIVATE_KEY} --broadcast --verify --etherscan-api-key ${ARBITRUM_SEPOLIA_API} -vvvv
-
-
-# VRFv2Consumer: 0xFcb58c9B25B53eDD3f7c230C98C062Eb8a89fd63
-# RandomNumberGenerator: 0x99e7233Bb11224e18D17bD7595Ad9B45862490FC
-# TokenManager: 0xdD559d1615BBb1b53cecf2026f0c355c6D760Dbb              (initial supply 660 RWDZ)
-# Reward: 0x27346f96D479C15889eCB07CeCbFeaD536E9AF52
-# LockDrop: 0xB94cef0886aB7F99cF3ccb08c78a66BB71932297

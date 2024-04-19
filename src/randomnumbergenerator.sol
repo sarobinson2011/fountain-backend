@@ -8,9 +8,19 @@ interface IVRFv2Consumer {
 }
 
 contract RandomNumberGenerator {
+    address public owner;
     address public vrfv2consumer;
 
-    constructor(address _vrfConsumerAddress) {
+    constructor() {
+        owner = msg.sender;
+    }
+
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Not authorized");
+        _;
+    }
+
+    function setVrfConsumer(address _vrfConsumerAddress) public onlyOwner {
         vrfv2consumer = _vrfConsumerAddress;
     }
 

@@ -27,9 +27,6 @@ contract VRFv2Consumer is VRFConsumerBaseV2, ConfirmedOwner {
         public s_requests; /* requestId --> requestStatus */
     VRFCoordinatorV2Interface COORDINATOR;
 
-    // used in the 'onlyAuthorized' modifier
-    RandomNumberGenerator public randomnumbergenerator;
-
     // Your subscription ID.
     uint64 s_subscriptionId;
 
@@ -62,8 +59,14 @@ contract VRFv2Consumer is VRFConsumerBaseV2, ConfirmedOwner {
      * HARDCODED FOR SEPOLIA
      * COORDINATOR: 0x8103B0A8A00be2DDC778e6e7eaa21791Cd364625
      */
+
+    // used in the 'onlyAuthorized' modifier - allows the RNG to access the randomness
+    address public randomnumbergenerator;
+
+
     constructor(
-        uint64 subscriptionId
+        uint64 subscriptionId,
+        address _randomnumbergenerator
     )
         VRFConsumerBaseV2(0x8103B0A8A00be2DDC778e6e7eaa21791Cd364625)
         ConfirmedOwner(msg.sender)
@@ -72,22 +75,23 @@ contract VRFv2Consumer is VRFConsumerBaseV2, ConfirmedOwner {
             0x8103B0A8A00be2DDC778e6e7eaa21791Cd364625
         );
         s_subscriptionId = subscriptionId;
+        randomnumbergenerator = _randomnumbergenerator;
     }
 
     
-    // modifier onlyAuthorized() {
-    //     require(
-    //         msg.sender == owner() || msg.sender == address(randomnumbergenerator),
-    //         "Not authorized"
-    //     );
-    //     _;
-    // }
+    modifier onlyAuthorized() {
+        require(
+            msg.sender == owner() || msg.sender == randomnumbergenerator,
+            "Not authorized"
+        );
+        _;
+    }
 
 
     // Assumes the subscription is funded sufficiently.
     function requestRandomWords()
         external
-        onlyOwner   
+        onlyAuthorized   
         returns (uint256 requestId)
     {
         // Will revert if subscription is not set and funded.
