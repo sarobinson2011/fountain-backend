@@ -16,9 +16,9 @@ contract Deploy is Script {
         address account = vm.addr(privateKey);
         // uint256 supply = 1_000 * (10 ** 18);
 
-        address vrfConsumer = 0xB53da4a1c4f1722ab896e9df2b8613eF6d850e24;
-        address randomnumbergenerator = 0x7f7729Bfd9EdBff801640E8047edfF8E3D328eBA; 
-        address tokenmanagerAddress =   0xcBC9DFEC7A3E052a9D15DaA19e266416f09976E2;
+        address vrfConsumer = 0xF81850c6A9CeE8eb9693dBa43D042379dd3384DB;
+        address randomnumbergenerator = 0xf91CEE8470186c1e17F7e4b2cC14a0090759dE02; 
+        address tokenmanagerAddress =   0x0f741C46DF0b919C9251e0A5d027de534d273369;
         // address rewardAddress =   0x27346f96D479C15889eCB07CeCbFeaD536E9AF52;
 
         console.log("Account:", account);

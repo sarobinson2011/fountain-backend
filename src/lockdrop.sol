@@ -15,13 +15,17 @@ interface TokenManagerInterface {
 
 contract LockDrop {
     address public tokenManagerAddress;
+
+    // reward can hold values 0-255
+    uint8 public rewards;
+    
     VRFv2Consumer public vrfv2consumer; // instance of VRFv2Consumer contract
     RandomNumberGenerator public randomnumbergenerator;
-
 
     struct TimedDeposit {
         uint256 amount;
         uint256 timestamp;
+        uint8 reward;
     }
 
     mapping (address => TimedDeposit) public balances;   
@@ -30,6 +34,7 @@ contract LockDrop {
     event NewWithdraw(address indexed _user, uint256 _amount, uint256 _timestamp);
 
     constructor(address _tokenmanager, address _vrfv2consumer, address _randomnumbergenerator) {
+        rewards = 0;
         tokenManagerAddress = _tokenmanager;
         vrfv2consumer = VRFv2Consumer(_vrfv2consumer);
         randomnumbergenerator = RandomNumberGenerator(_randomnumbergenerator);
@@ -44,21 +49,23 @@ contract LockDrop {
             balances[msg.sender] = TimedDeposit(
             {
                 amount: msg.value, 
-                timestamp: block.timestamp
+                timestamp: block.timestamp,
+                reward: 0
             });
         }
 
         // Reset timestamp upon every deposit to enforce full time lock
         balances[msg.sender].timestamp = block.timestamp;                   
         emit NewDeposit(msg.sender, msg.value, block.timestamp);
+
+        calculateReward(); 
+        balances[msg.sender].reward = rewards;                   
     }    
     
     function withdraw() external {
         require(balances[msg.sender].amount > 0, "You have no balance to withdraw...");
         require(block.timestamp >= balances[msg.sender].timestamp + 1 minutes, "Time lock not expired...");
- 
-        uint256 reward = calculateReward();            
- 
+  
         uint256 tempAmount = balances[msg.sender].amount;
         balances[msg.sender].amount = 0;
         balances[msg.sender].timestamp = 0;
@@ -71,26 +78,31 @@ contract LockDrop {
 
         // Transfer the RWDZ tokens 
         TokenManagerInterface tokenManager = TokenManagerInterface(tokenManagerAddress);
-        tokenManager.transferReward(msg.sender, reward); 
-        reward = 0;
+        tokenManager.transferReward(msg.sender, rewards); 
+        rewards = 0;
     }
 
-    function calculateReward() internal returns(uint256) {
+
+    function calculateReward() internal {
+        // request randomness 
+        randomnumbergenerator.requestRandomWords();       
+    }
+    
+
+    function calculatereward2() external returns(uint8) {
         // reward can hold values 0-255
         uint8 reward = 0;
 
-        // get a randomnumber - returns uint256
-        randomnumbergenerator.requestRandomWords();
         (bool fulfilled, ) = randomnumbergenerator.getRequestStatus();
         require(fulfilled, "Request not fulfilled");
         uint256 randomWord = randomnumbergenerator.randomNumGenerator();
         
         // use the return value to generate a number 1-20
         reward = uint8(randomWord % 20) + 1;
+        rewards = reward;
         return reward;
     }
 }
-
 
 
 

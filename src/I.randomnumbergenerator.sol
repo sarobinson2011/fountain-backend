@@ -8,18 +8,3 @@ interface IRandomNumberGenerator {
     function setVrfConsumer(address _vrfConsumerAddress) external;   
 }
 
-
-
-// This functions returns the random number given to us by chainlink
-
-    // function randomNumGenerator() public view returns (uint256) {
-    //     //    uint256 requestID = getRequestId();
-    //     uint256 requestID = vrfv2consumer.lastRequestId();
-    //     // Get random words array
-    //     (, uint256[] memory randomWords) = vrfv2consumer.getRequestStatus(requestID);
-
-    //     // return first random word
-    //     return randomWords[0];
-    // }
-
-

@@ -6,6 +6,9 @@ import {VRFCoordinatorV2Interface} from "@chainlink/interfaces/VRFCoordinatorV2I
 import {VRFConsumerBaseV2} from "@chainlink/vrf/VRFConsumerBaseV2.sol";
 import {ConfirmedOwner} from "@chainlink/shared/access/ConfirmedOwner.sol";
 import {RandomNumberGenerator} from "../src/randomnumbergenerator.sol";
+import {IRandomNumberGenerator} from "../src/I.randomnumbergenerator.sol";
+import {LockDrop} from "../src/lockdrop.sol";
+import {ILockDrop} from "../src/I.lockdrop.sol";
 
 
 /*
@@ -62,6 +65,8 @@ contract VRFv2Consumer is VRFConsumerBaseV2, ConfirmedOwner {
 
     // used in the 'onlyAuthorized' modifier - allows the RNG to access the randomness
     address public randomnumbergenerator;
+    // need to set this via setLockdropAddress(_address)
+    address public addressLockdrop;
 
 
     constructor(
@@ -121,6 +126,9 @@ contract VRFv2Consumer is VRFConsumerBaseV2, ConfirmedOwner {
         s_requests[_requestId].fulfilled = true;
         s_requests[_requestId].randomWords = _randomWords;
         emit RequestFulfilled(_requestId, _randomWords);
+        
+        // call back into LockDrop:calculateReward2()              
+        ILockDrop(addressLockdrop).calculatereward2();
     }
 
     function getRequestStatus(
@@ -131,4 +139,8 @@ contract VRFv2Consumer is VRFConsumerBaseV2, ConfirmedOwner {
         return (request.fulfilled, request.randomWords);
     }
 
+    function setLockdropAddress(address _lockdropaddress) public onlyAuthorized {
+        addressLockdrop = _lockdropaddress;
+    }
 }
+

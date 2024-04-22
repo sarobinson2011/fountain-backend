@@ -45,3 +45,4 @@ contract RandomNumberGenerator {
         return randomWords[0];
     }
 }
+

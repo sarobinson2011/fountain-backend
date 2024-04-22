@@ -12,8 +12,8 @@ contract Deploy is Script {
         uint256 privateKey = vm.envUint("PRIVATE_KEY_0x");
         address account = vm.addr(privateKey);
         // uint256 supply = 1_000 * (10 ** 18);
-        uint64 subscriptionId = 10258;                                              // Chainlink Subscription ID
-        address randomnumbergenerator = 0x7f7729Bfd9EdBff801640E8047edfF8E3D328eBA;
+        uint64 subscriptionId = 10258;                               // Chainlink Subscription ID
+        address randomnumbergenerator = 0xf91CEE8470186c1e17F7e4b2cC14a0090759dE02;
 
         console.log("Account:", account);
 
