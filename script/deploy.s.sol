@@ -3,7 +3,7 @@ pragma solidity ^0.8.0;
 
 import "forge-std/console.sol";
 import {Script, console2} from "forge-std/Script.sol";
-import {Reward} from "../src/tokencontract.sol";
+import {Reward} from "../src/reward.sol";
 import {TokenManager} from "../src/rewardtokenmanager.sol";
 
 contract Deploy is Script {

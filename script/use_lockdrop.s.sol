@@ -3,7 +3,7 @@ pragma solidity ^0.8.0;
 
 import "forge-std/console.sol";
 import {Script, console2} from "forge-std/Script.sol";
-import {Reward} from "../src/tokencontract.sol";
+import {Reward} from "../src/reward.sol";
 import {LockDrop} from "../src/lockdrop.sol";
 import {ILockDrop} from "../src/I.lockdrop.sol";
 import {IRandomNumberGenerator} from "../src/I.randomnumbergenerator.sol";
@@ -16,11 +16,11 @@ contract Deploy is Script {
         uint256 privateKey = vm.envUint("PRIVATE_KEY_0x");
         address account = vm.addr(privateKey);
         // uint256 amount = 15 * (10**18);
-        address lockdrop =  0x7c9D25AD8C5e948087d74654c230249E9C353Cd8;
-        address vrfconsumer = 0xF81850c6A9CeE8eb9693dBa43D042379dd3384DB;
-        address tokenmanager = 0x0f741C46DF0b919C9251e0A5d027de534d273369;
-        address reward = 0x27346f96D479C15889eCB07CeCbFeaD536E9AF52;
-        // address randomnumbergenerator = 0xf91CEE8470186c1e17F7e4b2cC14a0090759dE02;
+        address lockdrop =  0xb6C0f728b5fb76aED862E8C602Eb2D8FB520f14C;
+        address vrfconsumer = 0xED944B2A0298c4872615680b336f5b340FE2eCBD;
+        address tokenmanager = 0x67a3adfe456c8B4bf20c667768ACC9F18b159972;
+        address reward = 0x802560a926b63C75111a94bB0f818790113a7f37;
+        address randomnumbergenerator = 0xC793D13E7878feF765305375Cf6f38e0130C411c;
 
         console.log("Account:", account);
         
@@ -40,30 +40,38 @@ contract Deploy is Script {
         // ILockDrop(lockdrop).deposit{value: 0.0001 ether}();    
     
         // withdraw funds + random reward
-        ILockDrop(lockdrop).withdraw();
+        // ILockDrop(lockdrop).withdraw();
 
         // set the VRF consumer address in the Random Number Genrator
         // IRandomNumberGenerator(randomnumbergenerator).setVrfConsumer(vrfconsumer);  
+
+        // call LockDrop.returnRewards() - checks the VRF worked
+        uint8 Rewards = ILockDrop(lockdrop).returnRewards();
+        console.log("Reward: ", Rewards);
 
         // stop broadcast
         vm.stopBroadcast();
     }
 }   
 
-// 1. deploy RandomNumberGenerator                                              - yes
-// 2. deploy VRFv2Consumer contract (subscriptionId, randomnumbergenerator)     - yes
-// 3. call setVrfConsumer(address(RandomNumberGenerator))                       - yes
-// 3. deploy TokenManager contract                                              - yes
-// 4. call TokenManager:setRewardTokenAddress()                                 - yes
-// 4. deploy LockDrop (tokenmanager, vrfconsumer, randomnumbergenerator)        - yes
-// 5. call VRFv2Consumer:setLockdropAddress(LockDrop)                           - yes
-// 6. Reward = reward;                                                          - yes
-// 7. call LockDrop.deposit()                                                   - yes
-// 8. call LockDrop.withdraw()                                                  - no  <--
+// 1. deploy RandomNumberGenerator                                    -     yes 
+// 2. deploy VRFv2Consumer contract ()                                -     yes 
+// 3. call setVrfConsumer(vrfconsumer)                                -     yes
+
+// 4. deploy reward()                                                 -     yes
+// 5. deploy TokenManager contract                                    -     yes
+// 6. call TokenManager:setRewardTokenAddress()                       -     yes
+// 7. deploy LockDrop ()                                              -     yes 
+// 8. call VRFv2Consumer:setLockdropAddress(LockDrop)                 -     yes
+// 9. add RandomNumberGenerator to the VRF subscription               -     yes
+
+// 10. call LockDrop.deposit()                                        -     yes 
+// 11. call LockDrop.returnRewards()                                  -     no  <-- HERE!
+// 12. call LockDrop.withdraw()                                       -     no  
 
 
-// RandomNumberGenerator: 0xf91CEE8470186c1e17F7e4b2cC14a0090759dE02
-// VRFv2Consumer: 0xF81850c6A9CeE8eb9693dBa43D042379dd3384DB
-// TokenManager: 0x0f741C46DF0b919C9251e0A5d027de534d273369     
-// LockDrop: 0x7c9D25AD8C5e948087d74654c230249E9C353Cd8
-// Reward: 0x27346f96D479C15889eCB07CeCbFeaD536E9AF52                   (660 left)
+// RandomNumberGenerator: 0xC793D13E7878feF765305375Cf6f38e0130C411c
+// VRFv2Consumer: 0xED944B2A0298c4872615680b336f5b340FE2eCBD
+// TokenManager:  0x67a3adfe456c8B4bf20c667768ACC9F18b159972    
+// LockDrop: 0xb6C0f728b5fb76aED862E8C602Eb2D8FB520f14C
+// Reward: 0x802560a926b63C75111a94bB0f818790113a7f37                   (1000 left)

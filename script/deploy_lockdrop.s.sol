@@ -3,7 +3,7 @@ pragma solidity ^0.8.0;
 
 import "forge-std/console.sol";
 import {Script, console2} from "forge-std/Script.sol";
-import {Reward} from "../src/tokencontract.sol";
+import {Reward} from "../src/reward.sol";
 import {LockDrop} from "../src/lockdrop.sol";
 import {ILockDrop} from "../src/I.lockdrop.sol";
 import {TokenManager} from "../src/rewardtokenmanager.sol";
@@ -14,12 +14,11 @@ contract Deploy is Script {
     function run() public {
         uint256 privateKey = vm.envUint("PRIVATE_KEY_0x");
         address account = vm.addr(privateKey);
-        // uint256 supply = 1_000 * (10 ** 18);
 
-        address vrfConsumer = 0xF81850c6A9CeE8eb9693dBa43D042379dd3384DB;
-        address randomnumbergenerator = 0xf91CEE8470186c1e17F7e4b2cC14a0090759dE02; 
-        address tokenmanagerAddress =   0x0f741C46DF0b919C9251e0A5d027de534d273369;
-        // address rewardAddress =   0x27346f96D479C15889eCB07CeCbFeaD536E9AF52;
+        address vrfConsumer = 0xED944B2A0298c4872615680b336f5b340FE2eCBD;
+        address randomnumbergenerator = 0xC793D13E7878feF765305375Cf6f38e0130C411c; 
+        address tokenmanagerAddress = 0x67a3adfe456c8B4bf20c667768ACC9F18b159972;
+        // address rewardAddress = 0x802560a926b63C75111a94bB0f818790113a7f37;
 
         console.log("Account:", account);
 
@@ -30,7 +29,7 @@ contract Deploy is Script {
         // TokenManager tokenmanager = new TokenManager();
 
         // deploy the RWDZ token contract
-        // Reward reward = new Reward("Rewardz", "RWDZ", address(tokenmanager), supply);
+        // new Reward("Rewardz", "RWDZ", tokenmanagerAddress, supply);
         
         // set the Reward token address in TokenManager
         // ITokenManager(address(tokenmanager)).setRewardTokenAddress(address(reward));

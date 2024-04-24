@@ -22,18 +22,6 @@ contract Deploy is Script {
         // 0b.  deploy RandomNumberGenerator contract 
         new RandomNumberGenerator();
 
-        // 1.   call requestRandomWords()
-        // IRandomNumberGenerator(vrfConsumer).requestRandomWords();   
-
-        // 2.   call getRequestStatus()
-        // (bool fulfilled, uint256[] memory randomWords) = IRandomNumberGenerator(randomnumbergenerator).getRequestStatus();
-        // console.log("Request fulfilled: ", fulfilled);
-        // console.log("Random word: ", randomWords[0]);
-
-        // // 3.   call randonNumberGenerator()
-        // uint256 randomWord = IRandomNumberGenerator(randomnumbergenerator).randomNumGenerator();
-        // console.log("Random number (VRF): ", randomWord);
-
         vm.stopBroadcast();
     }
 } 

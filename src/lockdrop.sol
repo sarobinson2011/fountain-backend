@@ -5,7 +5,7 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {TokenManager} from "../src/rewardtokenmanager.sol";
 import {VRFv2Consumer} from "../src/vrfv2consumer.sol";
 import {RandomNumberGenerator} from "../src/randomnumbergenerator.sol";
-import {IRandomNumberGenerator} from "../src/I.randomnumbergenerator.sol";
+import {ITokenManager} from "../src/I.tokenmanager.sol";
 
 
 interface TokenManagerInterface {
@@ -39,7 +39,7 @@ contract LockDrop {
         vrfv2consumer = VRFv2Consumer(_vrfv2consumer);
         randomnumbergenerator = RandomNumberGenerator(_randomnumbergenerator);
         }
-
+        
     function deposit() external payable {
         require(msg.value > 0, "deposit amount must be greater than zero"); 
         
@@ -61,6 +61,10 @@ contract LockDrop {
         calculateReward(); 
         balances[msg.sender].reward = rewards;                   
     }    
+
+    function returnRewards() public view returns(uint8) {
+        return rewards;
+    }
     
     function withdraw() external {
         require(balances[msg.sender].amount > 0, "You have no balance to withdraw...");
@@ -77,9 +81,10 @@ contract LockDrop {
         tempAmount = 0;
 
         // Transfer the RWDZ tokens 
-        TokenManagerInterface tokenManager = TokenManagerInterface(tokenManagerAddress);
-        tokenManager.transferReward(msg.sender, rewards); 
+        // TokenManagerInterface tokenManager = TokenManagerInterface(tokenManagerAddress);
+        ITokenManager(tokenManagerAddress).transferReward(msg.sender, rewards);       // changed HERE
         rewards = 0;
+        // now rest the struct parameters to 0  <-- HERE !!
     }
 
 
@@ -89,18 +94,17 @@ contract LockDrop {
     }
     
 
-    function calculatereward2() external returns(uint8) {
+    function calculatereward2() external {
         // reward can hold values 0-255
-        uint8 reward = 0;
+        // uint8 reward = 0;
 
         (bool fulfilled, ) = randomnumbergenerator.getRequestStatus();
         require(fulfilled, "Request not fulfilled");
         uint256 randomWord = randomnumbergenerator.randomNumGenerator();
         
         // use the return value to generate a number 1-20
-        reward = uint8(randomWord % 20) + 1;
-        rewards = reward;
-        return reward;
+        rewards = uint8(randomWord % 20) + 1;
+        // return reward;
     }
 }
 

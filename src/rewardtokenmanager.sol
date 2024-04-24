@@ -28,8 +28,8 @@ contract TokenManager {
         rewardTokenAddress = _rewardTokenAddress;
     }
 
-    function transferReward(address _to, uint _amount) public addressIsNotZero {
-        (bool success, ) = rewardTokenAddress.call(abi.encodeWithSignature("transferReward(address,uint256)",_to,_amount));
+    function transferReward(address _to, uint8 _amount) public addressIsNotZero {
+        (bool success, ) = rewardTokenAddress.call(abi.encodeWithSignature("transferReward(address,uint8)",_to,_amount));
         require(success, "RWDZ token transfer failed...");
         emit RewardTransferred(msg.sender, _amount);              
 

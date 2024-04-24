@@ -13,7 +13,7 @@ contract Deploy is Script {
         address account = vm.addr(privateKey);
         // uint256 supply = 1_000 * (10 ** 18);
         uint64 subscriptionId = 10258;                               // Chainlink Subscription ID
-        address randomnumbergenerator = 0xf91CEE8470186c1e17F7e4b2cC14a0090759dE02;
+        address randomnumbergenerator = 0xC793D13E7878feF765305375Cf6f38e0130C411c;
 
         console.log("Account:", account);
 
