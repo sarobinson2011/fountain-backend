@@ -126,9 +126,6 @@ contract VRFv2Consumer is VRFConsumerBaseV2, ConfirmedOwner {
         s_requests[_requestId].fulfilled = true;
         s_requests[_requestId].randomWords = _randomWords;
         emit RequestFulfilled(_requestId, _randomWords);
-        
-        // call back into LockDrop:calculateReward2()              
-        ILockDrop(addressLockdrop).calculatereward2();
     }
 
     function getRequestStatus(

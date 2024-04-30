@@ -45,27 +45,23 @@ contract Deploy is Script {
         // set the VRF consumer address in the Random Number Genrator
         // IRandomNumberGenerator(randomnumbergenerator).setVrfConsumer(vrfconsumer);  
 
-        // call LockDrop.returnRewards() - checks the VRF worked
-        uint8 Rewards = ILockDrop(lockdrop).returnRewards();
-        console.log("Reward: ", Rewards);
-
         // stop broadcast
         vm.stopBroadcast();
     }
 }   
 
-// 1. deploy RandomNumberGenerator                                    -     yes 
-// 2. deploy VRFv2Consumer contract ()                                -     yes 
-// 3. call setVrfConsumer(vrfconsumer)                                -     yes
+// 1. deploy RandomNumberGenerator                                    -     no 
+// 2. deploy VRFv2Consumer contract ()                                -     no 
+// 3. call setVrfConsumer(vrfconsumer)                                -     no
 
 // 4. deploy reward()                                                 -     yes
 // 5. deploy TokenManager contract                                    -     yes
-// 6. call TokenManager:setRewardTokenAddress()                       -     yes
-// 7. deploy LockDrop ()                                              -     yes 
-// 8. call VRFv2Consumer:setLockdropAddress(LockDrop)                 -     yes
-// 9. add RandomNumberGenerator to the VRF subscription               -     yes
+// 6. call TokenManager:setRewardTokenAddress()                       -     no
+// 7. deploy LockDrop ()                                              -     no 
+// 8. call VRFv2Consumer:setLockdropAddress(LockDrop)                 -     no
+// 9. add RandomNumberGenerator to the VRF subscription               -     no
 
-// 10. call LockDrop.deposit()                                        -     yes 
+// 10. call LockDrop.deposit()                                        -     no 
 // 11. call LockDrop.returnRewards()                                  -     no  <-- HERE!
 // 12. call LockDrop.withdraw()                                       -     no  
 
@@ -75,3 +71,4 @@ contract Deploy is Script {
 // TokenManager:  0x67a3adfe456c8B4bf20c667768ACC9F18b159972    
 // LockDrop: 0xb6C0f728b5fb76aED862E8C602Eb2D8FB520f14C
 // Reward: 0x802560a926b63C75111a94bB0f818790113a7f37                   (1000 left)
+

@@ -21,9 +21,9 @@ contract RandomNumberGenerator {
         vrfv2consumer = _vrfConsumerAddress;
     }
 
-    function requestRandomWords() public {
-        IVRFv2Consumer(vrfv2consumer).requestRandomWords();   
-    }
+    // function requestRandomWords() public {
+    //     IVRFv2Consumer(vrfv2consumer).requestRandomWords();   
+    // }
 
     function getRequestStatus()
         public
