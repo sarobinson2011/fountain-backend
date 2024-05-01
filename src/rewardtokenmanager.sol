@@ -5,7 +5,6 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 
 contract TokenManager {
-
     address public rewardTokenAddress;
     address public owner;
     event RewardTransferred(address indexed _user, uint256 _amount);
@@ -28,11 +27,10 @@ contract TokenManager {
         rewardTokenAddress = _rewardTokenAddress;
     }
 
-    function transferReward(address _to, uint8 _amount) public addressIsNotZero {
-        (bool success, ) = rewardTokenAddress.call(abi.encodeWithSignature("transferReward(address,uint8)",_to,_amount));
+    function transferReward(address _to, uint256 _amount) public addressIsNotZero {
+        (bool success, ) = rewardTokenAddress.call(abi.encodeWithSignature("transferReward(address,uint256)",_to,_amount));
         require(success, "RWDZ token transfer failed...");
         emit RewardTransferred(msg.sender, _amount);              
-
     }
 }
 
