@@ -21,7 +21,6 @@ contract Deploy is Script {
         // address tokenmanager = 0xc2b04B6015051bDffAF9542b7f4De4fa30d26d52;
         // address reward = 0xCe5fDEb82519D6fa20eFb17cc59eDcA8117647b2;
    
-
         console.log("Account:", account);
         
         // start broadcast
@@ -60,5 +59,5 @@ contract Deploy is Script {
 
 // TokenManager: 0xc2b04B6015051bDffAF9542b7f4De4fa30d26d52
 // LockDrop: 0xF23d5eD9b01F337391F41D8E837888f577D9c0Ca
-// Reward: 0xCe5fDEb82519D6fa20eFb17cc59eDcA8117647b2                 (1000 left)
+// Reward: 0xCe5fDEb82519D6fa20eFb17cc59eDcA8117647b2                 (986 left)
 

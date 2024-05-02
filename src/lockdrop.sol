@@ -51,7 +51,6 @@ contract LockDrop {
         balances[msg.sender].timestamp = block.timestamp;                   
         emit NewDeposit(msg.sender, msg.value, block.timestamp);
     }    
-
     
     function withdraw() external {
         require(balances[msg.sender].amount > 0, "You have no balance to withdraw...");
