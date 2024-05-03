@@ -53,7 +53,6 @@ contract Deploy is Script {
 // 2. deploy Reward contract                                          -     yes
 // 3. call TokenManager:setRewardTokenAddress()                       -     yes
 // 4. deploy LockDrop (tokenManagerAddress)                           -     yes
-
 // 5. call LockDrop.deposit()                                         -     yes  
 // 6. call LockDrop.withdraw()                                        -     no   <--- 
 

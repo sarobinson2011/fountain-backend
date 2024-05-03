@@ -5,16 +5,13 @@ pragma solidity ^0.8.7;
 import {VRFCoordinatorV2Interface} from "@chainlink/interfaces/VRFCoordinatorV2Interface.sol";
 import {VRFConsumerBaseV2} from "@chainlink/vrf/VRFConsumerBaseV2.sol";
 import {ConfirmedOwner} from "@chainlink/shared/access/ConfirmedOwner.sol";
-import {RandomNumberGenerator} from "../src/randomnumbergenerator.sol";
-import {IRandomNumberGenerator} from "../src/I.randomnumbergenerator.sol";
-import {LockDrop} from "../src/lockdrop.sol";
-import {ILockDrop} from "../src/I.lockdrop.sol";
+import {ILottery} from "../src/I.lottery.sol";
 
 
 /*
     Chainlink VRF:
     Consumer contract must use the Subscription ID: 10258 
-    in the VRF request to make use of the LINK funds.
+    in the VRF request to use the LINK funds.
 */
 
 contract VRFv2Consumer is VRFConsumerBaseV2, ConfirmedOwner {
@@ -58,20 +55,16 @@ contract VRFv2Consumer is VRFConsumerBaseV2, ConfirmedOwner {
     // Cannot exceed VRFCoordinatorV2.MAX_NUM_WORDS.
     uint32 numWords = 2;
 
+    // address of the lottery contract
+    address public lotteryContract;
+
     /**
      * HARDCODED FOR SEPOLIA
      * COORDINATOR: 0x8103B0A8A00be2DDC778e6e7eaa21791Cd364625
      */
 
-    // used in the 'onlyAuthorized' modifier - allows the RNG to access the randomness
-    address public randomnumbergenerator;
-    // need to set this via setLockdropAddress(_address)
-    address public addressLockdrop;
-
-
     constructor(
-        uint64 subscriptionId,
-        address _randomnumbergenerator
+        uint64 subscriptionId
     )
         VRFConsumerBaseV2(0x8103B0A8A00be2DDC778e6e7eaa21791Cd364625)
         ConfirmedOwner(msg.sender)
@@ -80,16 +73,17 @@ contract VRFv2Consumer is VRFConsumerBaseV2, ConfirmedOwner {
             0x8103B0A8A00be2DDC778e6e7eaa21791Cd364625
         );
         s_subscriptionId = subscriptionId;
-        randomnumbergenerator = _randomnumbergenerator;
     }
 
     
     modifier onlyAuthorized() {
         require(
-            msg.sender == owner() || msg.sender == randomnumbergenerator,
-            "Not authorized"
-        );
+            msg.sender == owner() || msg.sender == lotteryContract, "Not authorized");
         _;
+    }
+
+    function setLotteryContract(address _lotteryContract) external {
+        lotteryContract = _lotteryContract;
     }
 
 
@@ -126,6 +120,7 @@ contract VRFv2Consumer is VRFConsumerBaseV2, ConfirmedOwner {
         s_requests[_requestId].fulfilled = true;
         s_requests[_requestId].randomWords = _randomWords;
         emit RequestFulfilled(_requestId, _randomWords);
+        ILottery(lotteryContract).selectWinner();
     }
 
     function getRequestStatus(
@@ -134,10 +129,6 @@ contract VRFv2Consumer is VRFConsumerBaseV2, ConfirmedOwner {
         require(s_requests[_requestId].exists, "request not found");
         RequestStatus memory request = s_requests[_requestId];
         return (request.fulfilled, request.randomWords);
-    }
-
-    function setLockdropAddress(address _lockdropaddress) public onlyAuthorized {
-        addressLockdrop = _lockdropaddress;
     }
 }
 

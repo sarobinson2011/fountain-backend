@@ -4,12 +4,14 @@ pragma solidity ^0.8.0;
 // Import Chainlink VRF Coordinator interface
 import "@chainlink/interfaces/VRFCoordinatorV2Interface.sol";
 import "@chainlink/vrf/VRFConsumerBaseV2.sol";
-import {VRFv2Consumer} from "../src/vrfv2consumer.sol";
+import {IVRFv2Consumer} from "../src/I.vrfv2consumer.sol";
+
 
 contract Lottery {
 
     // Randomness variables
     uint256 public randomNumber;
+    address public vrfconsumer;
 
     // Lottery variables
     address payable[] public players;
@@ -18,26 +20,34 @@ contract Lottery {
     uint public maxPlayers;
     bool public lotteryOpen;
 
+    // console.log the winner
+    address public winner;
+
     // Events
     event PlayerJoined(address indexed player);
     event WinnerPicked(address indexed winner);
 
     constructor(
-        address _owner,
         uint256 _entryFee,
         uint256 _maxPlayers
     ) {
         entryFee = _entryFee;
         maxPlayers = _maxPlayers;
         lotteryOpen = true;
-        owner = _owner;
+        owner = msg.sender;
     }
 
     modifier onlyAuthorized() {
-        require(
-            msg.sender == owner, "Not authorized, sorry"
-        );
+        require(msg.sender == owner, "Not authorized");
         _;
+    }
+
+    function returnWinner() public view returns(address) {
+        return winner;
+    }
+
+    function setVrfConsumer(address _vrfconsumer) public onlyAuthorized {
+        vrfconsumer = _vrfconsumer;
     }
 
     function joinLottery() public payable {
@@ -50,19 +60,20 @@ contract Lottery {
 
         // Check if enough players joined, request randomness
         if (players.length == maxPlayers) {
-            // requestRandomWords(KEYHASH);     // <-- this needs sorting, requesting the entropy
+            IVRFv2Consumer(vrfconsumer).requestRandomWords();
         }
     }
 
-    function selectWinner() private {
-        address payable winner = players[randomNumber];
-        winner.transfer(address(this).balance);
+    function selectWinner() external {                      
+        address payable _winner = players[randomNumber];
+        _winner.transfer(address(this).balance);
         lotteryOpen = false;
-        emit WinnerPicked(winner);
+        winner = _winner;
+        emit WinnerPicked(_winner);
     }
 
     // Function to allow restarting the lottery (for testing)
-    function resetLottery() public {
+    function resetLottery() public onlyAuthorized() {
         require(!lotteryOpen, "Lottery is currently running");
         delete players;
         randomNumber = 0;
