@@ -1,0 +1,88 @@
+{
+  "transactions": [
+    {
+      "hash": "0xf89d42c9f5a0f807189292d173366dde0d105d0b76340e25baff13d0497eaf64",
+      "transactionType": "CALL",
+      "contractName": "Lottery",
+      "contractAddress": "0x8BBfD7a9f0ce5BFEEA8D9Cc11Ca05B9eB3399dd7",
+      "function": "setVrfConsumer(address)",
+      "arguments": [
+        "0xa31e9AA75bD01fa2F12155c85B1dD358ECac9f64"
+      ],
+      "transaction": {
+        "type": "0x02",
+        "from": "0xf8f8269488f73fab3935555fcddd6035699dee25",
+        "to": "0x8bbfd7a9f0ce5bfeea8d9cc11ca05b9eb3399dd7",
+        "gas": "0xf85b",
+        "value": "0x0",
+        "data": "0xa829326d000000000000000000000000a31e9aa75bd01fa2f12155c85b1dd358ecac9f64",
+        "nonce": "0x465",
+        "accessList": []
+      },
+      "additionalContracts": [],
+      "isFixedGasLimit": false
+    },
+    {
+      "hash": "0xf48ef1da12fa3d7085e5a685f2c1bf4e2a29a3399c0ce13b1d784d0016dd278a",
+      "transactionType": "CALL",
+      "contractName": "VRFv2Consumer",
+      "contractAddress": "0xa31e9AA75bD01fa2F12155c85B1dD358ECac9f64",
+      "function": "setLotteryContract(address)",
+      "arguments": [
+        "0x8BBfD7a9f0ce5BFEEA8D9Cc11Ca05B9eB3399dd7"
+      ],
+      "transaction": {
+        "type": "0x02",
+        "from": "0xf8f8269488f73fab3935555fcddd6035699dee25",
+        "to": "0xa31e9aa75bd01fa2f12155c85b1dd358ecac9f64",
+        "gas": "0x9c14",
+        "value": "0x0",
+        "data": "0x1590a04f0000000000000000000000008bbfd7a9f0ce5bfeea8d9cc11ca05b9eb3399dd7",
+        "nonce": "0x466",
+        "accessList": []
+      },
+      "additionalContracts": [],
+      "isFixedGasLimit": false
+    }
+  ],
+  "receipts": [
+    {
+      "transactionHash": "0xf89d42c9f5a0f807189292d173366dde0d105d0b76340e25baff13d0497eaf64",
+      "transactionIndex": "0x16",
+      "blockHash": "0xce1974d28da3b64e7cb59ca176e8f6d463d7b7087ef66ac02db33bc618472ca7",
+      "blockNumber": "0x598b5e",
+      "from": "0xF8f8269488f73fab3935555FCDdD6035699deE25",
+      "to": "0x8BBfD7a9f0ce5BFEEA8D9Cc11Ca05B9eB3399dd7",
+      "cumulativeGasUsed": "0x1c1002",
+      "gasUsed": "0xb3cf",
+      "contractAddress": null,
+      "logs": [],
+      "status": "0x1",
+      "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "type": "0x2",
+      "effectiveGasPrice": "0x3ffbd028a"
+    },
+    {
+      "transactionHash": "0xf48ef1da12fa3d7085e5a685f2c1bf4e2a29a3399c0ce13b1d784d0016dd278a",
+      "transactionIndex": "0x17",
+      "blockHash": "0xce1974d28da3b64e7cb59ca176e8f6d463d7b7087ef66ac02db33bc618472ca7",
+      "blockNumber": "0x598b5e",
+      "from": "0xF8f8269488f73fab3935555FCDdD6035699deE25",
+      "to": "0xa31e9AA75bD01fa2F12155c85B1dD358ECac9f64",
+      "cumulativeGasUsed": "0x1c8102",
+      "gasUsed": "0x7100",
+      "contractAddress": null,
+      "logs": [],
+      "status": "0x1",
+      "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "type": "0x2",
+      "effectiveGasPrice": "0x3ffbd028a"
+    }
+  ],
+  "libraries": [],
+  "pending": [],
+  "returns": {},
+  "timestamp": 1715270024,
+  "chain": 11155111,
+  "commit": "ff0803f"
+}

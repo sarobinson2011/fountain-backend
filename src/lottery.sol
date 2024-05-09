@@ -16,8 +16,8 @@ contract Lottery {
     // Lottery variables
     address payable[] public players;
     address public owner;
-    uint public entryFee;
-    uint public maxPlayers;
+    uint256 public entryFee;
+    uint256 public maxPlayers;
     bool public lotteryOpen;
 
     // console.log the winner
@@ -34,6 +34,7 @@ contract Lottery {
         entryFee = _entryFee;
         maxPlayers = _maxPlayers;
         lotteryOpen = true;
+        winner = address(0);    // initialise winner as zero address
         owner = msg.sender;
     }
 
@@ -58,14 +59,15 @@ contract Lottery {
         players.push(payable(msg.sender));
         emit PlayerJoined(msg.sender);
 
-        // Check if enough players joined, request randomness
+        // Check if enough players have joined, if so request randomness
         if (players.length == maxPlayers) {
             IVRFv2Consumer(vrfconsumer).requestRandomWords();
         }
     }
 
-    function selectWinner() external {                      
-        address payable _winner = players[randomNumber];
+    function selectWinner(uint256[] memory _randomWords) external {   
+        uint256 _randomNumber = _randomWords[0] % maxPlayers;              // <-- HERE !!
+        address payable _winner = players[_randomNumber];
         _winner.transfer(address(this).balance);
         lotteryOpen = false;
         winner = _winner;
@@ -80,3 +82,4 @@ contract Lottery {
         lotteryOpen = true;
     }
 }
+

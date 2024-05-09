@@ -5,6 +5,5 @@ interface IVRFv2Consumer {
     function lastRequestId() external view returns (uint256);
     function requestRandomWords() external returns (uint256 requestId);
     function getRequestStatus(uint256 _requestId) external returns (bool fulfilled, uint256[] memory randomWords);
-    function setLockdropAddress(address _lockdropaddress) external;
+    function setLotteryContract(address _lotterycontract) external;
 }
-

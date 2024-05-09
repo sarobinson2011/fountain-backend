@@ -13,7 +13,7 @@ contract Deploy is Script {
         address account = vm.addr(privateKey);
         // uint256 supply = 1_000 * (10 ** 18);
         uint64 subscriptionId = 10258;                               // Chainlink Subscription ID
-        address randomnumbergenerator = 0xC793D13E7878feF765305375Cf6f38e0130C411c;
+        // address randomnumbergenerator = 0xC793D13E7878feF765305375Cf6f38e0130C411c;
 
         console.log("Account:", account);
 
@@ -21,7 +21,7 @@ contract Deploy is Script {
         vm.startBroadcast(privateKey);
 
         // deploy VRFv2Consumer contract
-        new VRFv2Consumer(subscriptionId, randomnumbergenerator);
+        // new VRFv2Consumer(subscriptionId);
 
         // call requestRandomWords()
         // IVRFv2Consumer(vrfConsumer).requestRandomWords();   

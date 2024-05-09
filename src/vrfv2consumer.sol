@@ -53,7 +53,7 @@ contract VRFv2Consumer is VRFConsumerBaseV2, ConfirmedOwner {
 
     // For this example, retrieve 2 random values in one request.
     // Cannot exceed VRFCoordinatorV2.MAX_NUM_WORDS.
-    uint32 numWords = 2;
+    uint32 numWords = 1;
 
     // address of the lottery contract
     address public lotteryContract;
@@ -74,7 +74,6 @@ contract VRFv2Consumer is VRFConsumerBaseV2, ConfirmedOwner {
         );
         s_subscriptionId = subscriptionId;
     }
-
     
     modifier onlyAuthorized() {
         require(
@@ -82,18 +81,17 @@ contract VRFv2Consumer is VRFConsumerBaseV2, ConfirmedOwner {
         _;
     }
 
-    function setLotteryContract(address _lotteryContract) external {
+    function setLotteryContract(address _lotteryContract) external onlyAuthorized {
         lotteryContract = _lotteryContract;
     }
 
-
-    // Assumes the subscription is funded sufficiently.
+    // assumes the subscription is funded sufficiently
+    // will revert otherwise
     function requestRandomWords()
         external
         onlyAuthorized   
         returns (uint256 requestId)
     {
-        // Will revert if subscription is not set and funded.
         requestId = COORDINATOR.requestRandomWords(
             keyHash,
             s_subscriptionId,
@@ -120,7 +118,7 @@ contract VRFv2Consumer is VRFConsumerBaseV2, ConfirmedOwner {
         s_requests[_requestId].fulfilled = true;
         s_requests[_requestId].randomWords = _randomWords;
         emit RequestFulfilled(_requestId, _randomWords);
-        ILottery(lotteryContract).selectWinner();
+        ILottery(lotteryContract).selectWinner(_randomWords);
     }
 
     function getRequestStatus(

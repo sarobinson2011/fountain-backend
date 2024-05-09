@@ -72,3 +72,13 @@ forge script script/deploy_vrfconsumer.s.sol:Deploy --rpc-url ${SEPOLIA_RPC_URL}
 // forge verify-contract --chain-id 1313161555 --num-of-optimizations 1000000 --watch --compiler-version v0.8.22+commit.4fc1097e 0x5912a392035116C62A40a400e3F54E4523227420 src/lockdrop.sol:LockDrop
 
 // forge verify-contract --chain-id 11155111 --num-of-optimizations 1000000 --watch --compiler-version v0.8.13+commit.abaa5c0e 0xE502649999431584710147eAeA097c941cc9Ee8C src/lockdrop.sol:Counter
+
+
+// chain-id 11155111 = Sepolia Ethereum
+// chain-id 1313161555 = Aurora testnet
+
+
+// HERE !!!
+
+forge verify-contract --chain-id 11155111 --num-of-optimizations 1000000 --watch --compiler-version v0.8.23+commit.f704f362 0x32a49E06D14CCa860E3305255449A7C91f55C001 src/vrfv2consumer.sol:VRFv2Consumer
+
