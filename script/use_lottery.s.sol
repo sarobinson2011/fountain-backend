@@ -33,10 +33,21 @@ contract Deploy is Script {
         // new VRFv2Consumer(subscriptionId);
 
         // 3. Set vrfconsumer address (in Lottery contract)
-        ILottery(lottery).setVrfConsumer(vrfconsumer);
+        // ILottery(lottery).setVrfConsumer(vrfconsumer);
 
         // 4. Set lottery address (in VRFv2Consumer contract)
-        IVRFv2Consumer(vrfconsumer).setLotteryContract(lottery);
+        // IVRFv2Consumer(vrfconsumer).setLotteryContract(lottery);
+
+        // 5. call Lottery:returnWinner()                               - Pre-Lottery
+        address winner = ILottery(lottery).returnWinner();
+        console.log("Current lottery winner: ", winner);
+
+        // 6. join the lottery (using 2 accounts)
+        // ILottery(lottery).joinLottery();
+
+        // 7. call Lottery:returnWinner()                               - Post-lottery
+        // address winner = ILottery(lottery).returnWinner();
+        // console.log("Current lottery winner: ", winner);
 
         // stop broadcast
         vm.stopBroadcast();
