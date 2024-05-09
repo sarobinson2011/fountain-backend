@@ -1,7 +1,7 @@
 {
   "transactions": [
     {
-      "hash": "0x74c776c8d70fc95647e8f471a8d237bb3dfe84b32e93be943ade1eed6403ecd5",
+      "hash": "0x1d2511b2c8442f3de39f1f6cd2a3b37dfae39042790c3d0006896a62dfcc5e0d",
       "transactionType": "CALL",
       "contractName": "Lottery",
       "contractAddress": "0x8BBfD7a9f0ce5BFEEA8D9Cc11Ca05B9eB3399dd7",
@@ -14,7 +14,7 @@
         "gas": "0x7e67",
         "value": "0x0",
         "data": "0xd2501b9c",
-        "nonce": "0x4",
+        "nonce": "0x2",
         "accessList": []
       },
       "additionalContracts": [],
@@ -23,26 +23,26 @@
   ],
   "receipts": [
     {
-      "transactionHash": "0x74c776c8d70fc95647e8f471a8d237bb3dfe84b32e93be943ade1eed6403ecd5",
-      "transactionIndex": "0xb",
-      "blockHash": "0x9ac523f278111771b404740937fe6552edba757a1089572b6291d510a83aa0b4",
-      "blockNumber": "0x598e09",
+      "transactionHash": "0x1d2511b2c8442f3de39f1f6cd2a3b37dfae39042790c3d0006896a62dfcc5e0d",
+      "transactionIndex": "0xc",
+      "blockHash": "0xc8e9972613265189d02e9d7f75caad6ebc3b07db215e13617cfd6bcbcb1c74f7",
+      "blockNumber": "0x598dc4",
       "from": "0xC26741bac14a3Ba52517D6fD825eF4513454178E",
       "to": "0x8BBfD7a9f0ce5BFEEA8D9Cc11Ca05B9eB3399dd7",
-      "cumulativeGasUsed": "0xea1e5",
+      "cumulativeGasUsed": "0xe8013",
       "gasUsed": "0x5b84",
       "contractAddress": null,
       "logs": [],
       "status": "0x1",
       "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
       "type": "0x2",
-      "effectiveGasPrice": "0x1ddbf7405"
+      "effectiveGasPrice": "0x23fe4f032"
     }
   ],
   "libraries": [],
   "pending": [],
   "returns": {},
-  "timestamp": 1715278670,
+  "timestamp": 1715277733,
   "chain": 11155111,
   "commit": "5f3bb89"
 }

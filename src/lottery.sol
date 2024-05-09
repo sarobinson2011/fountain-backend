@@ -34,17 +34,13 @@ contract Lottery {
         entryFee = _entryFee;
         maxPlayers = _maxPlayers;
         lotteryOpen = true;
-        winner = address(0);    // initialise winner as zero address
+        winner = address(0);                    // initialise winner as zero address
         owner = msg.sender;
     }
 
     modifier onlyAuthorized() {
         require(msg.sender == owner, "Not authorized");
         _;
-    }
-
-    function returnWinner() public view returns(address) {
-        return winner;
     }
 
     function setVrfConsumer(address _vrfconsumer) public onlyAuthorized {
@@ -66,7 +62,7 @@ contract Lottery {
     }
 
     function selectWinner(uint256[] memory _randomWords) external {   
-        uint256 _randomNumber = _randomWords[0] % maxPlayers;              // <-- HERE !!
+        uint256 _randomNumber = _randomWords[0] % maxPlayers;             
         address payable _winner = players[_randomNumber];
         _winner.transfer(address(this).balance);
         lotteryOpen = false;
@@ -80,6 +76,11 @@ contract Lottery {
         delete players;
         randomNumber = 0;
         lotteryOpen = true;
+        winner = address(0);            // reset winner address
+    }
+
+    function returnWinner() public view returns(address) {
+        return winner;
     }
 }
 
