@@ -45,12 +45,13 @@ contract Deploy is Script {
         // 6. join the lottery (using 2 accounts)
         // ILottery(lottery).joinLottery{value: entryFee}();
 
-        // 7. call Lottery:returnWinner()                               - Post-lottery
+        // 7. Reset the lottery
+        // ILottery(lottery).resetLottery();
+
+        // 8. call Lottery:returnWinner()                               - Post-lottery
         address winner = ILottery(lottery).returnWinner();
         console.log("Current lottery winner: ", winner);
 
-        // 8. Reset the lottery
-        // ILottery(lottery).resetLottery();
 
         // stop broadcast
         vm.stopBroadcast();

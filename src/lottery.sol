@@ -5,6 +5,7 @@ pragma solidity ^0.8.0;
 import "@chainlink/interfaces/VRFCoordinatorV2Interface.sol";
 import "@chainlink/vrf/VRFConsumerBaseV2.sol";
 import {IVRFv2Consumer} from "../src/I.vrfv2consumer.sol";
+import {ITokenManager} from "../src/I.tokenmanager.sol";
 
 
 contract Lottery {
@@ -20,6 +21,10 @@ contract Lottery {
     uint256 public maxPlayers;
     bool public lotteryOpen;
 
+    // RWDZ reward variables
+    address public tokenManager;
+    uint256 public rewardAmount;
+
     // console.log the winner
     address public winner;
 
@@ -34,7 +39,8 @@ contract Lottery {
         entryFee = _entryFee;
         maxPlayers = _maxPlayers;
         lotteryOpen = true;
-        winner = address(0);                    // initialise winner as zero address
+        winner = address(0);                  
+        rewardAmount = 5 * (10**18);
         owner = msg.sender;
     }
 
@@ -45,6 +51,10 @@ contract Lottery {
 
     function setVrfConsumer(address _vrfconsumer) public onlyAuthorized {
         vrfconsumer = _vrfconsumer;
+    }
+
+    function setTokenManager(address _tokenManager) public onlyAuthorized {
+        tokenManager = _tokenManager;
     }
 
     function joinLottery() public payable {
@@ -62,12 +72,16 @@ contract Lottery {
     }
 
     function selectWinner(uint256[] memory _randomWords) external {   
+        require(msg.sender = vrfconsumer, "only the VRF consumer can select the winner!");
         uint256 _randomNumber = _randomWords[0] % maxPlayers;             
         address payable _winner = players[_randomNumber];
         _winner.transfer(address(this).balance);
         lotteryOpen = false;
         winner = _winner;
         emit WinnerPicked(_winner);
+
+        // transfer some RWDZ tokens to the winner
+        ITokenManager(tokenManager).transferReward(winner, rewardAmount);      // <-- HERE !!
     }
 
     // Function to allow restarting the lottery (for testing)
@@ -76,11 +90,13 @@ contract Lottery {
         delete players;
         randomNumber = 0;
         lotteryOpen = true;
-        winner = address(0);            // reset winner address
+        winner = address(0);                                                   // reset winner
     }
 
     function returnWinner() public view returns(address) {
         return winner;
     }
 }
+
+
 
