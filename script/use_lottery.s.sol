@@ -18,42 +18,47 @@ contract Deploy is Script {
         uint256 entryFee = 0.001 * (10**18);
         uint256 maxPlayers = 2;
 
-        address lottery = 0x8BBfD7a9f0ce5BFEEA8D9Cc11Ca05B9eB3399dd7;
-        address vrfconsumer = 0xa31e9AA75bD01fa2F12155c85B1dD358ECac9f64;
+        address lottery = 0x0818477A1FBC549f449605F627971B87b599AE28;
+        address vrfconsumer = 0xB2ae8034Cc25B4Bc17E8b0044c19f7C427Ff96bC;
+        address tokenManager = 0x50eF9E70dA285ee6321F765997FCd294f0805d36;
    
         console.log("Account:", account);
         
         // start broadcast
         vm.startBroadcast(privateKey);
 
-        // 1. Deploy Lottery contract
-        // new Lottery(entryFee, maxPlayers);
 
-        // 2. Deploy VRFv2Consumer contract
+        // 1. Deploy VRFv2Consumer contract
         // new VRFv2Consumer(subscriptionId);
 
+        // 2. Deploy Lottery contract
+        // new Lottery(entryFee, maxPlayers);
+        
         // 3. Set vrfconsumer address (in Lottery contract)
         // ILottery(lottery).setVrfConsumer(vrfconsumer);
+
+        // x. Set tokenmanager address (in Lottery contract)
+        // ILottery(lottery).setTokenManager(tokenManager);
 
         // 4. Set lottery address (in VRFv2Consumer contract)
         // IVRFv2Consumer(vrfconsumer).setLotteryContract(lottery);
 
-        // 5. call Lottery:returnWinner()                               - Pre-Lottery
+        // 5. Set TokenManager / VRFv2Consumer addresses (in Lottery)
+        // ILottery(lottery).setTokenManager(tokenManager);
+        // ILottery(lottery).setVrfConsumer(vrfconsumer);
+
+        // 6. call Lottery:returnWinner()                              
         // address winner = ILottery(lottery).returnWinner();
         // console.log("Current lottery winner: ", winner);
 
-        // 6. join the lottery (using 2 accounts)
-        // ILottery(lottery).joinLottery{value: entryFee}();
+        // 7. join the lottery (using 2 accounts)
+        ILottery(lottery).joinLottery{value: entryFee}();           // do this next !!!
 
-        // 7. Reset the lottery
+        // 8. Reset the lottery
         // ILottery(lottery).resetLottery();
-
-        // 8. call Lottery:returnWinner()                               - Post-lottery
-        address winner = ILottery(lottery).returnWinner();
-        console.log("Current lottery winner: ", winner);
 
 
         // stop broadcast
         vm.stopBroadcast();
     }
-}  
+} 

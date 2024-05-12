@@ -72,7 +72,7 @@ contract Lottery {
     }
 
     function selectWinner(uint256[] memory _randomWords) external {   
-        require(msg.sender = vrfconsumer, "only the VRF consumer can select the winner!");
+        require(msg.sender == vrfconsumer, "only the VRFv2Consumer can select the winner!");
         uint256 _randomNumber = _randomWords[0] % maxPlayers;             
         address payable _winner = players[_randomNumber];
         _winner.transfer(address(this).balance);
@@ -86,11 +86,10 @@ contract Lottery {
 
     // Function to allow restarting the lottery (for testing)
     function resetLottery() public onlyAuthorized() {
-        require(!lotteryOpen, "Lottery is currently running");
         delete players;
         randomNumber = 0;
         lotteryOpen = true;
-        winner = address(0);                                                   // reset winner
+        winner = address(0);                                                
     }
 
     function returnWinner() public view returns(address) {

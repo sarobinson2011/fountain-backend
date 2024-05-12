@@ -1,0 +1,88 @@
+{
+  "transactions": [
+    {
+      "hash": "0xb3cd227b6e87fb3f5db31267f1b52e3550bfc9c17014198e83fea9b876e20821",
+      "transactionType": "CALL",
+      "contractName": "Lottery",
+      "contractAddress": "0x0818477A1FBC549f449605F627971B87b599AE28",
+      "function": "setTokenManager(address)",
+      "arguments": [
+        "0x50eF9E70dA285ee6321F765997FCd294f0805d36"
+      ],
+      "transaction": {
+        "type": "0x02",
+        "from": "0xf8f8269488f73fab3935555fcddd6035699dee25",
+        "to": "0x0818477a1fbc549f449605f627971b87b599ae28",
+        "gas": "0x9598",
+        "value": "0x0",
+        "data": "0x7cb2b79c00000000000000000000000050ef9e70da285ee6321f765997fcd294f0805d36",
+        "nonce": "0x48d",
+        "accessList": []
+      },
+      "additionalContracts": [],
+      "isFixedGasLimit": false
+    },
+    {
+      "hash": "0xb9df20ddb593db80a2dabc333bf3515c8dfd43d15ed174dbb6ecc90990dd468a",
+      "transactionType": "CALL",
+      "contractName": "Lottery",
+      "contractAddress": "0x0818477A1FBC549f449605F627971B87b599AE28",
+      "function": "setVrfConsumer(address)",
+      "arguments": [
+        "0xB2ae8034Cc25B4Bc17E8b0044c19f7C427Ff96bC"
+      ],
+      "transaction": {
+        "type": "0x02",
+        "from": "0xf8f8269488f73fab3935555fcddd6035699dee25",
+        "to": "0x0818477a1fbc549f449605f627971b87b599ae28",
+        "gas": "0x9548",
+        "value": "0x0",
+        "data": "0xa829326d000000000000000000000000b2ae8034cc25b4bc17e8b0044c19f7c427ff96bc",
+        "nonce": "0x48e",
+        "accessList": []
+      },
+      "additionalContracts": [],
+      "isFixedGasLimit": false
+    }
+  ],
+  "receipts": [
+    {
+      "transactionHash": "0xb3cd227b6e87fb3f5db31267f1b52e3550bfc9c17014198e83fea9b876e20821",
+      "transactionIndex": "0x4",
+      "blockHash": "0xe8b6fde93e2de50998e27151cc579e593c4857050c198f5940f6a08a9afdb878",
+      "blockNumber": "0x59da52",
+      "from": "0xF8f8269488f73fab3935555FCDdD6035699deE25",
+      "to": "0x0818477A1FBC549f449605F627971B87b599AE28",
+      "cumulativeGasUsed": "0x277945",
+      "gasUsed": "0x664a",
+      "contractAddress": null,
+      "logs": [],
+      "status": "0x1",
+      "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "type": "0x2",
+      "effectiveGasPrice": "0x1fd83e5f1"
+    },
+    {
+      "transactionHash": "0xb9df20ddb593db80a2dabc333bf3515c8dfd43d15ed174dbb6ecc90990dd468a",
+      "transactionIndex": "0x5",
+      "blockHash": "0xe8b6fde93e2de50998e27151cc579e593c4857050c198f5940f6a08a9afdb878",
+      "blockNumber": "0x59da52",
+      "from": "0xF8f8269488f73fab3935555FCDdD6035699deE25",
+      "to": "0x0818477A1FBC549f449605F627971B87b599AE28",
+      "cumulativeGasUsed": "0x27df58",
+      "gasUsed": "0x6613",
+      "contractAddress": null,
+      "logs": [],
+      "status": "0x1",
+      "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "type": "0x2",
+      "effectiveGasPrice": "0x1fd83e5f1"
+    }
+  ],
+  "libraries": [],
+  "pending": [],
+  "returns": {},
+  "timestamp": 1715529462,
+  "chain": 11155111,
+  "commit": "f0357c2"
+}

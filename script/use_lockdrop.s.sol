@@ -17,9 +17,9 @@ contract Deploy is Script {
         address account = vm.addr(privateKey);
         // uint256 amount = 15 * (10**18);
 
-        address lockdrop = 0xF23d5eD9b01F337391F41D8E837888f577D9c0Ca;
-        // address tokenmanager = 0xc2b04B6015051bDffAF9542b7f4De4fa30d26d52;
-        // address reward = 0xCe5fDEb82519D6fa20eFb17cc59eDcA8117647b2;
+        // address lockdrop = ;
+        address tokenmanager = 0x50eF9E70dA285ee6321F765997FCd294f0805d36;
+        address reward = 0xf45f8cB5A4C2Dc20D2865a1C6751407C4E097c67;
    
         console.log("Account:", account);
         
@@ -33,13 +33,13 @@ contract Deploy is Script {
         // IVRFv2Consumer(vrfconsumer).setLockdropAddress(lockdrop);
 
         // call setRewardTokenAddress()
-        // ITokenManager(tokenmanager).setRewardTokenAddress(reward);
+        ITokenManager(tokenmanager).setRewardTokenAddress(reward);
 
         // deposit
         // ILockDrop(lockdrop).deposit{value: 0.0001 ether}();    
     
         // withdraw funds + random reward
-        ILockDrop(lockdrop).withdraw();
+        // ILockDrop(lockdrop).withdraw();
 
         // set the VRF consumer address in the Random Number Genrator
         // IRandomNumberGenerator(randomnumbergenerator).setVrfConsumer(vrfconsumer);  
@@ -48,15 +48,3 @@ contract Deploy is Script {
         vm.stopBroadcast();
     }
 }   
-
-// 1. deploy TokenManager contract                                    -     yes
-// 2. deploy Reward contract                                          -     yes
-// 3. call TokenManager:setRewardTokenAddress()                       -     yes
-// 4. deploy LockDrop (tokenManagerAddress)                           -     yes
-// 5. call LockDrop.deposit()                                         -     yes  
-// 6. call LockDrop.withdraw()                                        -     no   <--- 
-
-// TokenManager: 0xc2b04B6015051bDffAF9542b7f4De4fa30d26d52
-// LockDrop: 0xF23d5eD9b01F337391F41D8E837888f577D9c0Ca
-// Reward: 0xCe5fDEb82519D6fa20eFb17cc59eDcA8117647b2                 (986 left)
-

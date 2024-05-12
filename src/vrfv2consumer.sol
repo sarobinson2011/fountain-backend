@@ -85,8 +85,8 @@ contract VRFv2Consumer is VRFConsumerBaseV2, ConfirmedOwner {
         lotteryContract = _lotteryContract;
     }
 
-    // assumes the subscription is funded sufficiently
-    // will revert otherwise
+    // assumes the subscription has enough LINK 
+    // function reverts otherwise
     function requestRandomWords()
         external
         onlyAuthorized   
