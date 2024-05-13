@@ -19,7 +19,7 @@ contract Deploy is Script {
         uint256 maxPlayers = 2;
 
         address lottery = 0x0818477A1FBC549f449605F627971B87b599AE28;
-        address vrfconsumer = 0xB2ae8034Cc25B4Bc17E8b0044c19f7C427Ff96bC;
+        address vrfconsumer = 0xA3838100aDC629874C864A9F49D3191EC8Cc3F35;
         address tokenManager = 0x50eF9E70dA285ee6321F765997FCd294f0805d36;
    
         console.log("Account:", account);
@@ -61,4 +61,5 @@ contract Deploy is Script {
         // stop broadcast
         vm.stopBroadcast();
     }
-} 
+}
+

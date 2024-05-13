@@ -11,7 +11,6 @@ import {ITokenManager} from "../src/I.tokenmanager.sol";
 contract Lottery {
 
     // Randomness variables
-    uint256 public randomNumber;
     address public vrfconsumer;
 
     // Lottery variables
@@ -87,7 +86,6 @@ contract Lottery {
     // Function to allow restarting the lottery (for testing)
     function resetLottery() public onlyAuthorized() {
         delete players;
-        randomNumber = 0;
         lotteryOpen = true;
         winner = address(0);                                                
     }
