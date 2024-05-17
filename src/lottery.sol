@@ -70,17 +70,16 @@ contract Lottery {
         }
     }
 
-    function selectWinner(uint256[] memory _randomWords) external {   
-        require(msg.sender == vrfconsumer, "only the VRFv2Consumer can select the winner!");
-        uint256 _randomNumber = _randomWords[0] % maxPlayers;             
-        address payable _winner = players[_randomNumber];
+    function selectWinner(uint256 _randomWords) public onlyAuthorized {  
+        uint256 randomNumber = _randomWords % maxPlayers;             
+        address payable _winner = players[randomNumber];
         _winner.transfer(address(this).balance);
         lotteryOpen = false;
         winner = _winner;
         emit WinnerPicked(_winner);
 
         // transfer some RWDZ tokens to the winner
-        ITokenManager(tokenManager).transferReward(winner, rewardAmount);      // <-- HERE !!
+        ITokenManager(tokenManager).transferReward(winner, rewardAmount); 
     }
 
     // Function to allow restarting the lottery (for testing)

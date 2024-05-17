@@ -80,5 +80,5 @@ forge script script/deploy_vrfconsumer.s.sol:Deploy --rpc-url ${SEPOLIA_RPC_URL}
 
 // HERE !!!
 
-forge verify-contract --chain-id 11155111 --num-of-optimizations 1000000 --watch --compiler-version v0.8.23+commit.f704f362 0x32a49E06D14CCa860E3305255449A7C91f55C001 src/vrfv2consumer.sol:VRFv2Consumer
+forge verify-contract --chain-id 11155111 --num-of-optimizations 1000000 --watch --compiler-version v0.8.23+commit.f704f362 0xDF5D971a9CED76A58c9fA61065D4E2963d1af748 src/vrfv2consumer.sol:VRFv2Consumer
 

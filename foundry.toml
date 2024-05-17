@@ -9,6 +9,7 @@ remappings = [
     "forge-std/=lib/forge-std/src/",
     # "ds-test/=lib/solmate/lib/ds-test/src/",        # not currently in use
     "@chainlink/=node_modules/@chainlink/contracts/src/v0.8/",
+    "@pythnetwork/=node_modules/@pythnetwork/",
 ]
 
 [rpc_endpoints]

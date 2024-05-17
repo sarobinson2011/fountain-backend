@@ -46,9 +46,9 @@ contract VRFv2Consumer is VRFConsumerBaseV2, ConfirmedOwner {
     // this limit based on the network that you select, the size of the request,
     // and the processing of the callback request in the fulfillRandomWords()
     // function.
-    uint32 callbackGasLimit = 2500000; 
+    uint32 callbackGasLimit = 1800000;      // was 100,000 ... try 180,000 
 
-    // The default is 3, but you can set this higher.
+    // The default is 3, but you can set this higher
     uint16 requestConfirmations = 3;
 
     // For this example, retrieve 2 random values in one request.
@@ -87,7 +87,7 @@ contract VRFv2Consumer is VRFConsumerBaseV2, ConfirmedOwner {
 
     // assumes the subscription has enough LINK 
     // function reverts otherwise
-    function requestRandomWords()                           // <-- is this working ??
+    function requestRandomWords()                         
         external
         onlyAuthorized   
         returns (uint256 requestId)
@@ -118,7 +118,6 @@ contract VRFv2Consumer is VRFConsumerBaseV2, ConfirmedOwner {
         s_requests[_requestId].fulfilled = true;
         s_requests[_requestId].randomWords = _randomWords;
         emit RequestFulfilled(_requestId, _randomWords);
-        ILottery(lotteryContract).selectWinner(_randomWords);
     }
 
     function getRequestStatus(

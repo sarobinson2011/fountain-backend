@@ -18,18 +18,19 @@ contract Deploy is Script {
         uint256 entryFee = 0.001 * (10**18);
         uint256 maxPlayers = 2;
 
-        address lottery = 0x0818477A1FBC549f449605F627971B87b599AE28;
-        address vrfconsumer = 0xA3838100aDC629874C864A9F49D3191EC8Cc3F35;
+        // uint256 requestId = 0;
+
+        address lottery = 0x3E07d0Cf3CE90FF622D64b3F7D3343b8fc5E0776;
+        address vrfconsumer = 0x1f8e4f82b95397813f11e2b0BBFb549D2bFECE57;
         address tokenManager = 0x50eF9E70dA285ee6321F765997FCd294f0805d36;
-   
+
         console.log("Account:", account);
         
         // start broadcast
         vm.startBroadcast(privateKey);
 
-
         // 1. Deploy VRFv2Consumer contract
-        // new VRFv2Consumer(subscriptionId);
+        new VRFv2Consumer(subscriptionId);
 
         // 2. Deploy Lottery contract
         // new Lottery(entryFee, maxPlayers);
@@ -52,14 +53,26 @@ contract Deploy is Script {
         // console.log("Current lottery winner: ", winner);
 
         // 7. join the lottery (using 2 accounts)
-        ILottery(lottery).joinLottery{value: entryFee}();           // do this next !!!
+        // ILottery(lottery).joinLottery{value: entryFee}();        
 
         // 8. Reset the lottery
         // ILottery(lottery).resetLottery();
 
+        // 9. call getRequestStatus(requestId)
+        // bool fulfilled, uint256[] memory randomWords = IVRFv2Consumer(vrfconsumer).getRequestStatus(requestId);
+
+        // 10. console.log the request info
+        // console.log("Request fulfilled: ", fulfilled)
+        // console.log("Randomness: ", randomWords[0]) 
+
+        // 11. call selectWinner()
+        // ILottery(lottery).selectWinner(randomWords); 
 
         // stop broadcast
         vm.stopBroadcast();
     }
 }
+
+
+// forge verify-contract --chain-id 11155111 --num-of-optimizations 1000000 --watch --compiler-version v0.8.23+commit.f704f362 0x03a66BB798B1dF87046cC535a8e8489D023212bD src/vrfv2consumer.sol:VRFv2Consumer 
 
