@@ -19,10 +19,12 @@ contract Deploy is Script {
         uint256 maxPlayers = 2;
 
         // uint256 requestId = 0;
-
+        address rewardz = 0xf45f8cB5A4C2Dc20D2865a1C6751407C4E097c67;
         address lottery = 0x3E07d0Cf3CE90FF622D64b3F7D3343b8fc5E0776;
-        address vrfconsumer = 0x1f8e4f82b95397813f11e2b0BBFb549D2bFECE57;
+        address vrfconsumer = 0x6D315be97bDE09563779b4558Cf2bB26F3FCdB66;
         address tokenManager = 0x50eF9E70dA285ee6321F765997FCd294f0805d36;
+
+        uint256 randomWords = 0xe88cb090918492ae8a2ca83cafb44744736b796305ef8b6be7a326b478e5a0ee;
 
         console.log("Account:", account);
         
@@ -30,7 +32,7 @@ contract Deploy is Script {
         vm.startBroadcast(privateKey);
 
         // 1. Deploy VRFv2Consumer contract
-        new VRFv2Consumer(subscriptionId);
+        // new VRFv2Consumer(subscriptionId);
 
         // 2. Deploy Lottery contract
         // new Lottery(entryFee, maxPlayers);
@@ -54,7 +56,7 @@ contract Deploy is Script {
 
         // 7. join the lottery (using 2 accounts)
         // ILottery(lottery).joinLottery{value: entryFee}();        
-
+ 
         // 8. Reset the lottery
         // ILottery(lottery).resetLottery();
 
@@ -66,7 +68,7 @@ contract Deploy is Script {
         // console.log("Randomness: ", randomWords[0]) 
 
         // 11. call selectWinner()
-        // ILottery(lottery).selectWinner(randomWords); 
+        ILottery(lottery).selectWinner(randomWords); 
 
         // stop broadcast
         vm.stopBroadcast();

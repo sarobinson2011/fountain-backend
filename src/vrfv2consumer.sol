@@ -46,7 +46,7 @@ contract VRFv2Consumer is VRFConsumerBaseV2, ConfirmedOwner {
     // this limit based on the network that you select, the size of the request,
     // and the processing of the callback request in the fulfillRandomWords()
     // function.
-    uint32 callbackGasLimit = 1800000;      // was 100,000 ... try 180,000 
+    uint32 callbackGasLimit = 100_000;     
 
     // The default is 3, but you can set this higher
     uint16 requestConfirmations = 3;

@@ -1,0 +1,49 @@
+{
+  "transactions": [
+    {
+      "hash": "0x32daa7b58c90776064e92743cd8b90762e3d1712623dca45abf5aa95df97eef2",
+      "transactionType": "CALL",
+      "contractName": "Lottery",
+      "contractAddress": "0x3e07d0cf3ce90ff622d64b3f7d3343b8fc5e0776",
+      "function": "setVrfConsumer(address)",
+      "arguments": [
+        "0x6D315be97bDE09563779b4558Cf2bB26F3FCdB66"
+      ],
+      "transaction": {
+        "from": "0xf8f8269488f73fab3935555fcddd6035699dee25",
+        "to": "0x3e07d0cf3ce90ff622d64b3f7d3343b8fc5e0776",
+        "gas": "0xa567",
+        "value": "0x0",
+        "input": "0xa829326d0000000000000000000000006d315be97bde09563779b4558cf2bb26f3fcdb66",
+        "nonce": "0x4ce",
+        "chainId": "0xaa36a7"
+      },
+      "additionalContracts": [],
+      "isFixedGasLimit": false
+    }
+  ],
+  "receipts": [
+    {
+      "status": "0x1",
+      "cumulativeGasUsed": "0x44d041",
+      "logs": [],
+      "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "type": "0x2",
+      "transactionHash": "0x32daa7b58c90776064e92743cd8b90762e3d1712623dca45abf5aa95df97eef2",
+      "transactionIndex": "0x20",
+      "blockHash": "0x3a439d8cf8f1fe5179287aa8b9b5b88028b998367e8965eb71bfd1e620194849",
+      "blockNumber": "0x5a74fa",
+      "gasUsed": "0x7119",
+      "effectiveGasPrice": "0x18e37aeec9",
+      "from": "0xf8f8269488f73fab3935555fcddd6035699dee25",
+      "to": "0x3e07d0cf3ce90ff622d64b3f7d3343b8fc5e0776",
+      "contractAddress": null
+    }
+  ],
+  "libraries": [],
+  "pending": [],
+  "returns": {},
+  "timestamp": 1716038995,
+  "chain": 11155111,
+  "commit": "d3eff92"
+}
