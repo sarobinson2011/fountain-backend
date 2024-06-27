@@ -24,11 +24,11 @@ contract Deploy is Script {
         address vrfconsumer = 0x6D315be97bDE09563779b4558Cf2bB26F3FCdB66;
         address tokenManager = 0x50eF9E70dA285ee6321F765997FCd294f0805d36;
 
-        uint256 randomWords = 0xe88cb090918492ae8a2ca83cafb44744736b796305ef8b6be7a326b478e5a0ee;
+        uint256 randomWord = 0xe88cb090918292ae8a2ca83cafb44744736b796305ef8b6be7a326b478e5a0ee;
 
         console.log("Account:", account);
         
-        // start broadcast
+        // start broadcast 
         vm.startBroadcast(privateKey);
 
         // 1. Deploy VRFv2Consumer contract
@@ -68,13 +68,14 @@ contract Deploy is Script {
         // console.log("Randomness: ", randomWords[0]) 
 
         // 11. call selectWinner()
-        ILottery(lottery).selectWinner(randomWords); 
+        ILottery(lottery).selectWinner(randomWord); 
 
         // stop broadcast
         vm.stopBroadcast();
-    }
+    } 
 }
 
 
 // forge verify-contract --chain-id 11155111 --num-of-optimizations 1000000 --watch --compiler-version v0.8.23+commit.f704f362 0x03a66BB798B1dF87046cC535a8e8489D023212bD src/vrfv2consumer.sol:VRFv2Consumer 
 
+  
