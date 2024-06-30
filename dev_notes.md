@@ -30,4 +30,3 @@
     - rewardz token calculation for the drop + implement        ×       
       - use Chainlink to inject randomness to the drop          ×
     - logic to check for no RWDZ left to transfer               ×
-
