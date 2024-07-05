@@ -7,6 +7,8 @@ import {VRFv2Consumer} from "../src/vrfv2consumer.sol";
 import {IVRFv2Consumer} from "../src/I.vrfv2consumer.sol";
 import {Lottery} from "../src/lottery.sol";
 import {ILottery} from "../src/I.lottery.sol";
+import {ITokenManager} from "../src/I.tokenmanager.sol";
+import {Reward} from "../src/reward.sol";
 
 
 contract Deploy is Script {
@@ -17,9 +19,10 @@ contract Deploy is Script {
         uint64 subscriptionId = 10258;
         uint256 entryFee = 0.001 * (10**18);
         uint256 maxPlayers = 2;
+        uint256 supply = 10000 * (10**18);
 
         // uint256 requestId = 0;
-        address rewardz = 0xf45f8cB5A4C2Dc20D2865a1C6751407C4E097c67;
+        address rewardz = 0xA58889F7C6fc8D407F6B69e15E23fCf194b05Bce;
         address lottery = 0x3E07d0Cf3CE90FF622D64b3F7D3343b8fc5E0776;
         address vrfconsumer = 0x6D315be97bDE09563779b4558Cf2bB26F3FCdB66;
         address tokenManager = 0x50eF9E70dA285ee6321F765997FCd294f0805d36;
@@ -34,6 +37,9 @@ contract Deploy is Script {
         // 1. Deploy VRFv2Consumer contract
         // new VRFv2Consumer(subscriptionId);
 
+        // 1a. Deploy Reward token contract
+        new Reward("Rewardz", "RWDZ", address(tokenManager), supply);
+
         // 2. Deploy Lottery contract
         // new Lottery(entryFee, maxPlayers);
         
@@ -45,6 +51,9 @@ contract Deploy is Script {
 
         // 4. Set lottery address (in VRFv2Consumer contract)
         // IVRFv2Consumer(vrfconsumer).setLotteryContract(lottery);
+
+        // 4a. Set Reward Token Address (in TokenManager) 
+        // ITokenManager(tokenManager).setRewardTokenAddress(rewardz);
 
         // 5. Set TokenManager / VRFv2Consumer addresses (in Lottery)
         // ILottery(lottery).setTokenManager(tokenManager);
