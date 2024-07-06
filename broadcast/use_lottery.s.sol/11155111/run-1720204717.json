@@ -1,0 +1,53 @@
+{
+  "transactions": [
+    {
+      "hash": null,
+      "transactionType": "CALL",
+      "contractName": "TokenManager",
+      "contractAddress": "0x50ef9e70da285ee6321f765997fcd294f0805d36",
+      "function": "setRewardTokenAddress(address)",
+      "arguments": [
+        "0xA58889F7C6fc8D407F6B69e15E23fCf194b05Bce"
+      ],
+      "transaction": {
+        "from": "0xf8f8269488f73fab3935555fcddd6035699dee25",
+        "to": "0x50ef9e70da285ee6321f765997fcd294f0805d36",
+        "gas": "0xa599",
+        "value": "0x0",
+        "input": "0x9a6acf20000000000000000000000000a58889f7c6fc8d407f6b69e15e23fcf194b05bce",
+        "nonce": "0x4e1",
+        "chainId": "0xaa36a7"
+      },
+      "additionalContracts": [],
+      "isFixedGasLimit": false
+    },
+    {
+      "hash": null,
+      "transactionType": "CALL",
+      "contractName": "Lottery",
+      "contractAddress": "0x3e07d0cf3ce90ff622d64b3f7d3343b8fc5e0776",
+      "function": "selectWinner(uint256)",
+      "arguments": [
+        "105185158065300128016283508262665065006243813451627540226627447580356031914222"
+      ],
+      "transaction": {
+        "from": "0xf8f8269488f73fab3935555fcddd6035699dee25",
+        "to": "0x3e07d0cf3ce90ff622d64b3f7d3343b8fc5e0776",
+        "gas": "0x1b5e1",
+        "value": "0x0",
+        "input": "0x4c524be4e88cb090918292ae8a2ca83cafb44744736b796305ef8b6be7a326b478e5a0ee",
+        "nonce": "0x4e2",
+        "chainId": "0xaa36a7"
+      },
+      "additionalContracts": [],
+      "isFixedGasLimit": false
+    }
+  ],
+  "receipts": [],
+  "libraries": [],
+  "pending": [],
+  "returns": {},
+  "timestamp": 1720204717,
+  "chain": 11155111,
+  "commit": "6a243e2"
+}

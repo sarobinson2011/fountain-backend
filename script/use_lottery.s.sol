@@ -38,7 +38,7 @@ contract Deploy is Script {
         // new VRFv2Consumer(subscriptionId);
 
         // 1a. Deploy Reward token contract
-        new Reward("Rewardz", "RWDZ", address(tokenManager), supply);
+        // new Reward("Rewardz", "RWDZ", address(tokenManager), supply);
 
         // 2. Deploy Lottery contract
         // new Lottery(entryFee, maxPlayers);
@@ -57,7 +57,7 @@ contract Deploy is Script {
 
         // 5. Set TokenManager / VRFv2Consumer addresses (in Lottery)
         // ILottery(lottery).setTokenManager(tokenManager);
-        // ILottery(lottery).setVrfConsumer(vrfconsumer);
+        ILottery(lottery).setVrfConsumer(vrfconsumer);
 
         // 6. call Lottery:returnWinner()                              
         // address winner = ILottery(lottery).returnWinner();
@@ -77,7 +77,7 @@ contract Deploy is Script {
         // console.log("Randomness: ", randomWords[0]) 
 
         // 11. call selectWinner()
-        ILottery(lottery).selectWinner(randomWord); 
+        // ILottery(lottery).selectWinner(randomWord); 
 
         // stop broadcast
         vm.stopBroadcast();
