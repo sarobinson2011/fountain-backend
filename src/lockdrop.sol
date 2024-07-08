@@ -74,9 +74,23 @@ contract LockDrop {
     }
 
     function calculateReward() internal view returns(uint256) {
-        uint256 elapsedTime = (block.timestamp - balances[msg.sender].timestamp) / 60 seconds;
-        uint256 reward = elapsedTime * (10**18);
+        uint256 currentBlock = block.number;
+        uint256 startingBlock = balances[msg.sender].timestamp; 
+
+        // Check for potential underflow (startingBlock > currentBlock)
+        if (startingBlock > currentBlock) {
+            return 0;
+        }
+
+        uint256 elapsedBlocks = currentBlock - startingBlock;
+        uint256 reward = elapsedBlocks * (5**18);             // 0.5 reward per block
         return reward;
     }
+
+    // function calculateReward() internal view returns(uint256) {
+    //     uint256 elapsedTime = (block.timestamp - balances[msg.sender].timestamp) / 60 seconds;
+    //     uint256 reward = elapsedTime * (10**18);
+    //     return reward;
+    // }
 }
 

@@ -14,10 +14,10 @@ contract Deploy is Script {
     function run() public {
         uint256 privateKey = vm.envUint("PRIVATE_KEY_0x");
         address account = vm.addr(privateKey);
-        uint256 supply = 2000 * (10**18);
+        // uint256 supply = 2000 * (10**18);
 
-        // address tokenmanagerAddress = 0x50eF9E70dA285ee6321F765997FCd294f0805d36;
-        // address rewardAddress = 0xf45f8cB5A4C2Dc20D2865a1C6751407C4E097c67;
+        address tokenmanagerAddress = 0x50eF9E70dA285ee6321F765997FCd294f0805d36;
+        // address rewardAddress = 0xA58889F7C6fc8D407F6B69e15E23fCf194b05ce;
 
         console.log("Account:", account);
 
@@ -31,7 +31,7 @@ contract Deploy is Script {
         // new Reward("Rewardz", "RWDZ", tokenmanagerAddress, supply);
         
         // deploy lockdrop
-        // new LockDrop(tokenmanagerAddress);
+        new LockDrop(tokenmanagerAddress);
 
         // stop broadcast
         vm.stopBroadcast();

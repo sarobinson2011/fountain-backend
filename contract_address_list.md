@@ -5,13 +5,13 @@
     - VRFv2Consumer = 0x6D315be97bDE09563779b4558Cf2bB26F3FCdB66
     - TokenManager = 0x50eF9E70dA285ee6321F765997FCd294f0805d36
 
-    - LockDrop = 0xAa01BfbB39aFC88F35D18B8ACBa6c09971646923
+    - LockDrop = 0x775bDD1CdF9927683d5fCe9588f036BEA1C62074
 
 
 #       Contract addresses (Utility)
 # 
 # TokenManager  : 0x50eF9E70dA285ee6321F765997FCd294f0805d36      
-# Reward        : 0xA58889F7C6fc8D407F6B69e15E23fCf194b05Bce  
+# Reward        : 0xA58889F7C6fc8D407F6B69e15E23fCf194b05ce  
 # 
 
 #       Contract addresses (Functionality)
@@ -29,6 +29,9 @@
 # Lottery:setVrfConsumer()               -- done
 #  
 #
-# LockDrop - rewrite calculateReward() to drip 0.5 per block    -- ToDo
-#          - display live in front-end?                         -- ToDo
+# LockDrop - rewrite calculateReward() to drip 0.5 per block    -- done
+#          - deploy LockDrop contract                           -- done 
+#          - test the RWDZ drop upon withdraw                       -- ToDo   <--  here !! 
+#          - display live in front-end                              -- ToDo
 #
+

@@ -57,7 +57,7 @@ contract Deploy is Script {
 
         // 5. Set TokenManager / VRFv2Consumer addresses (in Lottery)
         // ILottery(lottery).setTokenManager(tokenManager);
-        ILottery(lottery).setVrfConsumer(vrfconsumer);
+        // ILottery(lottery).setVrfConsumer(vrfconsumer);
 
         // 6. call Lottery:returnWinner()                              
         // address winner = ILottery(lottery).returnWinner();
