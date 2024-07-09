@@ -6,27 +6,23 @@ import {TokenManager} from "../src/rewardtokenmanager.sol";
 import {IVRFv2Consumer} from "../src/I.vrfv2consumer.sol";
 import {ITokenManager} from "../src/I.tokenmanager.sol";
 import {IRandomNumberGenerator} from "../src/I.randomnumbergenerator.sol";
+import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 
 
-// interface TokenManagerInterface {
-//     function transferReward(address _to, uint256 _amount) external;
-//     function setRewardTokenAddress(address _rewardTokenAddress) external;
-// }
-
-contract LockDrop {
+contract LockDrop is ReentrancyGuard {
     address public tokenManagerAddress;
     uint256 public requestId;
     
     struct TimedDeposit {
         uint256 amount;
-        uint256 timestamp;
+        uint256 blockstamp;
         uint256 reward;
     }
 
     mapping (address => TimedDeposit) public balances;   
 
-    event NewDeposit(address indexed _user, uint256 _amount, uint256 _timestamp);
-    event NewWithdraw(address indexed _user, uint256 _amount, uint256 _timestamp);
+    event NewDeposit(address indexed _user, uint256 _amount, uint256 _blockstamp);
+    event NewWithdraw(address indexed _user, uint256 _amount, uint256 _blockstamp);
 
     constructor(address _tokenmanager) {
         requestId = 0;
@@ -42,25 +38,25 @@ contract LockDrop {
             balances[msg.sender] = TimedDeposit(
             {
                 amount: msg.value, 
-                timestamp: block.timestamp,
+                blockstamp: block.number,
                 reward: 0
             });
         } 
 
         // Reset timestamp upon every deposit to enforce full time lock
-        balances[msg.sender].timestamp = block.timestamp;                   
-        emit NewDeposit(msg.sender, msg.value, block.timestamp);
+        balances[msg.sender].blockstamp = block.number;                   
+        emit NewDeposit(msg.sender, msg.value, block.number);
     }    
-    
-    function withdraw() external {
+     
+    function withdraw() external nonReentrant {
         require(balances[msg.sender].amount > 0, "You have no balance to withdraw...");
-        require(block.timestamp >= balances[msg.sender].timestamp + 1 minutes, "Time lock not expired...");
+        require(block.number > balances[msg.sender].blockstamp);
   
         balances[msg.sender].reward = calculateReward();                         
 
         uint256 tempAmount = balances[msg.sender].amount;
         balances[msg.sender].amount = 0;
-        balances[msg.sender].timestamp = 0;
+        balances[msg.sender].blockstamp = 0;
                
         // Transfer deposited Ether to the withdrawer                     
         (bool success, ) = payable(msg.sender).call{value: tempAmount}("");
@@ -75,22 +71,16 @@ contract LockDrop {
 
     function calculateReward() internal view returns(uint256) {
         uint256 currentBlock = block.number;
-        uint256 startingBlock = balances[msg.sender].timestamp; 
+        uint256 startingBlock = balances[msg.sender].blockstamp; 
 
         // Check for potential underflow (startingBlock > currentBlock)
         if (startingBlock > currentBlock) {
-            return 0;
+            revert("Starting block cannot be greater than the current block!");
         }
 
         uint256 elapsedBlocks = currentBlock - startingBlock;
-        uint256 reward = elapsedBlocks * (5**18);             // 0.5 reward per block
+        uint256 reward = elapsedBlocks * (5**18);   // 0.5 reward per block
         return reward;
     }
-
-    // function calculateReward() internal view returns(uint256) {
-    //     uint256 elapsedTime = (block.timestamp - balances[msg.sender].timestamp) / 60 seconds;
-    //     uint256 reward = elapsedTime * (10**18);
-    //     return reward;
-    // }
 }
 

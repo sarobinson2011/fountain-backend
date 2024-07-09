@@ -27,10 +27,12 @@ contract TokenManager {
         rewardTokenAddress = _rewardTokenAddress;
     }
 
+    // shouldn't THIS be non-reentrant?                                                 // ToDo 
     function transferReward(address _to, uint256 _amount) public addressIsNotZero {
         (bool success, ) = rewardTokenAddress.call(abi.encodeWithSignature("transferReward(address,uint256)",_to,_amount));
         require(success, "RWDZ token transfer failed...");
         emit RewardTransferred(msg.sender, _amount);              
     }
+
 }
 

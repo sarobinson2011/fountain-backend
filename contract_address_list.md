@@ -14,6 +14,7 @@
 # Reward        : 0xA58889F7C6fc8D407F6B69e15E23fCf194b05ce  
 # 
 
+
 #       Contract addresses (Functionality)
 #
 # VRFv2Consumer : 0x6D315be97bDE09563779b4558Cf2bB26F3FCdB66    
@@ -31,7 +32,7 @@
 #
 # LockDrop - rewrite calculateReward() to drip 0.5 per block    -- done
 #          - deploy LockDrop contract                           -- done 
-#          - test the RWDZ drop upon withdraw                       -- ToDo   <--  here !! 
+#          - test the RWDZ drop upon withdraw                       -- ToDo <-- HERE!
 #          - display live in front-end                              -- ToDo
 #
 
