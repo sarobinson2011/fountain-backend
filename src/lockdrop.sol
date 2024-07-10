@@ -9,7 +9,7 @@ import {IRandomNumberGenerator} from "../src/I.randomnumbergenerator.sol";
 import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 
 
-contract LockDrop is ReentrancyGuard {
+contract LockDrop {
     address public tokenManagerAddress;
     uint256 public requestId;
     
@@ -48,7 +48,7 @@ contract LockDrop is ReentrancyGuard {
         emit NewDeposit(msg.sender, msg.value, block.number);
     }    
      
-    function withdraw() external nonReentrant {
+    function withdraw() external {
         require(balances[msg.sender].amount > 0, "You have no balance to withdraw...");
         require(block.number > balances[msg.sender].blockstamp);
   
