@@ -2,9 +2,23 @@
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 
 
-contract TokenManager {
+/**
+* @dev TokenManager contract is custodian of the RWDZ tokens, 
+* as minted by the (ERC20) Reward token contract on deployment
+*
+* @dev TokenManager contract inherits from ReentrancyGuard and
+* imlements the nonReentrant modifier for transferReward()
+*
+* @dev transferReward() function sends a low-level call to the 
+* Reward token contract, which makes the RWDZ token transfer 
+* from TokenManager to the user
+*/
+
+
+contract TokenManager is ReentrancyGuard {
     address public rewardTokenAddress;
     address public owner;
     event RewardTransferred(address indexed _user, uint256 _amount);
@@ -27,12 +41,14 @@ contract TokenManager {
         rewardTokenAddress = _rewardTokenAddress;
     }
 
-    // shouldn't THIS be non-reentrant?                                                 // ToDo 
-    function transferReward(address _to, uint256 _amount) public addressIsNotZero {
+    function transferReward(address _to, uint256 _amount) external nonReentrant addressIsNotZero {
+        // Check remaining RWDZ token balance with Reward contract before transfer
+        uint256 remainingBalance = IERC20(rewardTokenAddress).balanceOf(address(this));
+        require(_amount <= remainingBalance, "Insufficient RWDZ tokens remaining in TokenManager");
+
         (bool success, ) = rewardTokenAddress.call(abi.encodeWithSignature("transferReward(address,uint256)",_to,_amount));
         require(success, "RWDZ token transfer failed...");
-        emit RewardTransferred(msg.sender, _amount);              
+        emit RewardTransferred(msg.sender, _amount);        
     }
-
 }
 

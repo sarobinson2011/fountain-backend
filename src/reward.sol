@@ -9,7 +9,9 @@ contract Reward is ERC20 {
         _mint(_address, _supply);
     }
 
-    function transferReward(address _to, uint256 _amount) public {
+    function transferReward(address _to, uint256 _amount) public { 
         transfer(_to, _amount);
     }
 }
+
+
