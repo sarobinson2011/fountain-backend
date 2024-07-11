@@ -11,7 +11,7 @@ import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 
 contract LockDrop {
     address public tokenManagerAddress;
-    uint256 public requestId;
+    uint256 public rewardValue;
     
     struct TimedDeposit {
         uint256 amount;
@@ -25,7 +25,6 @@ contract LockDrop {
     event NewWithdraw(address indexed _user, uint256 _amount, uint256 _blockstamp);
 
     constructor(address _tokenmanager) {
-        requestId = 0;
         tokenManagerAddress = _tokenmanager;
     }
 
@@ -52,7 +51,8 @@ contract LockDrop {
         require(balances[msg.sender].amount > 0, "You have no balance to withdraw...");
         require(block.number > balances[msg.sender].blockstamp);
   
-        balances[msg.sender].reward = calculateReward();                         
+        balances[msg.sender].reward = calculateReward(); 
+        rewardValue = balances[msg.sender].reward;                       
 
         uint256 tempAmount = balances[msg.sender].amount;
         balances[msg.sender].amount = 0;
@@ -81,6 +81,20 @@ contract LockDrop {
         uint256 elapsedBlocks = currentBlock - startingBlock;
         uint256 reward = elapsedBlocks * (5**18);   // 0.5 reward per block
         return reward;
+    }
+
+    // changes from here need to be re-dployed                                                      <-- ToDo
+
+    /**
+    * @dev calculateEstimatedReward() returns the current value of the 
+    * number of Rewardz (RWDZ) tokens allocated to the calling address
+    *
+    * @dev intention is for this function to be used for event polling
+    * in the front-end code, e.g. displaying the current reward amount
+    **/
+
+    function calculateBlockReward(uint256 startingBlock, uint256 currentBlock) public pure returns (uint256) {
+        // ToDo 
     }
 }
 

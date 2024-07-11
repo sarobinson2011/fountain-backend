@@ -15,7 +15,7 @@ import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 * @dev transferReward() function sends a low-level call to the 
 * Reward token contract, which makes the RWDZ token transfer 
 * from TokenManager to the user
-*/
+**/
 
 
 contract TokenManager is ReentrancyGuard {
