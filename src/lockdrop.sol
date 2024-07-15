@@ -79,11 +79,10 @@ contract LockDrop {
         }
 
         uint256 elapsedBlocks = currentBlock - startingBlock;
-        uint256 reward = elapsedBlocks * (5**18);   // 0.5 reward per block
+        uint256 reward = elapsedBlocks * (10**18); 
         return reward;
     }
-
-    // changes from here need to be re-dployed                                                      <-- ToDo
+    
 
     /**
     * @dev calculateEstimatedReward() returns the current value of the 
@@ -93,8 +92,19 @@ contract LockDrop {
     * in the front-end code, e.g. displaying the current reward amount
     **/
 
-    function calculateBlockReward(uint256 startingBlock, uint256 currentBlock) public pure returns (uint256) {
-        // ToDo 
+
+    function returnBlockReward() public view returns (uint256) {
+        uint256 _currentBlock = block.number;
+        uint256 _startingBlock = balances[msg.sender].blockstamp; 
+        
+        if (_startingBlock > _currentBlock) {
+            revert("Starting block cannot be greater than the current block!");
+            // or return(0) ??
+        }
+
+        uint256 _elapsedBlocks = _currentBlock - _startingBlock;
+        uint256 blockReward = _elapsedBlocks * (10**18); 
+        return blockReward;
     }
 }
 

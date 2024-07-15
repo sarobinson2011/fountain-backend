@@ -1,5 +1,7 @@
 # forge script script/deploy_lockdrop.s.sol:Deploy --rpc-url ${SEPOLIA_RPC_URL} --broadcast --legacy --verify -vv --etherscan-api-key ${ETHERSCAN_API_KEY}
 
+# forge script script/use_lottery.s.sol:Deploy --rpc-url ${SEPOLIA_RPC_URL} --broadcast --legacy
+
 # forge script script/deploy_lockdrop.s.sol:Deploy --rpc-url ${ARBITRUM_SEPOLIA_RPC_URL} --broadcast --verify -vv --etherscan-api-key ${ARBISCAN_API_KEY} --verifier-url ${ARBITRUM_SEPOLIA_API} --private-key ${PRIVATE_KEY} 
 
 # forge script script/use_lockdrop.s.sol:Deploy --rpc-url ${ARBITRUM_SEPOLIA_RPC_URL} --broadcast

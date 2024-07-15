@@ -22,12 +22,12 @@ contract Deploy is Script {
         uint256 supply = 10_000 * (10**18);
 
         // uint256 requestId = 0;
-        address rewardz = 0x9226fe7f6e64E44a84b90cAC43562Fe0ad4A7Cf9;
-        address lottery = 0x3E07d0Cf3CE90FF622D64b3F7D3343b8fc5E0776;
-        address vrfconsumer = 0x6D315be97bDE09563779b4558Cf2bB26F3FCdB66;
+        address rewardz = 0x89Af2fc384D9ecC8Ac6efa8F79CAc33837F78588;
+        // address lottery = 0x3E07d0Cf3CE90FF622D64b3F7D3343b8fc5E0776;
+        // address vrfconsumer = 0x6D315be97bDE09563779b4558Cf2bB26F3FCdB66;
         address tokenManager = 0x311cF9EDE117CdDEBBb5EF3b9B9A03C5D3652D1B;
 
-        uint256 randomWord = 0xe88cb090918292ae8a2ca83cafb44744736b796305ef8b6be7a326b478e5a0ee;
+        // uint256 randomWord = 0xe88cb090918292ae8a2ca83cafb44744736b796305ef8b6be7a326b478e5a0ee;
 
         console.log("Account:", account);
         
@@ -87,4 +87,3 @@ contract Deploy is Script {
 
 // forge verify-contract --chain-id 11155111 --num-of-optimizations 1000000 --watch --compiler-version v0.8.23+commit.f704f362 0x03a66BB798B1dF87046cC535a8e8489D023212bD src/vrfv2consumer.sol:VRFv2Consumer 
 
-  
