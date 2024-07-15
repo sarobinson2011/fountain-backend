@@ -40,15 +40,36 @@ contract TokenManager is ReentrancyGuard {
     function setRewardTokenAddress(address _rewardTokenAddress) public onlyOwner {
         rewardTokenAddress = _rewardTokenAddress;
     }
+    
 
     function transferReward(address _to, uint256 _amount) external nonReentrant addressIsNotZero {
         // Check remaining RWDZ token balance with Reward contract before transfer
         uint256 remainingBalance = IERC20(rewardTokenAddress).balanceOf(address(this));
-        require(_amount <= remainingBalance, "Insufficient RWDZ tokens remaining in TokenManager");
 
-        (bool success, ) = rewardTokenAddress.call(abi.encodeWithSignature("transferReward(address,uint256)",_to,_amount));
+        // Transfer logic
+        uint256 transferAmount;
+        if (remainingBalance < _amount) {
+            transferAmount = remainingBalance;
+        } else {
+            transferAmount = _amount;
+        }
+
+        (bool success, ) = rewardTokenAddress.call(abi.encodeWithSignature("transferReward(address,uint256)", _to, transferAmount));
         require(success, "RWDZ token transfer failed...");
-        emit RewardTransferred(msg.sender, _amount);        
-    }
+        emit RewardTransferred(msg.sender, transferAmount);
+    }   
+
+
+    // function transferReward(address _to, uint256 _amount) external nonReentrant addressIsNotZero {
+    //     // Check remaining RWDZ token balance with Reward contract before transfer
+    //     uint256 remainingBalance = IERC20(rewardTokenAddress).balanceOf(address(this));
+
+    //     // if not need logic to transfer the remaining tokens                                           <-- ToDo
+    //     require(_amount <= remainingBalance, "Insufficient RWDZ tokens remaining in TokenManager");
+
+    //     (bool success, ) = rewardTokenAddress.call(abi.encodeWithSignature("transferReward(address,uint256)",_to,_amount));
+    //     require(success, "RWDZ token transfer failed...");
+    //     emit RewardTransferred(msg.sender, _amount);        
+    // }
 }
 

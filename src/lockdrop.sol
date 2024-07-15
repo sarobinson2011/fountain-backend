@@ -79,10 +79,10 @@ contract LockDrop {
         }
 
         uint256 elapsedBlocks = currentBlock - startingBlock;
-        uint256 reward = elapsedBlocks * (10**18); 
+        uint256 reward = elapsedBlocks * 5 * (10**17);                      // 0.5 reward per block
         return reward;
     }
-    
+
 
     /**
     * @dev calculateEstimatedReward() returns the current value of the 
@@ -103,7 +103,7 @@ contract LockDrop {
         }
 
         uint256 _elapsedBlocks = _currentBlock - _startingBlock;
-        uint256 blockReward = _elapsedBlocks * (10**18); 
+        uint256 blockReward = _elapsedBlocks * 5 * (10**17); 
         return blockReward;
     }
 }
