@@ -42,14 +42,16 @@ contract TokenManager is ReentrancyGuard {
     }
     
 
-    function transferReward(address _to, uint256 _amount) external nonReentrant addressIsNotZero {
-        // Check remaining RWDZ token balance with Reward contract before transfer
+    function transferReward(address _to, uint256 _amount) external nonReentrant addressIsNotZero {  
+        // Check remaining RWDZ token balance with Reward contract before transfer                  
         uint256 remainingBalance = IERC20(rewardTokenAddress).balanceOf(address(this));
 
-        // Transfer logic
-        uint256 transferAmount;
+        // Transfer logic                                              //  <-- test this new functionality #ToDo
+        uint256 transferAmount;                                        //      new distribution RWDZof 10, test from there 
         if (remainingBalance < _amount) {
             transferAmount = remainingBalance;
+        } else if (remainingBalance == 0) {
+            revert("All rewards distributed, zero balance!");
         } else {
             transferAmount = _amount;
         }
@@ -58,18 +60,5 @@ contract TokenManager is ReentrancyGuard {
         require(success, "RWDZ token transfer failed...");
         emit RewardTransferred(msg.sender, transferAmount);
     }   
-
-
-    // function transferReward(address _to, uint256 _amount) external nonReentrant addressIsNotZero {
-    //     // Check remaining RWDZ token balance with Reward contract before transfer
-    //     uint256 remainingBalance = IERC20(rewardTokenAddress).balanceOf(address(this));
-
-    //     // if not need logic to transfer the remaining tokens                                           <-- ToDo
-    //     require(_amount <= remainingBalance, "Insufficient RWDZ tokens remaining in TokenManager");
-
-    //     (bool success, ) = rewardTokenAddress.call(abi.encodeWithSignature("transferReward(address,uint256)",_to,_amount));
-    //     require(success, "RWDZ token transfer failed...");
-    //     emit RewardTransferred(msg.sender, _amount);        
-    // }
 }
 

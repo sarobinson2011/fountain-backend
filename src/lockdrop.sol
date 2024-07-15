@@ -93,13 +93,12 @@ contract LockDrop {
     **/
 
 
-    function returnBlockReward() public view returns (uint256) {
+    function returnBlockReward() public view returns (uint256) {               // check calling this works #ToDo
         uint256 _currentBlock = block.number;
         uint256 _startingBlock = balances[msg.sender].blockstamp; 
         
         if (_startingBlock > _currentBlock) {
             revert("Starting block cannot be greater than the current block!");
-            // or return(0) ??
         }
 
         uint256 _elapsedBlocks = _currentBlock - _startingBlock;
