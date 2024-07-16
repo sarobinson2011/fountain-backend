@@ -22,6 +22,7 @@ contract TokenManager is ReentrancyGuard {
     address public rewardTokenAddress;
     address public owner;
     event RewardTransferred(address indexed _user, uint256 _amount);
+    event RewardBalanceZero(address indexed _user, bool _trueFalse);
 
     constructor() {
         owner = msg.sender;
@@ -40,18 +41,23 @@ contract TokenManager is ReentrancyGuard {
     function setRewardTokenAddress(address _rewardTokenAddress) public onlyOwner {
         rewardTokenAddress = _rewardTokenAddress;
     }
+
+    function returnRewardTokenAddress() public view returns(address) {
+        return rewardTokenAddress;
+    }
     
 
     function transferReward(address _to, uint256 _amount) external nonReentrant addressIsNotZero {  
+
         // Check remaining RWDZ token balance with Reward contract before transfer                  
         uint256 remainingBalance = IERC20(rewardTokenAddress).balanceOf(address(this));
 
-        // Transfer logic                                              //  <-- test this new functionality #ToDo
-        uint256 transferAmount;                                        //      new distribution RWDZof 10, test from there 
+        // Transfer logic                                              
+        uint256 transferAmount;                                      
         if (remainingBalance < _amount) {
             transferAmount = remainingBalance;
         } else if (remainingBalance == 0) {
-            revert("All rewards distributed, zero balance!");
+            emit RewardBalanceZero(msg.sender, true);    // <-- this needs catching in front-end + testing #ToDo 
         } else {
             transferAmount = _amount;
         }

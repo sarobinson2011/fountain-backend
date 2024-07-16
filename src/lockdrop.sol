@@ -64,6 +64,7 @@ contract LockDrop {
         emit NewWithdraw(msg.sender, tempAmount, block.timestamp);
         tempAmount = 0;
 
+
         // Transfer the Reward tokens 
         ITokenManager(tokenManagerAddress).transferReward(msg.sender, balances[msg.sender].reward); 
         balances[msg.sender].reward = 0;

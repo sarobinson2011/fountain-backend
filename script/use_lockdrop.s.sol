@@ -17,7 +17,7 @@ contract Deploy is Script {
         address account = vm.addr(privateKey);
         // uint256 amount = 15 * (10**18);
 
-        // address lockdrop = ;
+        address lockdrop = 0xaD05211B79e832628Ed86825F9217586ebfdA6ae;
         address tokenmanager = 0x50eF9E70dA285ee6321F765997FCd294f0805d36;
         address reward = 0xf45f8cB5A4C2Dc20D2865a1C6751407C4E097c67;
    
@@ -33,7 +33,7 @@ contract Deploy is Script {
         // IVRFv2Consumer(vrfconsumer).setLockdropAddress(lockdrop);
 
         // call setRewardTokenAddress()
-        ITokenManager(tokenmanager).setRewardTokenAddress(reward);
+        // ITokenManager(tokenmanager).setRewardTokenAddress(reward);
 
         // deposit
         // ILockDrop(lockdrop).deposit{value: 0.0001 ether}();    
