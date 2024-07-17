@@ -2,12 +2,12 @@
 
 #       App address for front-end
 #
-# LockDrop      : 
+# LockDrop      : 0x8eA5DFF5ee126a9497185249b91f6790F1325bbE
 
 #       Contract addresses (Utility)
 # 
-# TokenManager  : 0xEbD2Ce933eA2AcF319E0636A04736fA64449c3C8      
-# Reward        :  
+# TokenManager  : 0x2761EF18De0018A2fEF0EEE16F85A8Fa59401822       
+# Reward        : 0xc18b35F67fe20606E61353f0A0a2332b08bD5872
 # 
 
 #       Contract addresses (Functionality)
@@ -24,13 +24,12 @@
 # Lottery:setVrfConsumer()               -- done
 #  
 #
-# LockDrop - rewrite calculateReward() to drip 0.5 per block  -- done
-#          - deploy the TokenManager contract                     -- ToDo #1
-#          - deploy the Reward contract                           -- ToDo #2
-#          - import reward token into Metamask                    -- ToDo #3
-#          - call TokenManager:setRewardTokenAddress()            -- ToDo #4 
-#          - deploy LockDrop contract                             -- ToDo #5 
-#          - test the reward tokens drop, upon withdraw           -- ToDo #6  
-#          - display live in front-end                            -- ToDo #7
+#   - deploy the TokenManager contract                   -- #1
+#   - deploy the Reward contract                         -- #2
+#   - import reward token into Metamask                  -- #3
+#   - call TokenManager:setRewardTokenAddress()          -- #4 
+#   - deploy LockDrop contract                           -- #5 
+#   - test the reward tokens drop, upon withdraw         -- #6    <-- HERE !!
+#   - display live in front-end                          -- #7
 #
 

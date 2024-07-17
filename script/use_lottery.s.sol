@@ -22,10 +22,10 @@ contract Deploy is Script {
         uint256 supply = 10_000 * (10**18);
 
         // uint256 requestId = 0;
-        address rewardz = 0x177FbC60A6163D7c0b549DeEb1CFcde3837867B8;
+        address rewardz = 0xc18b35F67fe20606E61353f0A0a2332b08bD5872;
         // address lottery = ;
         // address vrfconsumer = ;
-        address tokenManager = 0xEbD2Ce933eA2AcF319E0636A04736fA64449c3C8;
+        address tokenManager = 0x2761EF18De0018A2fEF0EEE16F85A8Fa59401822;
 
         // uint256 randomWord = 0xe88cb090918292ae8a2ca83cafb44744736b796305ef8b6be7a326b478e5a0ee;
 

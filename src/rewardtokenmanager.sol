@@ -49,15 +49,16 @@ contract TokenManager is ReentrancyGuard {
 
     function transferReward(address _to, uint256 _amount) external nonReentrant addressIsNotZero {  
 
-        // Check remaining RWDZ token balance with Reward contract before transfer                  
+        // Check remaining reward token balance with Reward contract before transfer                  
         uint256 remainingBalance = IERC20(rewardTokenAddress).balanceOf(address(this));
 
         // Transfer logic                                              
         uint256 transferAmount;                                      
-        if (remainingBalance < _amount) {
-            transferAmount = remainingBalance;
-        } else if (remainingBalance == 0) {
-            emit RewardBalanceZero(msg.sender, true);    // <-- this needs catching in front-end + testing #ToDo 
+        if (remainingBalance == 0) {
+            emit RewardBalanceZero(msg.sender, true);           // <-- catch + display in React app
+            transferAmount = 0;
+        } else if (remainingBalance < _amount) {
+            transferAmount = remainingBalance;            
         } else {
             transferAmount = _amount;
         }
@@ -68,3 +69,5 @@ contract TokenManager is ReentrancyGuard {
     }   
 }
 
+
+        
