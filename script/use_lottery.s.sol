@@ -19,13 +19,11 @@ contract Deploy is Script {
         uint64 subscriptionId = 10258;
         uint256 entryFee = 0.001 * (10**18);
         uint256 maxPlayers = 2;
-        uint256 supply = 10_000 * (10**18);
+        uint256 supply = 1_000 * (10**18);
 
         // uint256 requestId = 0;
-        address rewardz = 0xc18b35F67fe20606E61353f0A0a2332b08bD5872;
-        // address lottery = ;
-        // address vrfconsumer = ;
-        address tokenManager = 0x2761EF18De0018A2fEF0EEE16F85A8Fa59401822;
+        address rewardz = 0x1645422d1f02fc09CcA7af48ea30cA2bF5F4F25E;
+        address tokenManager = 0x19c68c600CB47b53e9609DE123bccc2E40A9B880;
 
         // uint256 randomWord = 0xe88cb090918292ae8a2ca83cafb44744736b796305ef8b6be7a326b478e5a0ee;
 

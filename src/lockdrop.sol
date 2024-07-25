@@ -23,6 +23,8 @@ contract LockDrop {
 
     event NewDeposit(address indexed _user, uint256 _amount, uint256 _blockstamp);
     event NewWithdraw(address indexed _user, uint256 _amount, uint256 _blockstamp);
+    event RewardBalanceZero();
+
 
     constructor(address _tokenmanager) {
         tokenManagerAddress = _tokenmanager;
@@ -86,7 +88,7 @@ contract LockDrop {
 
 
     /**
-    * @dev calculateEstimatedReward() returns the current value of the 
+    * @dev calculateEstimatedReward() returns the current value of the
     * number of Rewardz (RWDZ) tokens allocated to the calling address
     *
     * @dev intention is for this function to be used for event polling
@@ -94,17 +96,22 @@ contract LockDrop {
     **/
 
 
-    function returnBlockReward() public view returns (uint256) {               // check calling this works #ToDo
-        uint256 _currentBlock = block.number;
-        uint256 _startingBlock = balances[msg.sender].blockstamp; 
-        
-        if (_startingBlock > _currentBlock) {
-            revert("Starting block cannot be greater than the current block!");
-        }
+    function returnBlockReward() public view returns (uint256) {       
+        if (balances[msg.sender].amount > 0) {
+            uint256 _currentBlock = block.number;
+            uint256 _startingBlock = balances[msg.sender].blockstamp; 
 
-        uint256 _elapsedBlocks = _currentBlock - _startingBlock;
-        uint256 blockReward = _elapsedBlocks * 5 * (10**17); 
-        return blockReward;
+            if (_startingBlock > _currentBlock) {
+                revert("Starting block cannot be greater than the current block!");
+            }
+
+            uint256 _elapsedBlocks = _currentBlock - _startingBlock;
+            uint256 blockReward = _elapsedBlocks * 5 * (10**17); 
+            return blockReward;
+
+        } else {
+            return(0);
+        }   
     }
 }
 

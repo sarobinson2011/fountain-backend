@@ -5,6 +5,8 @@ interface ILockDrop {
     function owner() external;
     function deposit() external payable;
     function withdraw() external;
-    function calculateReward() external; 
+    function calculateReward() external returns(uint256); 
+    function emitRewardBalanceZero() external;
+    function returnBlockReward() external returns(uint256);
 }
 

@@ -20,9 +20,10 @@ import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 
 contract TokenManager is ReentrancyGuard {
     address public rewardTokenAddress;
+    address public lockdropAddress;
     address public owner;
     event RewardTransferred(address indexed _user, uint256 _amount);
-    event RewardBalanceZero(address indexed _user, bool _trueFalse);
+    event RewardBalanceZero();
 
     constructor() {
         owner = msg.sender;
@@ -42,7 +43,11 @@ contract TokenManager is ReentrancyGuard {
         rewardTokenAddress = _rewardTokenAddress;
     }
 
-    function returnRewardTokenAddress() public view returns(address) {
+    function setLockDropAddress(address _lockdropAddress) public onlyOwner {
+        lockdropAddress = _lockdropAddress;
+    }
+
+    function returnRewardTokenAddress() public view returns(address) {      // change to emitRewardTokenAddress
         return rewardTokenAddress;
     }
     
@@ -55,8 +60,8 @@ contract TokenManager is ReentrancyGuard {
         // Transfer logic                                              
         uint256 transferAmount;                                      
         if (remainingBalance == 0) {
-            emit RewardBalanceZero(msg.sender, true);           // <-- catch + display in React app
-            transferAmount = 0;
+            transferAmount = 0;      
+            emit RewardBalanceZero();                          
         } else if (remainingBalance < _amount) {
             transferAmount = remainingBalance;            
         } else {

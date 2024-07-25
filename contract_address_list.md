@@ -1,13 +1,10 @@
 ##      Deployed contract address list 
 
-#       App address for front-end
-#
-# LockDrop      : 0x8eA5DFF5ee126a9497185249b91f6790F1325bbE
-
 #       Contract addresses (Utility)
-# 
-# TokenManager  : 0x2761EF18De0018A2fEF0EEE16F85A8Fa59401822       
-# Reward        : 0xc18b35F67fe20606E61353f0A0a2332b08bD5872
+#
+# LockDrop      : 0x73451dF16b339f2523d959326e0EA7B6A76e0263
+# TokenManager  : 0x19c68c600CB47b53e9609DE123bccc2E40A9B880       
+# Reward        : 0x1645422d1f02fc09CcA7af48ea30cA2bF5F4F25E 
 # 
 
 #       Contract addresses (Functionality)
@@ -29,7 +26,7 @@
 #   - import reward token into Metamask                  -- #3
 #   - call TokenManager:setRewardTokenAddress()          -- #4 
 #   - deploy LockDrop contract                           -- #5 
-#   - test the reward tokens drop, upon withdraw         -- #6    <-- HERE !!
-#   - display live in front-end                          -- #7
+#   - test the reward tokens drop, upon withdraw         -- #6    
+#   - display live in front-end                          -- #7  <-- HERE !!
 #
 
