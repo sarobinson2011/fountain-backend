@@ -22,8 +22,8 @@ contract Deploy is Script {
         uint256 supply = 1_000 * (10**18);
 
         // uint256 requestId = 0;
-        address rewardz = 0x1645422d1f02fc09CcA7af48ea30cA2bF5F4F25E;
-        address tokenManager = 0x19c68c600CB47b53e9609DE123bccc2E40A9B880;
+        address reward = 0x6B4127F62E5d15DbE754441bD4dF79c71273996a;
+        address tokenManager = 0xAfb04620B1BFAC4a59d141FDe8C79B3B075f79B0;
 
         // uint256 randomWord = 0xe88cb090918292ae8a2ca83cafb44744736b796305ef8b6be7a326b478e5a0ee;
 
@@ -51,7 +51,7 @@ contract Deploy is Script {
         // IVRFv2Consumer(vrfconsumer).setLotteryContract(lottery);
 
         // 4a. Set Reward Token Address (in TokenManager) 
-        ITokenManager(tokenManager).setRewardTokenAddress(rewardz);
+        ITokenManager(tokenManager).setRewardTokenAddress(reward);
 
         // 5. Set TokenManager / VRFv2Consumer addresses (in Lottery)
         // ILottery(lottery).setTokenManager(tokenManager);

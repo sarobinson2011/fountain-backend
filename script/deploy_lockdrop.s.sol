@@ -15,12 +15,11 @@ contract Deploy is Script {
         uint256 privateKey = vm.envUint("PRIVATE_KEY_0x");
         address account = vm.addr(privateKey);
         uint256 supply = 1_000 * (10**18);
-        uint256 currentReward = 0;
+        // uint256 currentReward = 0;
 
-        address tokenmanagerAddress = 0x19c68c600CB47b53e9609DE123bccc2E40A9B880;
+        address tokenmanagerAddress = 0xAfb04620B1BFAC4a59d141FDe8C79B3B075f79B0;
 
-        address lockdrop =
-        0x73451dF16b339f2523d959326e0EA7B6A76e0263;
+        // address lockdrop = ;
 
         console.log("Account:", account);
 
@@ -30,15 +29,15 @@ contract Deploy is Script {
         // deploy reward token manager
         // new TokenManager();
 
-        // deploy the RWDZ token contract
-        // new Reward("Testz", "TST", tokenmanagerAddress, supply);
+        // deploy the FTN token contract
+        // new Reward("Frountain", "FTN", tokenmanagerAddress, supply);
         
         // deploy lockdrop
-        // new LockDrop(tokenmanagerAddress); 
+        new LockDrop(tokenmanagerAddress); 
 
         // call returnBlockReward
-        currentReward = ILockDrop(lockdrop).returnBlockReward();
-        console.log("Current Reward amount:", currentReward);
+        // currentReward = ILockDrop(lockdrop).returnBlockReward();
+        // console.log("Current Reward amount:", currentReward);
 
         // stop broadcast
         vm.stopBroadcast();

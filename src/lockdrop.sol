@@ -23,6 +23,7 @@ contract LockDrop {
 
     event NewDeposit(address indexed _user, uint256 _amount, uint256 _blockstamp);
     event NewWithdraw(address indexed _user, uint256 _amount, uint256 _blockstamp);
+    event RewardReturned(address indexed _user, uint256 _amount);
     event RewardBalanceZero();
 
 
@@ -88,15 +89,13 @@ contract LockDrop {
 
 
     /**
-    * @dev calculateEstimatedReward() returns the current value of the
-    * number of Rewardz (RWDZ) tokens allocated to the calling address
+    * @dev fetchBlockReward() emits the current value of the
+    * number of reward tokens allocated to the calling address
     *
-    * @dev intention is for this function to be used for event polling
-    * in the front-end code, e.g. displaying the current reward amount
+    * @dev this function to be used by the front-end app
     **/
 
-
-    function returnBlockReward() public view returns (uint256) {       
+    function fetchBlockReward() external {       
         if (balances[msg.sender].amount > 0) {
             uint256 _currentBlock = block.number;
             uint256 _startingBlock = balances[msg.sender].blockstamp; 
@@ -107,11 +106,8 @@ contract LockDrop {
 
             uint256 _elapsedBlocks = _currentBlock - _startingBlock;
             uint256 blockReward = _elapsedBlocks * 5 * (10**17); 
-            return blockReward;
-
-        } else {
-            return(0);
-        }   
+            emit RewardReturned(msg.sender, blockReward); 
+        } 
     }
 }
 
