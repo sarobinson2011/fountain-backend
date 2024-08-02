@@ -22,8 +22,8 @@ contract Deploy is Script {
         uint256 supply = 1_000 * (10**18);
 
         // uint256 requestId = 0;
-        address reward = 0x6B4127F62E5d15DbE754441bD4dF79c71273996a;
-        address tokenManager = 0xAfb04620B1BFAC4a59d141FDe8C79B3B075f79B0;
+        address reward = 0x6f75964b49776731D86ca81c4E8C363B30Af87F1;
+        address tokenManager = 0x803C2eE5618fADB163D85C74990E98D11a7827f8;
 
         // uint256 randomWord = 0xe88cb090918292ae8a2ca83cafb44744736b796305ef8b6be7a326b478e5a0ee;
 

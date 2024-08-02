@@ -15,11 +15,9 @@ contract Deploy is Script {
         uint256 privateKey = vm.envUint("PRIVATE_KEY_0x");
         address account = vm.addr(privateKey);
         uint256 supply = 1_000 * (10**18);
-        // uint256 currentReward = 0;
 
-        address tokenmanagerAddress = 0xAfb04620B1BFAC4a59d141FDe8C79B3B075f79B0;
-
-        // address lockdrop = ;
+        address tokenmanagerAddress = 0x803C2eE5618fADB163D85C74990E98D11a7827f8;
+        // address lockdrop = 0x3908C1ed3f6F2878affaF18B41b22006A0B86865;
 
         console.log("Account:", account);
 
@@ -30,14 +28,13 @@ contract Deploy is Script {
         // new TokenManager();
 
         // deploy the FTN token contract
-        // new Reward("Frountain", "FTN", tokenmanagerAddress, supply);
+        // new Reward("Fountain", "FTN", tokenmanagerAddress, supply);
         
         // deploy lockdrop
         new LockDrop(tokenmanagerAddress); 
 
-        // call returnBlockReward
-        // currentReward = ILockDrop(lockdrop).returnBlockReward();
-        // console.log("Current Reward amount:", currentReward);
+        // call fetchBlockReward
+        // ILockDrop(lockdrop).fetchBlockReward();
 
         // stop broadcast
         vm.stopBroadcast();

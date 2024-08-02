@@ -70,6 +70,7 @@ contract LockDrop {
 
         // Transfer the Reward tokens 
         ITokenManager(tokenManagerAddress).transferReward(msg.sender, balances[msg.sender].reward); 
+        emit RewardReturned(msg.sender, balances[msg.sender].reward);          
         balances[msg.sender].reward = 0;
     }
 
@@ -90,12 +91,14 @@ contract LockDrop {
 
     /**
     * @dev fetchBlockReward() emits the current value of the
-    * number of reward tokens allocated to the calling address
+    * number of reward tokens allocated to the calling address.
+    * if zero balance function returns zero
     *
     * @dev this function to be used by the front-end app
     **/
 
-    function fetchBlockReward() external {       
+    function fetchBlockReward() external {                                  // re-deploy and test functionality <-- ToDo
+        uint256 blockReward = 0;
         if (balances[msg.sender].amount > 0) {
             uint256 _currentBlock = block.number;
             uint256 _startingBlock = balances[msg.sender].blockstamp; 
@@ -105,9 +108,11 @@ contract LockDrop {
             }
 
             uint256 _elapsedBlocks = _currentBlock - _startingBlock;
-            uint256 blockReward = _elapsedBlocks * 5 * (10**17); 
-            emit RewardReturned(msg.sender, blockReward); 
-        } 
+            blockReward = _elapsedBlocks * 5 * (10**17); 
+        } else {
+            blockReward = 0;
+        }
+        emit RewardReturned(msg.sender, blockReward); 
     }
 }
 
