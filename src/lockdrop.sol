@@ -97,7 +97,7 @@ contract LockDrop {
     * @dev this function to be used by the front-end app
     **/
 
-    function fetchBlockReward() external {                                  // re-deploy and test functionality <-- ToDo
+    function fetchBlockReward() external {                  
         uint256 blockReward = 0;
         if (balances[msg.sender].amount > 0) {
             uint256 _currentBlock = block.number;
