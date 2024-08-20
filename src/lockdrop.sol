@@ -97,7 +97,7 @@ contract LockDrop {
     * @dev this function to be used by the front-end app
     **/
 
-    function fetchBlockReward() external {                  
+    function fetchBlockReward() external returns(uint256) {                  
         uint256 blockReward = 0;
         if (balances[msg.sender].amount > 0) {
             uint256 _currentBlock = block.number;
@@ -111,8 +111,10 @@ contract LockDrop {
             blockReward = _elapsedBlocks * 5 * (10**17); 
         } else {
             blockReward = 0;
+            return blockReward;
         }
         emit RewardReturned(msg.sender, blockReward); 
-    }
+        return blockReward;
+    } 
 }
 

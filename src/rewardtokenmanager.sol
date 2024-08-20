@@ -6,14 +6,14 @@ import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 
 
 /**
-* @dev TokenManager contract is custodian of the RWDZ tokens, 
-* as minted by the (ERC20) Reward token contract on deployment
+* @dev TokenManager contract is custodian of the FTN tokens, 
+* as minted by the (ERC20) Reward contract on deployment
 *
 * @dev TokenManager contract inherits from ReentrancyGuard and
 * imlements the nonReentrant modifier for transferReward()
 *
 * @dev transferReward() function sends a low-level call to the 
-* Reward token contract, which makes the RWDZ token transfer 
+* Reward token contract, which makes the FTN token transfer 
 * from TokenManager to the user
 **/
 
@@ -69,7 +69,7 @@ contract TokenManager is ReentrancyGuard {
         }
 
         (bool success, ) = rewardTokenAddress.call(abi.encodeWithSignature("transferReward(address,uint256)", _to, transferAmount));
-        require(success, "RWDZ token transfer failed...");
+        require(success, "FTN token transfer failed...");
         emit RewardTransferred(msg.sender, transferAmount);
     }   
 }

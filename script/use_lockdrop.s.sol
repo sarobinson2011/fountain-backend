@@ -16,33 +16,42 @@ contract Deploy is Script {
         uint256 privateKey = vm.envUint("PRIVATE_KEY_0x");
         address account = vm.addr(privateKey);
         // uint256 amount = 15 * (10**18);
+        uint256 blockReward = 0;
 
-        address lockdrop = 0xaD05211B79e832628Ed86825F9217586ebfdA6ae;
-        address tokenmanager = 0x50eF9E70dA285ee6321F765997FCd294f0805d36;
-        address reward = 0xf45f8cB5A4C2Dc20D2865a1C6751407C4E097c67;
+        address lockdrop = 0xA19d215f9f580B12F2A9979CF4aE6a177018e7AF;
+        address tokenmanager = 0x7aedE1ceF21bF80574aD9339c63745Ef138219C6;
+        address reward = 0xB688bbAF1239b560eCd6B56d7fAd4719D75CB7e1;
    
         console.log("Account:", account);
         
         // start broadcast
         vm.startBroadcast(privateKey);
 
-        // call setVrfConsumer()
+
+        // ===========  Lottery  ===========
+
+        // Set VRF Consumer
         // IRandomNumberGenerator(randomnumbergenerator).setVrfConsumer(vrfconsumer);
 
-        // call VRFv2Consumer:setLockdropAddress(LockDrop)
+        // Set Lockdrop Address 
         // IVRFv2Consumer(vrfconsumer).setLockdropAddress(lockdrop);
 
-        // call setRewardTokenAddress()
-        // ITokenManager(tokenmanager).setRewardTokenAddress(reward);
+        // set the VRF consumer address in the Random Number Genrator
+        // IRandomNumberGenerator(randomnumbergenerator).setVrfConsumer(vrfconsumer);
 
-        // deposit
+
+        // ===========  LockDrop  ==========
+
+        // 1/. DEPOSIT
         // ILockDrop(lockdrop).deposit{value: 0.0001 ether}();    
     
-        // withdraw funds + random reward
+        // 2/. WITHDRAW 
         // ILockDrop(lockdrop).withdraw();
 
-        // set the VRF consumer address in the Random Number Genrator
-        // IRandomNumberGenerator(randomnumbergenerator).setVrfConsumer(vrfconsumer);  
+        // 3/. call fetchBlockReward
+        blockReward = ILockDrop(lockdrop).fetchBlockReward(); // needs to return blockReward
+        console.log("FTN token reward: ", blockReward);
+
 
         // stop broadcast
         vm.stopBroadcast();
