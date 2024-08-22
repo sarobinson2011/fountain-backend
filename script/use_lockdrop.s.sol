@@ -18,7 +18,7 @@ contract Deploy is Script {
         // uint256 amount = 15 * (10**18);
         uint256 blockReward = 0;
 
-        address lockdrop = 0xA19d215f9f580B12F2A9979CF4aE6a177018e7AF;
+        address lockdrop = 0x8EF66EF1D1988aCe7E557CDE98f67Fb3c18Cd2D2;
         address tokenmanager = 0x7aedE1ceF21bF80574aD9339c63745Ef138219C6;
         address reward = 0xB688bbAF1239b560eCd6B56d7fAd4719D75CB7e1;
    
@@ -49,7 +49,7 @@ contract Deploy is Script {
         // ILockDrop(lockdrop).withdraw();
 
         // 3/. call fetchBlockReward
-        blockReward = ILockDrop(lockdrop).fetchBlockReward(); // needs to return blockReward
+        blockReward = ILockDrop(lockdrop).fetchBlockReward();
         console.log("FTN token reward: ", blockReward);
 
 

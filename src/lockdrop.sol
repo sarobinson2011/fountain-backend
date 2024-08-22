@@ -12,6 +12,8 @@ import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 contract LockDrop {
     address public tokenManagerAddress;
     uint256 public rewardValue;
+    uint256[] public tierNumberOfBlocks = [10, 25, 250];  // based on a ~12 second block time
+    uint256[] public tierMultiplier = [1, 2, 3];
     
     struct TimedDeposit {
         uint256 amount;
@@ -25,7 +27,6 @@ contract LockDrop {
     event NewWithdraw(address indexed _user, uint256 _amount, uint256 _blockstamp);
     event RewardReturned(address indexed _user, uint256 _amount);
     event RewardBalanceZero();
-
 
     constructor(address _tokenmanager) {
         tokenManagerAddress = _tokenmanager;
@@ -74,6 +75,7 @@ contract LockDrop {
         balances[msg.sender].reward = 0;
     }
 
+
     function calculateReward() internal view returns(uint256) {
         uint256 currentBlock = block.number;
         uint256 startingBlock = balances[msg.sender].blockstamp; 
@@ -84,7 +86,23 @@ contract LockDrop {
         }
 
         uint256 elapsedBlocks = currentBlock - startingBlock;
-        uint256 reward = elapsedBlocks * 5 * (10**17);                      // 0.5 reward per block
+
+        // uint256 reward = elapsedBlocks * 5 * (10**17);                  // OLD code: 0.5 FTN per block
+        
+        // Determine user's tier index
+        uint256 tierIndex = 0;
+        for (uint256 i = 0; i < tierNumberOfBlocks.length; i++) {
+            if (elapsedBlocks <= tierNumberOfBlocks[i]) {             
+                tierIndex = i;
+            } else if (elapsedBlocks > tierNumberOfBlocks[tierNumberOfBlocks.length]) {
+                tierIndex = tierMultiplier.length - 1;
+            } else {
+                break;
+            }
+        }
+
+        // Apply multiplier
+        uint256 reward = elapsedBlocks * 5 * (10**17) * tierMultiplier[tierIndex];
         return reward;
     }
 
@@ -111,10 +129,10 @@ contract LockDrop {
             blockReward = _elapsedBlocks * 5 * (10**17); 
         } else {
             blockReward = 0;
-            return blockReward;
         }
         emit RewardReturned(msg.sender, blockReward); 
         return blockReward;
     } 
 }
+
 

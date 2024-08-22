@@ -2,7 +2,7 @@
 
 #       Contract addresses (Utility)
 #
-# LockDrop      : 0xA19d215f9f580B12F2A9979CF4aE6a177018e7AF
+# LockDrop      : 0x8EF66EF1D1988aCe7E557CDE98f67Fb3c18Cd2D2
 # TokenManager  : 0x7aedE1ceF21bF80574aD9339c63745Ef138219C6  
 # Reward        : 0xB688bbAF1239b560eCd6B56d7fAd4719D75CB7e1
 # 
