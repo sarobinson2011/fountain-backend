@@ -12,7 +12,7 @@ import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 contract LockDrop {
     address public tokenManagerAddress;
     uint256 public rewardValue;
-    uint256[] public tierNumberOfBlocks = [10, 25, 250];  // based on a ~12 second block time
+    uint256[] public tierNumberOfBlocks = [24, 108, 252];  // based on a 12 second block time: mins = [2, 9, 21]
     uint256[] public tierMultiplier = [1, 2, 3];
     
     struct TimedDeposit {
@@ -79,6 +79,7 @@ contract LockDrop {
     function calculateReward() internal view returns(uint256) {
         uint256 currentBlock = block.number;
         uint256 startingBlock = balances[msg.sender].blockstamp; 
+        uint256 reward = 0;
 
         // Check for potential underflow (startingBlock > currentBlock)
         if (startingBlock > currentBlock) {
@@ -89,7 +90,7 @@ contract LockDrop {
 
         // uint256 reward = elapsedBlocks * 5 * (10**17);                  // OLD code: 0.5 FTN per block
         
-        // Determine user's tier index
+        // Determine user's tier index for reward calculation 
         uint256 tierIndex = 0;
         for (uint256 i = 0; i < tierNumberOfBlocks.length; i++) {
             if (elapsedBlocks <= tierNumberOfBlocks[i]) {             
@@ -101,38 +102,46 @@ contract LockDrop {
             }
         }
 
-        // Apply multiplier
-        uint256 reward = elapsedBlocks * 5 * (10**17) * tierMultiplier[tierIndex];
+        // Reward calculation
+        reward = elapsedBlocks * 5 * (10**17) * tierMultiplier[tierIndex];
         return reward;
     }
 
 
-    /**
-    * @dev fetchBlockReward() emits the current value of the
-    * number of reward tokens allocated to the calling address.
-    * if zero balance function returns zero
-    *
-    * @dev this function to be used by the front-end app
-    **/
 
-    function fetchBlockReward() external returns(uint256) {                  
+    function fetchBlockReward() internal returns(uint256) {
         uint256 blockReward = 0;
-        if (balances[msg.sender].amount > 0) {
-            uint256 _currentBlock = block.number;
-            uint256 _startingBlock = balances[msg.sender].blockstamp; 
 
-            if (_startingBlock > _currentBlock) {
+        if (balances[msg.sender].amount > 0) {
+        
+            uint256 currentBlock = block.number;
+            uint256 startingBlock = balances[msg.sender].blockstamp; 
+
+            // Check for potential underflow (startingBlock > currentBlock)
+            if (startingBlock > currentBlock) {
                 revert("Starting block cannot be greater than the current block!");
             }
 
-            uint256 _elapsedBlocks = _currentBlock - _startingBlock;
-            blockReward = _elapsedBlocks * 5 * (10**17); 
+            uint256 elapsedBlocks = currentBlock - startingBlock;
+            
+            uint256 tierIndex = 0;
+            for (uint256 i = 0; i < tierNumberOfBlocks.length; i++) {
+                if (elapsedBlocks <= tierNumberOfBlocks[i]) {             
+                    tierIndex = i;
+                } else if (elapsedBlocks > tierNumberOfBlocks[tierNumberOfBlocks.length]) {
+                    tierIndex = tierMultiplier.length - 1;
+                } else {
+                    break;
+                }
+            }
+            blockReward = elapsedBlocks * 5 * (10**17) * tierMultiplier[tierIndex];
         } else {
             blockReward = 0;
         }
-        emit RewardReturned(msg.sender, blockReward); 
+
+        emit RewardReturned(msg.sender, blockReward);
         return blockReward;
-    } 
+    }
 }
 
 

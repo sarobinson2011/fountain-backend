@@ -2,9 +2,9 @@
 
 #       Contract addresses (Utility)
 #
-# LockDrop      : 0x8EF66EF1D1988aCe7E557CDE98f67Fb3c18Cd2D2
-# TokenManager  : 0x7aedE1ceF21bF80574aD9339c63745Ef138219C6  
-# Reward        : 0xB688bbAF1239b560eCd6B56d7fAd4719D75CB7e1
+# LockDrop      : 
+# TokenManager  :   
+# Reward        : 
 # 
 
 #       Contract addresses (Functionality)
@@ -30,5 +30,3 @@
 #   - test the reward tokens drop, upon withdraw         -- #6    
 #   - display live in front-end                          -- #7  <-- HERE !!
 #
-
-

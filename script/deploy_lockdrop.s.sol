@@ -18,7 +18,7 @@ contract Deploy is Script {
 
         address tokenmanagerAddress = 0x7aedE1ceF21bF80574aD9339c63745Ef138219C6;
         // address reward = 0xB688bbAF1239b560eCd6B56d7fAd4719D75CB7e1;
-        // address lockdrop = 0x8EF66EF1D1988aCe7E557CDE98f67Fb3c18Cd2D2;
+        // address lockdrop = 0x6cffCb2EEb384D2E339701e1d599eBbB511505F4;
 
         console.log("Account:", account);
 
