@@ -12,8 +12,9 @@ import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 contract LockDrop {
     address public tokenManagerAddress;
     uint256 public rewardValue;
-    uint256[] public tierNumberOfBlocks = [24, 108, 252];  // based on a 12 second block time: mins = [2, 9, 21]
-    uint256[] public tierMultiplier = [1, 2, 3];
+    uint256[] public tierMultiplier = [1, 3, 10];
+    uint256[] public tierNumberOfBlocks = [10, 25, 30]; // 12 sec block time --> 5 blocks/min 
+    //                                    [2,  5,  6+]  minutes
     
     struct TimedDeposit {
         uint256 amount;
@@ -50,7 +51,8 @@ contract LockDrop {
         balances[msg.sender].blockstamp = block.number;                   
         emit NewDeposit(msg.sender, msg.value, block.number);
     }    
-     
+
+
     function withdraw() external {
         require(balances[msg.sender].amount > 0, "You have no balance to withdraw...");
         require(block.number > balances[msg.sender].blockstamp);
@@ -106,7 +108,6 @@ contract LockDrop {
         reward = elapsedBlocks * 5 * (10**17) * tierMultiplier[tierIndex];
         return reward;
     }
-
 
 
     function fetchBlockReward() external returns(uint256) {

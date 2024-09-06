@@ -18,9 +18,9 @@ contract Deploy is Script {
         // uint256 amount = 15 * (10**18);
         uint256 blockReward = 0;
 
-        address lockdrop = 0x136A1d899c5867a705ff2b28a6Cb4eF08aD87cb7;
-        address tokenmanager = 0xE699e26689E5A1243147e90bA619B480bEc84663;
-        address reward = 0x07A8297d53556179448B582b3e939629F5dCC778;
+        address lockdrop = 0x639E1684c506c56B8bc9B914A3742bCB9196b4F3;
+        address tokenmanager = 0x2c3c29a0A7B72d2951a5270d959F7C5C8DeD3cBc;
+        address reward = 0x3879d5dA031fB5F7B65Be7d00b5e6e2312D55eaC;
    
         console.log("Account:", account);
         
@@ -34,19 +34,16 @@ contract Deploy is Script {
         // IRandomNumberGenerator(randomnumbergenerator).setVrfConsumer(vrfconsumer);
 
         // Set Lockdrop Address 
-        // IVRFv2Consumer(vrfconsumer).setLockdropAddress(lockdrop);
-
-        // set the VRF consumer address in the Random Number Genrator
-        // IRandomNumberGenerator(randomnumbergenerator).setVrfConsumer(vrfconsumer);
+        // IVRFv2Consumer(vrfconsumer).setLockdropAddress(lockdrop); 
 
 
         // ===========  LockDrop  ==========
 
         // 1/. DEPOSIT
-        // ILockDrop(lockdrop).deposit{value: 0.0001 ether}();    
+        ILockDrop(lockdrop).deposit{value: 0.0001 ether}();    
     
         // 2/. WITHDRAW 
-        ILockDrop(lockdrop).withdraw();
+        // ILockDrop(lockdrop).withdraw();
 
         // 3/. call fetchBlockReward
         // blockReward = ILockDrop(lockdrop).fetchBlockReward();
