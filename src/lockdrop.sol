@@ -89,19 +89,19 @@ contract LockDrop {
         }
 
         uint256 elapsedBlocks = currentBlock - startingBlock;
-
-        // uint256 reward = elapsedBlocks * 5 * (10**17);                  // OLD code: 0.5 FTN per block
         
         // Determine user's tier index for reward calculation 
         uint256 tierIndex = 0;
         for (uint256 i = 0; i < tierNumberOfBlocks.length; i++) {
-            if (elapsedBlocks <= tierNumberOfBlocks[i]) {             
-                tierIndex = i;
-            } else if (elapsedBlocks > tierNumberOfBlocks[tierNumberOfBlocks.length]) {
-                tierIndex = tierMultiplier.length - 1;
+            if (elapsedBlocks > tierNumberOfBlocks[i]) {
+                tierIndex = i + 1;
             } else {
                 break;
             }
+        }
+
+        if (tierIndex >= tierMultiplier.length) {
+            tierIndex = tierMultiplier.length - 1;  // set to the highest tier
         }
 
         // Reward calculation
@@ -110,7 +110,7 @@ contract LockDrop {
     }
 
 
-    function fetchBlockReward() external returns(uint256) {
+    function fetchBlockReward() external returns(uint256) {     // need to make this = calculateReward() #ToDo
         uint256 blockReward = 0;
 
         if (balances[msg.sender].amount > 0) {
