@@ -110,7 +110,7 @@ contract LockDrop {
     }
 
 
-    function fetchBlockReward() external returns(uint256) {     // need to make this = calculateReward() #ToDo
+    function fetchBlockReward() external returns(uint256) {         // returns (and emits) the current reward value
         uint256 blockReward = 0;
 
         if (balances[msg.sender].amount > 0) {
@@ -127,15 +127,20 @@ contract LockDrop {
             
             uint256 tierIndex = 0;
             for (uint256 i = 0; i < tierNumberOfBlocks.length; i++) {
-                if (elapsedBlocks <= tierNumberOfBlocks[i]) {             
-                    tierIndex = i;
-                } else if (elapsedBlocks > tierNumberOfBlocks[tierNumberOfBlocks.length]) {
-                    tierIndex = tierMultiplier.length - 1;
+                if (elapsedBlocks > tierNumberOfBlocks[i]) {             
+                    tierIndex = i + 1;
                 } else {
                     break;
                 }
             }
+
+            if (tierIndex >= tierMultiplier.length) {
+                tierIndex = tierMultiplier.length - 1;  // set to the highest tier
+            }
+
+            // Reward calculation
             blockReward = elapsedBlocks * 5 * (10**17) * tierMultiplier[tierIndex];
+
         } else {
             blockReward = 0;
         }

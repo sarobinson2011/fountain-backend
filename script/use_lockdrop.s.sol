@@ -18,10 +18,10 @@ contract Deploy is Script {
         // uint256 amount = 15 * (10**18);
         uint256 blockReward = 0;
 
-        address lockdrop = 0xBfce06e08210eA7D521CC8B268c98F3103D291ff;
-        address tokenmanager = 0x6e504AADD0CaB5859EaC96ce3C2aA4f0c6e22C05;
-        address reward = 0x835aC05C80A15b7D0260f10B0E05298FABc8d941;
-   
+        address tokenmanager = 0x6fA792653BDf612B12156781142020952585fDDD;
+        address reward = 0x990c4cDACEd8CcEcD158BB940C029A37f08a6cc8;
+        address lockdrop = 0xb3E84f2D80246eEB6677F69f391Ca5FCd6A70cA0;
+
         console.log("Account:", account);
         
         // start broadcast
@@ -35,6 +35,12 @@ contract Deploy is Script {
 
         // Set Lockdrop Address 
         // IVRFv2Consumer(vrfconsumer).setLockdropAddress(lockdrop); 
+
+
+        // ========  TokenManager  =========
+
+        // Set LockDrop address in TokenManager
+        // ITokenManager(tokenmanager).setLockDropAddress(lockdrop);
 
 
         // ===========  LockDrop  ==========

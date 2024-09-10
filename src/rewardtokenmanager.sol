@@ -34,6 +34,11 @@ contract TokenManager is ReentrancyGuard {
         _;
     }
 
+    modifier onlyLockDrop() {
+        require(msg.sender == lockdropAddress);
+        _;
+    }
+
     modifier addressIsNotZero() {
         require(rewardTokenAddress != address(0), "Address is zero, not allowed for ERC20 transfers");
         _;
@@ -47,12 +52,7 @@ contract TokenManager is ReentrancyGuard {
         lockdropAddress = _lockdropAddress;
     }
 
-    function returnRewardTokenAddress() public view returns(address) {      // change to emitRewardTokenAddress
-        return rewardTokenAddress;
-    }
-    
-
-    function transferReward(address _to, uint256 _amount) external nonReentrant addressIsNotZero {  
+    function transferReward(address _to, uint256 _amount) external nonReentrant onlyLockDrop addressIsNotZero {  
 
         // Check remaining reward token balance with Reward contract before transfer                  
         uint256 remainingBalance = IERC20(rewardTokenAddress).balanceOf(address(this));
