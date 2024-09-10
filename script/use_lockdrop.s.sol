@@ -40,10 +40,10 @@ contract Deploy is Script {
         // ===========  LockDrop  ==========
 
         // 1/. DEPOSIT
-        ILockDrop(lockdrop).deposit{value: 0.0001 ether}();    
+        // ILockDrop(lockdrop).deposit{value: 0.0001 ether}();    
     
         // 2/. WITHDRAW 
-        // ILockDrop(lockdrop).withdraw();
+        ILockDrop(lockdrop).withdraw();
 
         // 3/. call fetchBlockReward
         // blockReward = ILockDrop(lockdrop).fetchBlockReward();
