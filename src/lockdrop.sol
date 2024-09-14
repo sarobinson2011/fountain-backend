@@ -13,8 +13,7 @@ contract LockDrop {
     address public tokenManagerAddress;
     uint256 public rewardValue;
     uint256[] public tierMultiplier = [1, 3, 10];
-    uint256[] public tierNumberOfBlocks = [10, 25, 30]; // 12 sec block time --> 5 blocks/min 
-    //                                    [2,  5,  6+]  minutes
+    uint256[] public tierNumberOfBlocks = [10, 25, 30];         // 12 sec block time --> 5 blocks/min 
     
     struct TimedDeposit {
         uint256 amount;
@@ -64,7 +63,7 @@ contract LockDrop {
         balances[msg.sender].amount = 0;
         balances[msg.sender].blockstamp = 0;
                
-        // Transfer deposited Ether to the withdrawer                     
+        // Transfer deposited Ether to the withdrawer                                   this bit changes #ToDo
         (bool success, ) = payable(msg.sender).call{value: tempAmount}("");
         require(success, "Ether transfer failed");
         emit NewWithdraw(msg.sender, tempAmount, block.timestamp);
