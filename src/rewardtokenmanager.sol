@@ -44,12 +44,17 @@ contract TokenManager is ReentrancyGuard {
         _;
     }
 
-    function setRewardTokenAddress(address _rewardTokenAddress) public onlyOwner {
+    function setRewardTokenAddress(address _rewardTokenAddress) external onlyOwner {
         rewardTokenAddress = _rewardTokenAddress;
     }
 
-    function setLockDropAddress(address _lockdropAddress) public onlyOwner {
+    function setLockDropAddress(address _lockdropAddress) external onlyOwner {
         lockdropAddress = _lockdropAddress;
+    }
+
+    function topUpFtn(uint256 _amount) external onlyOwner {
+        (bool success, ) = rewardTokenAddress.call(abi.encodeWithSignature("transferReward(address,uint256)", msg.sender, _amount));
+        require(success, "FTN token top-up failed...");
     }
 
     function transferReward(address _to, uint256 _amount) external nonReentrant onlyLockDrop addressIsNotZero {  

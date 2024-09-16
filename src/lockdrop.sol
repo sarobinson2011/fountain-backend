@@ -32,29 +32,30 @@ contract LockDrop {
         tokenManagerAddress = _tokenmanager;
     }
 
-    function deposit() external payable {
-        require(msg.value > 0, "deposit amount must be greater than zero"); 
+    function deposit(uint256 _amount) external payable {
+        require(_amount > 0, "deposit amount must be greater than zero"); 
+        require(IERC20(tokenManagerAddress).transferFrom(msg.sender, address(this), _amount), "Transfer failed");
         
         if (balances[msg.sender].amount > 0) {
-            balances[msg.sender].amount += msg.value;
+            balances[msg.sender].amount += _amount;
         } else {
             balances[msg.sender] = TimedDeposit(
             {
-                amount: msg.value, 
+                amount: _amount, 
                 blockstamp: block.number,
                 reward: 0
             });
         } 
 
-        // Reset timestamp upon every deposit to enforce full time lock
+        // Reset the time lock upon each deposit
         balances[msg.sender].blockstamp = block.number;                   
-        emit NewDeposit(msg.sender, msg.value, block.number);
+        emit NewDeposit(msg.sender, _amount, block.number);
     }    
 
 
     function withdraw() external {
-        require(balances[msg.sender].amount > 0, "You have no balance to withdraw...");
-        require(block.number > balances[msg.sender].blockstamp);
+        require(balances[msg.sender].amount > 0, "You have no FTN balance to withdraw...");
+        require(block.number > balances[msg.sender].blockstamp, "block error...");
   
         balances[msg.sender].reward = calculateReward(); 
         rewardValue = balances[msg.sender].reward;                       
@@ -63,14 +64,12 @@ contract LockDrop {
         balances[msg.sender].amount = 0;
         balances[msg.sender].blockstamp = 0;
                
-        // Transfer deposited Ether to the withdrawer                                   this bit changes #ToDo
-        (bool success, ) = payable(msg.sender).call{value: tempAmount}("");
-        require(success, "Ether transfer failed");
+        // Transfer deposited FTN tokens to the customer 
+        require(IERC20(tokenManagerAddress).transfer(msg.sender, tempAmount), "Token transfer failed");
         emit NewWithdraw(msg.sender, tempAmount, block.timestamp);
         tempAmount = 0;
 
-
-        // Transfer the Reward tokens 
+        // Transfer the rewarded FTN tokens to the customer 
         ITokenManager(tokenManagerAddress).transferReward(msg.sender, balances[msg.sender].reward); 
         emit RewardReturned(msg.sender, balances[msg.sender].reward);          
         balances[msg.sender].reward = 0;
