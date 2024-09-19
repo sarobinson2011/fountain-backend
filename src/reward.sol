@@ -9,8 +9,16 @@ contract Reward is ERC20 {
         _mint(_address, _supply);
     }
 
-    function transferReward(address _to, uint256 _amount) public { 
+    function approveFtn(address _spender, uint256 _amount) public { 
+        approve(_spender, _amount);
+    }
+
+    function transferFtn(address _to, uint256 _amount) public { 
         transfer(_to, _amount);
+    }
+
+    function depositFtn(address _from, address _to, uint256 _amount) public {
+        transferFrom(_from, _to, _amount);
     }
 }
 

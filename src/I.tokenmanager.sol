@@ -5,6 +5,7 @@ interface ITokenManager {
     function setRewardTokenAddress(address _rewardTokenAddress) external;
     function setLockDropAddress(address _lockdropAddress) external;
     function topUpFtn(uint256 _amount) external;
+    function deposit(address _from, address _to, uint256 _amount) external;
     function transferReward(address _to, uint256 _amount) external;
 }
 

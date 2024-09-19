@@ -53,8 +53,13 @@ contract TokenManager is ReentrancyGuard {
     }
 
     function topUpFtn(uint256 _amount) external onlyOwner {
-        (bool success, ) = rewardTokenAddress.call(abi.encodeWithSignature("transferReward(address,uint256)", msg.sender, _amount));
+        (bool success, ) = rewardTokenAddress.call(abi.encodeWithSignature("transferFtn(address,uint256)", msg.sender, _amount));
         require(success, "FTN token top-up failed...");
+    }
+
+    function deposit(address _from, address _to, uint256 _amount) external onlyLockDrop {
+        (bool success, ) = rewardTokenAddress.call(abi.encodeWithSignature("depositFtn(address,address,uint256)", _from, _to, _amount));
+        require(success, "FTN token deposit failed - check you have a sufficient FTN balance");
     }
 
     function transferReward(address _to, uint256 _amount) external nonReentrant onlyLockDrop addressIsNotZero {  
@@ -73,7 +78,7 @@ contract TokenManager is ReentrancyGuard {
             transferAmount = _amount;
         }
 
-        (bool success, ) = rewardTokenAddress.call(abi.encodeWithSignature("transferReward(address,uint256)", _to, transferAmount));
+        (bool success, ) = rewardTokenAddress.call(abi.encodeWithSignature("transferFtn(address,uint256)", _to, transferAmount));
         require(success, "FTN token transfer failed...");
         emit RewardTransferred(msg.sender, transferAmount);
     }   

@@ -2,18 +2,18 @@
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import {TokenManager} from "../src/rewardtokenmanager.sol";
-import {IVRFv2Consumer} from "../src/I.vrfv2consumer.sol";
-import {ITokenManager} from "../src/I.tokenmanager.sol";
-import {IRandomNumberGenerator} from "../src/I.randomnumbergenerator.sol";
 import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
+import {TokenManager} from "../src/rewardtokenmanager.sol";
+import {ITokenManager} from "../src/I.tokenmanager.sol";
 
 
 contract LockDrop {
+    address public owner;
     address public tokenManagerAddress;
+    address public rewardTokenAddress;
     uint256 public rewardValue;
     uint256[] public tierMultiplier = [1, 3, 10];
-    uint256[] public tierNumberOfBlocks = [10, 25, 30];         // 12 sec block time --> 5 blocks/min 
+    uint256[] public tierNumberOfBlocks = [10, 25, 30];         // 12 sec block time --> approx 5 blocks/min 
     
     struct TimedDeposit {
         uint256 amount;
@@ -29,13 +29,28 @@ contract LockDrop {
     event RewardBalanceZero();
 
     constructor(address _tokenmanager) {
+        owner = msg.sender;
         tokenManagerAddress = _tokenmanager;
     }
 
-    function deposit(uint256 _amount) external payable {
+    modifier onlyOwner() {
+        require(msg.sender == owner);
+        _;
+    }
+
+    function setRewardTokenAddress(address _rewardTokenAddress) external onlyOwner {
+        rewardTokenAddress = _rewardTokenAddress;
+    }
+
+
+    function deposit(uint256 _amount) external {
         require(_amount > 0, "deposit amount must be greater than zero"); 
-        require(IERC20(tokenManagerAddress).transferFrom(msg.sender, address(this), _amount), "Transfer failed");
         
+        address _from = msg.sender;
+        address _to = address(this);
+        // approve contract to spend your FTN tokens prior to calling deposit()
+        ITokenManager(tokenManagerAddress).deposit(_from, _to, _amount);        
+
         if (balances[msg.sender].amount > 0) {
             balances[msg.sender].amount += _amount;
         } else {
@@ -58,21 +73,19 @@ contract LockDrop {
         require(block.number > balances[msg.sender].blockstamp, "block error...");
   
         balances[msg.sender].reward = calculateReward(); 
-        rewardValue = balances[msg.sender].reward;                       
 
-        uint256 tempAmount = balances[msg.sender].amount;
+        uint256 tempAmount = balances[msg.sender].amount + balances[msg.sender].reward;    
+        require(IERC20(tokenManagerAddress).transfer(msg.sender, tempAmount), "Tx failure, FTN reward faucet empty!");
+
         balances[msg.sender].amount = 0;
         balances[msg.sender].blockstamp = 0;
-               
-        // Transfer deposited FTN tokens to the customer 
-        require(IERC20(tokenManagerAddress).transfer(msg.sender, tempAmount), "Token transfer failed");
-        emit NewWithdraw(msg.sender, tempAmount, block.timestamp);
-        tempAmount = 0;
-
-        // Transfer the rewarded FTN tokens to the customer 
-        ITokenManager(tokenManagerAddress).transferReward(msg.sender, balances[msg.sender].reward); 
-        emit RewardReturned(msg.sender, balances[msg.sender].reward);          
         balances[msg.sender].reward = 0;
+               
+        // Transfer DEPOSIT + REWARD (tempAmount) FTN tokens to the customer 
+        ITokenManager(tokenManagerAddress).transferReward(msg.sender, tempAmount);
+        emit NewWithdraw(msg.sender, balances[msg.sender].amount, block.timestamp);        
+        emit RewardReturned(msg.sender, balances[msg.sender].reward);   
+        tempAmount = 0;       
     }
 
 

@@ -17,12 +17,13 @@ contract Deploy is Script {
         address account = vm.addr(privateKey);
         // uint256 amount = 15 * (10**18);
         uint256 blockReward = 0;
+        uint256 topUpAmount = 100 * (10**18);
         
-        // uint256 ftnDeposit = 1 * (10**18);  // choose value #ToDo 
+        uint256 ftnDeposit = 10 * (10**18); 
 
-        address tokenmanager = 0x6fA792653BDf612B12156781142020952585fDDD;
-        address reward = 0x990c4cDACEd8CcEcD158BB940C029A37f08a6cc8;
-        address lockdrop = 0xb3E84f2D80246eEB6677F69f391Ca5FCd6A70cA0;
+        address tokenmanager = 0x8823a76dE8387F84Fa0CF4Da2d180d52B36c9F62;
+        address reward = 0x5ECFAd467F0D15fdc266772546D1770Ff5b300C3;
+        address lockdrop = 0x01518cf209C67e07e0c57fefC079491E2119F6dB;
 
         console.log("Account:", account);
         
@@ -50,8 +51,12 @@ contract Deploy is Script {
         // 1a/. DEPOSIT ETH
         // ILockDrop(lockdrop).deposit{value: 0.0001 ether}();    
     
-        // 1b/. DEPOSIT FTN
-        // ILockDrop(lockdrop).deposit(ftnDeposit);  // update ILockDrop ToDo    
+        // 1b/. Top-up with FTN tokens
+        // ITokenManager(tokenmanager).topUpFtn(topUpAmount); 
+
+        // 1c/. DEPOSIT FTN
+        ILockDrop(lockdrop).deposit(ftnDeposit); 
+
 
         // 2/. WITHDRAW 
         // ILockDrop(lockdrop).withdraw();

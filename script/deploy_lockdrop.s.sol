@@ -16,9 +16,9 @@ contract Deploy is Script {
         address account = vm.addr(privateKey);
         uint256 supply = 1_000_000 * (10**18);
 
-        address tokenmanagerAddress = 0x6fA792653BDf612B12156781142020952585fDDD;
-        address reward = 0x990c4cDACEd8CcEcD158BB940C029A37f08a6cc8;
-        address lockdrop = 0xb3E84f2D80246eEB6677F69f391Ca5FCd6A70cA0;
+        address tokenmanager = 0x8823a76dE8387F84Fa0CF4Da2d180d52B36c9F62;
+        address reward = 0x5ECFAd467F0D15fdc266772546D1770Ff5b300C3;
+        address lockdrop = 0x01518cf209C67e07e0c57fefC079491E2119F6dB;
 
         console.log("Account:", account);
 
@@ -29,13 +29,13 @@ contract Deploy is Script {
         // new TokenManager();
 
         // deploy the FTN token contract
-        // new Reward("Fountain", "FTN", tokenmanagerAddress, supply);
+        // new Reward("Fountain", "FTN", tokenmanager, supply);
         
         // set Reward Token Address (in TokenManager) 
-        // ITokenManager(tokenmanagerAddress).setRewardTokenAddress(reward);
+        // ITokenManager(tokenmanager).setRewardTokenAddress(reward);
 
         // deploy lockdrop
-        new LockDrop(tokenmanagerAddress); 
+        new LockDrop(tokenmanager); 
 
         // call fetchBlockReward
         // ILockDrop(lockdrop).fetchBlockReward();

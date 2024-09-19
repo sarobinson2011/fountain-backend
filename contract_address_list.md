@@ -2,9 +2,9 @@
 
 #       Contract addresses (Utility)
 #
-# TokenManager  : 0x6fA792653BDf612B12156781142020952585fDDD
-# Reward        : 0x990c4cDACEd8CcEcD158BB940C029A37f08a6cc8
-# LockDrop      : 0xb3E84f2D80246eEB6677F69f391Ca5FCd6A70cA0
+# TokenManager  : 0x8823a76dE8387F84Fa0CF4Da2d180d52B36c9F62
+# Reward        : 0x5ECFAd467F0D15fdc266772546D1770Ff5b300C3
+# LockDrop      : 0x01518cf209C67e07e0c57fefC079491E2119F6dB
 # 
 
 #       Contract addresses (Functionality)
@@ -27,7 +27,9 @@
 #   - call TokenManager:setRewardTokenAddress()          -- #4 
 #   - deploy LockDrop contract                           -- #5 
 #   - call TokenManager:setLockDropAddress()             -- #6
+#   - call TokenManager:topUpFtn()                       -- #7
 #   
-#   - test the reward tokens drop, upon withdraw         -- #7    
-#   - display live in front-end                          -- #8  <-- HERE !!
+#
+#   - test the reward tokens drop, upon withdraw         --    
+#   - display live in front-end                          --
 #
