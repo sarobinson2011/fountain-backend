@@ -16,9 +16,9 @@ contract Deploy is Script {
         address account = vm.addr(privateKey);
         uint256 supply = 1_000_000 * (10**18);
 
-        address tokenmanager = 0x8823a76dE8387F84Fa0CF4Da2d180d52B36c9F62;
-        address reward = 0x5ECFAd467F0D15fdc266772546D1770Ff5b300C3;
-        address lockdrop = 0x01518cf209C67e07e0c57fefC079491E2119F6dB;
+        address tokenmanager = vm.envAddress("TOKEN_MANAGER_ADDRESS");
+        address reward = vm.envAddress("REWARD_ADDRESS");
+        // address lockdrop = vm.envAddress("LOCKDROP_ADDRESS");
 
         console.log("Account:", account);
 
@@ -35,7 +35,7 @@ contract Deploy is Script {
         // ITokenManager(tokenmanager).setRewardTokenAddress(reward);
 
         // deploy lockdrop
-        new LockDrop(tokenmanager); 
+        // new LockDrop(tokenmanager); 
 
         // call fetchBlockReward
         // ILockDrop(lockdrop).fetchBlockReward();

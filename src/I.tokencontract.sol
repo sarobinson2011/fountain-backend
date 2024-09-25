@@ -1,9 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-/*
-    IReward == copy pasta the OpenZeppelin IERC20 interface 
-*/
 
 interface IReward {
     /**
@@ -75,4 +72,5 @@ interface IReward {
      * Emits a {Transfer} event.
      */
     function transferFrom(address from, address to, uint256 value) external returns (bool);
+
 }

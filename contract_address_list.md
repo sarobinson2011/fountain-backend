@@ -2,9 +2,9 @@
 
 #       Contract addresses (Utility)
 #
-# TokenManager  : 0x8823a76dE8387F84Fa0CF4Da2d180d52B36c9F62
-# Reward        : 0x5ECFAd467F0D15fdc266772546D1770Ff5b300C3
-# LockDrop      : 0x01518cf209C67e07e0c57fefC079491E2119F6dB
+# TokenManager  : 
+# Reward        : 
+# LockDrop      : 
 # 
 
 #       Contract addresses (Functionality)
@@ -21,8 +21,8 @@
 # Lottery:setVrfConsumer()               -- done
 #
 #  
-#   - deploy the TokenManager contract                   -- #1
-#   - deploy the Reward contract                         -- #2
+#   - deploy the Reward contract                         -- #1
+#   - deploy the TokenManager contract                   -- #2
 #   - import reward token into Metamask                  -- #3
 #   - call TokenManager:setRewardTokenAddress()          -- #4 
 #   - deploy LockDrop contract                           -- #5 

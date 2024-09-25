@@ -3,6 +3,7 @@ pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
+import {IReward} from "../src/I.tokencontract.sol";                     // copy pasta of IERC20
 
 
 /**
@@ -24,6 +25,7 @@ contract TokenManager is ReentrancyGuard {
     address public owner;
     event RewardTransferred(address indexed _user, uint256 _amount);
     event RewardBalanceZero();
+    event NewApproval(address _spender, uint256 _amount);
 
     constructor() {
         owner = msg.sender;
@@ -52,14 +54,17 @@ contract TokenManager is ReentrancyGuard {
         lockdropAddress = _lockdropAddress;
     }
 
+
     function topUpFtn(uint256 _amount) external onlyOwner {
-        (bool success, ) = rewardTokenAddress.call(abi.encodeWithSignature("transferFtn(address,uint256)", msg.sender, _amount));
-        require(success, "FTN token top-up failed...");
+        // require(IERC20(rewardTokenAddress).transfer(msg.sender, _amount), "FTN top-up failed...");
+        (bool success, ) = rewardTokenAddress.call(abi.encodeWithSignature("transfer(address,uint256)", msg.sender, _amount));
+        require(success, "FTN token top-up failed...");  
     }
 
-    function deposit(address _from, address _to, uint256 _amount) external onlyLockDrop {
-        (bool success, ) = rewardTokenAddress.call(abi.encodeWithSignature("depositFtn(address,address,uint256)", _from, _to, _amount));
-        require(success, "FTN token deposit failed - check you have a sufficient FTN balance");
+
+    function approve(address _spender, uint256 _amount) external {
+        require(IERC20(rewardTokenAddress).approve(_spender, _amount), "Failed to approve FTN for spend");
+        emit NewApproval(_spender, _amount);
     }
 
     function transferReward(address _to, uint256 _amount) external nonReentrant onlyLockDrop addressIsNotZero {  
@@ -78,11 +83,12 @@ contract TokenManager is ReentrancyGuard {
             transferAmount = _amount;
         }
 
-        (bool success, ) = rewardTokenAddress.call(abi.encodeWithSignature("transferFtn(address,uint256)", _to, transferAmount));
-        require(success, "FTN token transfer failed...");
+        require(IERC20(rewardTokenAddress).transfer(_to, _amount), "FTN token transfer failed...");
+
         emit RewardTransferred(msg.sender, transferAmount);
-    }   
+    }  
 }
+
 
 
         

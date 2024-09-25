@@ -25,6 +25,7 @@ contract LockDrop {
 
     event NewDeposit(address indexed _user, uint256 _amount, uint256 _blockstamp);
     event NewWithdraw(address indexed _user, uint256 _amount, uint256 _blockstamp);
+    event NewApproval(address indexed _spender, uint256 _amount);
     event RewardReturned(address indexed _user, uint256 _amount);
     event RewardBalanceZero();
 
@@ -43,13 +44,18 @@ contract LockDrop {
     }
 
 
+    function approve(address _spender, uint256 _amount) external {
+        require(IERC20(rewardTokenAddress).approve(_spender, _amount), "Failed to approve FTN for spend");
+        // (bool success, ) = rewardTokenAddress.call(abi.encodeWithSignature("approveFtn(address,uint256)", _spender, _amount));
+        // require(success, "Failed to approve FTN tokens for spend");
+        emit NewApproval(_spender, _amount);
+    }
+
+
     function deposit(uint256 _amount) external {
         require(_amount > 0, "deposit amount must be greater than zero"); 
         
-        address _from = msg.sender;
-        address _to = address(this);
-        // approve contract to spend your FTN tokens prior to calling deposit()
-        ITokenManager(tokenManagerAddress).deposit(_from, _to, _amount);        
+        require(IERC20(rewardTokenAddress).transferFrom(msg.sender, address(this), _amount), "Deposit failed, check balance");
 
         if (balances[msg.sender].amount > 0) {
             balances[msg.sender].amount += _amount;
@@ -75,7 +81,6 @@ contract LockDrop {
         balances[msg.sender].reward = calculateReward(); 
 
         uint256 tempAmount = balances[msg.sender].amount + balances[msg.sender].reward;    
-        require(IERC20(tokenManagerAddress).transfer(msg.sender, tempAmount), "Tx failure, FTN reward faucet empty!");
 
         balances[msg.sender].amount = 0;
         balances[msg.sender].blockstamp = 0;
@@ -83,6 +88,7 @@ contract LockDrop {
                
         // Transfer DEPOSIT + REWARD (tempAmount) FTN tokens to the customer 
         ITokenManager(tokenManagerAddress).transferReward(msg.sender, tempAmount);
+
         emit NewWithdraw(msg.sender, balances[msg.sender].amount, block.timestamp);        
         emit RewardReturned(msg.sender, balances[msg.sender].reward);   
         tempAmount = 0;       

@@ -2,6 +2,7 @@
 pragma solidity ^0.8.0;
 
 import "forge-std/console.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {Script, console2} from "forge-std/Script.sol";
 import {Reward} from "../src/reward.sol";
 import {LockDrop} from "../src/lockdrop.sol";
@@ -18,12 +19,12 @@ contract Deploy is Script {
         // uint256 amount = 15 * (10**18);
         uint256 blockReward = 0;
         uint256 topUpAmount = 100 * (10**18);
-        
-        uint256 ftnDeposit = 10 * (10**18); 
+        uint256 amount = 5 * (10**18); 
+        uint256 allowance = 0;
 
-        address tokenmanager = 0x8823a76dE8387F84Fa0CF4Da2d180d52B36c9F62;
-        address reward = 0x5ECFAd467F0D15fdc266772546D1770Ff5b300C3;
-        address lockdrop = 0x01518cf209C67e07e0c57fefC079491E2119F6dB;
+        address tokenmanager = vm.envAddress("TOKEN_MANAGER_ADDRESS");
+        address reward = vm.envAddress("REWARD_ADDRESS");
+        address lockdrop = vm.envAddress("LOCKDROP_ADDRESS");
 
         console.log("Account:", account);
         
@@ -42,21 +43,30 @@ contract Deploy is Script {
 
         // ========  TokenManager  =========
 
-        // Set LockDrop address in TokenManager
+        // 1a/. Set LockDrop address in TokenManager
         // ITokenManager(tokenmanager).setLockDropAddress(lockdrop);
 
+        // 1b/. Top-up with FTN tokens
+        ITokenManager(tokenmanager).topUpFtn(topUpAmount);
+
+        // 1c/. Approve FTN tokens for deposit
+        // ITokenManager(tokenmanager).approveFtn(tokenmanager, amount);  
+        //                            _spender tokenmanager or lockdrop ??
 
         // ===========  LockDrop  ==========
 
         // 1a/. DEPOSIT ETH
         // ILockDrop(lockdrop).deposit{value: 0.0001 ether}();    
-    
-        // 1b/. Top-up with FTN tokens
-        // ITokenManager(tokenmanager).topUpFtn(topUpAmount); 
+     
+        // 1c/. APPROVE FTN
+        // ILockDrop(lockdrop).approve(lockdrop, amount);   // #ToDo  
 
-        // 1c/. DEPOSIT FTN
-        ILockDrop(lockdrop).deposit(ftnDeposit); 
+        // 1d/. ALLOWANCE FTN 
+        // allowance = IERC20(reward).allowance(lockdrop, account);
+        // console.log("allowance: ", allowance);
 
+        // 1d/. DEPOSIT FTN
+        // ILockDrop(lockdrop).deposit(ftnDeposit); 
 
         // 2/. WITHDRAW 
         // ILockDrop(lockdrop).withdraw();
