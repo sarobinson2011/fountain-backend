@@ -20,11 +20,14 @@
 # Lottery:setTokenManager()              -- done     
 # Lottery:setVrfConsumer()               -- done
 #
-#  
-#   - deploy the Reward contract                         -- #1
+#
+
+#   - deploy the Reward contract                         -- #1  
 #   - deploy the TokenManager contract                   -- #2
 #   - import reward token into Metamask                  -- #3
-#   - call TokenManager:setRewardTokenAddress()          -- #4 
+#   - call TokenManager:setRewardTokenAddress()          -- #4
+
+
 #   - deploy LockDrop contract                           -- #5 
 #   - call TokenManager:setLockDropAddress()             -- #6
 #   - call TokenManager:topUpFtn()                       -- #7
