@@ -50,47 +50,16 @@ contract TokenManager is ReentrancyGuard {
     }
 
     function setRewardTokenAddress(address _rewardTokenAddress) external onlyOwner {
-        rewardTokenAddress = _rewardTokenAddress;                                           // <--  here  #ToDo 
+        rewardTokenAddress = _rewardTokenAddress;                                         
     }
 
     function setLockDropAddress(address _lockdropAddress) external onlyOwner {
         lockdropAddress = _lockdropAddress;
     }
 
-    function transfer(address _to, uint256 _amount) external onlyOwner {
+    function transferFTN(address _to, uint256 _amount) external onlyOwner {
         require(IERC20(rewardTokenAddress).transfer(_to, _amount), "FTN top-up (transfer) failed...");
     }
-
-    function approve(address _spender, uint256 _amount) external {
-        require(IERC20(rewardTokenAddress).approve(_spender, _amount), "Failed to approve FTN for spend");
-        emit NewApproval(_spender, _amount);
-    }
-
-
-    function allowance(address _owner, address _spender) external returns (uint256) {
-        uint256 _allowance = IERC20(rewardTokenAddress).allowance(_owner, _spender);
-        emit Allowance(_owner, _spender, _allowance);
-        return _allowance;
-    }
-
-
-    function transferFrom(address _from, address _to, uint256 _value) external {
-        require(IERC20(rewardTokenAddress).transferFrom(_from, _to, _value), "transferFrom failed");  // test here #ToDo 
-    }      
-
-
-    function totalSupply() external returns (uint256) {
-        uint256 _supply = IERC20(rewardTokenAddress).totalSupply();      // added _tokenAddress argument #ToDo
-        emit TotalSupply(_supply);
-        return _supply;
-    }
-
-    function balanceOf(address _account) external returns (uint256) {
-        uint256 _balanceOf = IERC20(rewardTokenAddress).balanceOf(_account);
-        emit BalanceOf(_balanceOf);
-        return _balanceOf;
-    }
-
 
     function transferReward(address _to, uint256 _amount) external nonReentrant onlyLockDrop addressIsNotZero {  
 
@@ -108,15 +77,9 @@ contract TokenManager is ReentrancyGuard {
             transferAmount = _amount;
         }
 
-        require(IERC20(rewardTokenAddress).transfer(_to, _amount), "FTN token transfer failed..."); // _amount should be transferAmount ?  ToDo
+        require(IERC20(rewardTokenAddress).transfer(_to, transferAmount), "FTN token transfer failed..."); // _amount should be transferAmount ?  ToDo - DONE!
 
         emit RewardTransferred(msg.sender, transferAmount);
     }  
 }
 
-
-
-
-
-
-        

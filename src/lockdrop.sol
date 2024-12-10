@@ -29,9 +29,10 @@ contract LockDrop {
     event RewardReturned(address indexed _user, uint256 _amount);
     event RewardBalanceZero();
 
-    constructor(address _tokenmanager) {
+    constructor(address _tokenmanager, address _rewardTokenAddress) {
         owner = msg.sender;
         tokenManagerAddress = _tokenmanager;
+        rewardTokenAddress = _rewardTokenAddress;
     }
 
     modifier onlyOwner() {
@@ -39,23 +40,10 @@ contract LockDrop {
         _;
     }
 
-    function setRewardTokenAddress(address _rewardTokenAddress) external onlyOwner {
-        rewardTokenAddress = _rewardTokenAddress;
-    }
-
-
-    function approve(address _spender, uint256 _amount) external {
-        require(IERC20(rewardTokenAddress).approve(_spender, _amount), "Failed to approve FTN for spend");
-        // (bool success, ) = rewardTokenAddress.call(abi.encodeWithSignature("approveFtn(address,uint256)", _spender, _amount));
-        // require(success, "Failed to approve FTN tokens for spend");
-        emit NewApproval(_spender, _amount);
-    }
-
-
     function deposit(uint256 _amount) external {
         require(_amount > 0, "deposit amount must be greater than zero"); 
         
-        require(IERC20(rewardTokenAddress).transferFrom(msg.sender, address(this), _amount), "Deposit failed, check balance");
+        require(IERC20(rewardTokenAddress).transferFrom(msg.sender, address(this), _amount), "Deposit failed, check balance"); 
 
         if (balances[msg.sender].amount > 0) {
             balances[msg.sender].amount += _amount;
@@ -73,28 +61,27 @@ contract LockDrop {
         emit NewDeposit(msg.sender, _amount, block.number);
     }    
 
-
     function withdraw() external {
         require(balances[msg.sender].amount > 0, "You have no FTN balance to withdraw...");
         require(block.number > balances[msg.sender].blockstamp, "block error...");
   
         balances[msg.sender].reward = calculateReward(); 
+               
+        // Transfer reward balance
+        ITokenManager(tokenManagerAddress).transferReward(msg.sender, balances[msg.sender].reward);
+        
+        // Transfer deposit balance                         
+        IERC20(rewardTokenAddress).transfer(msg.sender, balances[msg.sender].amount);
 
-        uint256 tempAmount = balances[msg.sender].amount + balances[msg.sender].reward;    
-
+        // Reset balances
         balances[msg.sender].amount = 0;
         balances[msg.sender].blockstamp = 0;
         balances[msg.sender].reward = 0;
-               
-        // Transfer DEPOSIT + REWARD (tempAmount) FTN tokens to the customer 
-        ITokenManager(tokenManagerAddress).transferReward(msg.sender, tempAmount);
 
         emit NewWithdraw(msg.sender, balances[msg.sender].amount, block.timestamp);        
         emit RewardReturned(msg.sender, balances[msg.sender].reward);   
-        tempAmount = 0;       
     }
-
-
+ 
     function calculateReward() internal view returns(uint256) {
         uint256 currentBlock = block.number;
         uint256 startingBlock = balances[msg.sender].blockstamp; 
@@ -126,8 +113,7 @@ contract LockDrop {
         return reward;
     }
 
-
-    function fetchBlockReward() external returns(uint256) {         // returns (and emits) the current reward value
+    function fetchBlockReward() external returns(uint256) {     // returns (and emits) the current reward value
         uint256 blockReward = 0;
 
         if (balances[msg.sender].amount > 0) {

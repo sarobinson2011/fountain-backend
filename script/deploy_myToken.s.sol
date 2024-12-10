@@ -41,8 +41,13 @@ contract Deploy is Script {
 }
 
 
-// Shaun of the Dead moment  <-----  LOOK   
+// Shaun of the Dead moment  
 
-// re-deploy the contracts
-// testt the token vs manager thing (you know)
-                                                                                                                                                                                                                                                                  
+/*
+    as per the original order, but:                             <-----  HERE!!
+
+    a. deploy both TokenManager and MyTokenController
+    b. mint tokens to both
+    c. test all ERC-20 function calls work on both contracts
+
+*/

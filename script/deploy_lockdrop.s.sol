@@ -15,15 +15,15 @@ contract Deploy is Script {
     function run() public {
         uint256 privateKey = vm.envUint("PRIVATE_KEY_0x");
         address account = vm.addr(privateKey);
-        address account3 = 0xC26741bac14a3Ba52517D6fD825eF4513454178E;
+        address account2 = 0xC26741bac14a3Ba52517D6fD825eF4513454178E;
 
         uint256 supply = 1_000_000 * (10**18);
-        uint256 amount = 23 * (10**18);
-        uint256 amount2 = 4 * (10**18);
+        uint256 amount = 100 * (10**18);
+        uint256 amount2 = 40 * (10**18);
 
         address tokenmanager = vm.envAddress("TOKEN_MANAGER_ADDRESS");
         address reward = vm.envAddress("REWARD_ADDRESS");
-        // address lockdrop = vm.envAddress("LOCKDROP_ADDRESS");
+        address lockdrop = vm.envAddress("LOCKDROP_ADDRESS");
 
         console.log("Account:", account);
 
@@ -35,30 +35,28 @@ contract Deploy is Script {
 
         // deploy the FTN token contract
         // new Reward("Fountain", "FTN", tokenmanager, supply);
-        
-        // set Reward Token Address (in TokenManager) 
-        // ITokenManager(tokenmanager).setRewardTokenAddress(reward);
 
         // deploy lockdrop
-        // new LockDrop(tokenmanager); 
+        // new LockDrop(tokenmanager, reward); 
 
-        // **** new commands ****
-        //
-        ITokenManager(tokenmanager).totalSupply();
-        // ITokenManager(tokenmanager).balanceOf(account);
-        // ITokenManager(tokenmanager).transfer(account, amount);
 
-        // ITokenManager(tokenmanager).approve(tokenmanager, amount);
-        // ITokenManager(tokenmanager).allowance(account, tokenmanager);
-
-        // uint256 allowance = ITokenManager(tokenmanager).allowance(account, tokenmanager);
-        // console.log("Allowance amount ", allowance);     //  #ToDo
+        // **** wire the system up ****
+        // ITokenManager(tokenmanager).setLockDropAddress(lockdrop);
+        // ITokenManager(tokenmanager).setRewardTokenAddress(reward);
         
-        // ITokenManager(tokenmanager).transferFrom(account, tokenmanager, amount2);
+        // ITokenManager(tokenmanager).transferFTN(account, amount);   
+
+        // IERC20(reward).approve(lockdrop, amount2);                      
+
+        // uint256 allowance = IERC20(reward).allowance(account, lockdrop);
+        // console.log("allowance = ", allowance);
+                                                                         
+        // ILockDrop(lockdrop).deposit(amount2);
+        ILockDrop(lockdrop).withdraw();           
+        
 
         // stop broadcast
         vm.stopBroadcast();
     }
 }
-
 

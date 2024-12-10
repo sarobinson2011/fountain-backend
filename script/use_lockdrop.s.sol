@@ -22,9 +22,9 @@ contract Deploy is Script {
         uint256 amount = 5 * (10**18); 
         uint256 allowance = 0;
 
-        // address tokenmanager = vm.envAddress("TOKEN_MANAGER_ADDRESS");
-        // address reward = vm.envAddress("REWARD_ADDRESS");
-        // address lockdrop = vm.envAddress("LOCKDROP_ADDRESS");
+        address tokenmanager = vm.envAddress("TOKEN_MANAGER_ADDRESS");
+        address reward = vm.envAddress("REWARD_ADDRESS");
+        address lockdrop = vm.envAddress("LOCKDROP_ADDRESS");
 
         console.log("Account:", account);
         
@@ -48,6 +48,7 @@ contract Deploy is Script {
 
         // 1b/. Top-up with FTN tokens
         // ITokenManager(tokenmanager).topUpFtn(topUpAmount);  // ToDo
+        // ITokenManager(tokenmanager).transfer(account, topUpAmount);
 
         // 1c/. Approve FTN tokens for deposit
         // ITokenManager(tokenmanager).approveFtn(tokenmanager, amount);  
@@ -80,3 +81,6 @@ contract Deploy is Script {
         vm.stopBroadcast();
     }
 }   
+
+// call deposit _amount (of reward tokens) to lockdrop        <-- 1) here !!
+// call withdraw _amount (of reward tokens) from lockdrop          <-- 2) and here !!

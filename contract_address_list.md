@@ -2,9 +2,9 @@
 
 #       Contract addresses (Utility)
 #
-# TokenManager  : 
-# Reward        : 
-# LockDrop      : 
+# TokenManager  : 0xe8c02A1b4c93C0AF0eB6eb1767Da3de80af7B302
+# Reward        : 0x0caE28846187A0111eeA8e31Cd251Bb95ADa692E
+# LockDrop      : 0x31A10D4c514c769Eb21b02400c5DF3b914cc54A1
 # 
 
 #       Contract addresses (Functionality)
@@ -14,25 +14,22 @@
 #
 
 #       Actions to perform
-# 
-# TokenManager:setRewardTokenAddress()   -- done
-# VRFv2Consumer:setLotteryContract()     -- done
-# Lottery:setTokenManager()              -- done     
-# Lottery:setVrfConsumer()               -- done
-#
-#
 
 #   - deploy the Reward contract                         -- #1  
 #   - deploy the TokenManager contract                   -- #2
-#   - import reward token into Metamask                  -- #3
 #   - call TokenManager:setRewardTokenAddress()          -- #4
+#   - call TokenManager:setTokenManagerAddress()         -- #5
+#   - deploy LockDrop contract                           -- #6 
+
+#   - test TokenManager (ERC-20) functions as working?   -- #9      <-- HERE !!
+#
 
 
-#   - deploy LockDrop contract                           -- #5 
-#   - call TokenManager:setLockDropAddress()             -- #6
-#   - call TokenManager:topUpFtn()                       -- #7
-#   
-#
-#   - test the reward tokens drop, upon withdraw         --    
-#   - display live in front-end                          --
-#
+
+
+#    transfer(address _to, uint256 _amount) external;                           - done
+#    approve(address _spender, uint256 _amount) external;                           - ToDo 
+#    transferFrom(address _from, address _to, uint256 _value) external;             - ToDo 
+#    allowance(address _owner, address _spender) external returns(uint256);         - ToDo
+#    balanceOf(address _account) external returns (uint256);                    - done
+#    totalSupply() external returns (uint256);                                  - done
