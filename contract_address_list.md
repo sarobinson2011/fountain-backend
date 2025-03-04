@@ -25,11 +25,17 @@
 #
 
 
-
-
 #    transfer(address _to, uint256 _amount) external;                           - done
-#    approve(address _spender, uint256 _amount) external;                           - ToDo 
-#    transferFrom(address _from, address _to, uint256 _value) external;             - ToDo 
-#    allowance(address _owner, address _spender) external returns(uint256);         - ToDo
+#    approve(address _spender, uint256 _amount) external;                       - done 
+#    transferFrom(address _from, address _to, uint256 _value) external;         - done 
+#    allowance(address _owner, address _spender) external returns(uint256);     - done
 #    balanceOf(address _account) external returns (uint256);                    - done
 #    totalSupply() external returns (uint256);                                  - done
+
+
+
+# *** Aurora Testnet ***  -->  this works!
+# 
+# forge script script/deploy_lockdrop.s.sol:Deploy --rpc-url ${AURORA_TEST_RPC_URL} --broadcast --legacy --verify -vv --etherscan-api-key ${AURORA_API_KEY} --verifier blockscout --verifier-url ${AURORA_API} --private-key ${PRIVATE_KEY}
+
+

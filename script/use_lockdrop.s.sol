@@ -7,8 +7,6 @@ import {Script, console2} from "forge-std/Script.sol";
 import {Reward} from "../src/reward.sol";
 import {LockDrop} from "../src/lockdrop.sol";
 import {ILockDrop} from "../src/I.lockdrop.sol";
-import {IRandomNumberGenerator} from "../src/I.randomnumbergenerator.sol";
-import {IVRFv2Consumer} from "../src/I.vrfv2consumer.sol";
 import {ITokenManager} from "../src/I.tokenmanager.sol";
 
 

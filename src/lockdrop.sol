@@ -113,7 +113,7 @@ contract LockDrop {
         return reward;
     }
 
-    function fetchBlockReward() external returns(uint256) {     // returns (and emits) the current reward value
+    function fetchBlockReward() external returns(uint256) { 
         uint256 blockReward = 0;
 
         if (balances[msg.sender].amount > 0) {

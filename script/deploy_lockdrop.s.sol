@@ -33,7 +33,7 @@ contract Deploy is Script {
         // deploy reward token manager
         // new TokenManager();
 
-        // deploy the FTN token contract
+        // // deploy the FTN token contract
         // new Reward("Fountain", "FTN", tokenmanager, supply);
 
         // deploy lockdrop
@@ -59,4 +59,7 @@ contract Deploy is Script {
         vm.stopBroadcast();
     }
 }
+
+
+
 
