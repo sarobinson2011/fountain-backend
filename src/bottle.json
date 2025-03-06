@@ -1,0 +1,15 @@
+{
+    "name": "Whiskey - Laphroig 18 years aged",
+    "description": "A vintage whiskey bottle with RFID authentication.",
+    "image": "ipfs://QmWJP1Es4gUWHso6yT5pLZTDfY4grssSbQ5Gd12Qcg4zFw",
+    "attributes": [
+        {
+            "trait_type": "RFID",
+            "value": "000000000000001"
+        },
+        {
+            "trait_type": "Authenticity Hash",
+            "value": "0xd26fe0985dfb6da664b3c62f4ae07e0f307c9f212a10f760f28cdfa5a571d0aa"
+        }
+    ]
+}

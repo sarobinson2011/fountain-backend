@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
+import {BottleNFT} from "../src/bottleNFT.sol";
+import {IBottleNFT} from "../src/I.bottleNFT.sol";
+
 contract Registry {
     
     struct Bottle {
@@ -11,6 +14,7 @@ contract Registry {
     }
     
     address public admin;
+    address public NFTContract;
     
     mapping(string => Bottle) public bottles;             // bottle storage via a mapping
 
@@ -26,12 +30,17 @@ contract Registry {
         admin = msg.sender;
     }
 
+    function setContractNFT(address _NFTcontract) external onlyAdmin {
+        NFTContract = _NFTcontract;                              // new - all needs re-deploying  #ToDo
+    }
+
     function registerBottle(
         string memory _rfid,
         bytes32 _authentictyHash,
-        address _bottleOwner
+        address _bottleOwner,
+        string memory _tokenURI
     ) external onlyAdmin {
-        require(!bottles[_rfid].exists, "Bottle already registered :-)");
+        require(!bottles[_rfid].exists, "Bottle RFID has already registered");
         
         bottles[_rfid] = Bottle({
             rfid: _rfid,
@@ -39,7 +48,8 @@ contract Registry {
             bottleOwner: _bottleOwner,
             exists: true
         });
-        emit BottleRegistered(_rfid, _authentictyHash, _bottleOwner);    
+        emit BottleRegistered(_rfid, _authentictyHash, _bottleOwner);   
+        IBottleNFT(NFTContract).mintNFT(_bottleOwner, _tokenURI);           // mint the NFT test  #ToDo
     } 
 
 
